@@ -1,5 +1,6 @@
-import { Text, View, FlatList, Image } from "react-native";
-import React from "react";
+import React, { useRef, useEffect, useState } from "react";
+import { View, FlatList, Image } from "react-native";
+
 const DATA = [
   {
     id: "https://res.cloudinary.com/dhs93uix6/image/upload/v1713091267/wp3592806-job-wallpapers_osw154.jpg",
@@ -16,22 +17,56 @@ const DATA = [
 ];
 
 export default function Slider() {
+  const flatListRef = useRef(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      if (flatListRef.current) {
+        flatListRef.current.scrollToIndex({
+          index: currentIndex === DATA.length - 1 ? 0 : currentIndex + 1,
+          animated: true,
+        });
+      }
+    }, 3000);
+
+    return () => clearInterval(timer);
+  }, [currentIndex]);
+
+  const handleScroll = (event) => {
+    const { contentOffset } = event.nativeEvent;
+    const index = Math.floor(contentOffset.x / 330); // Kích thước của mỗi mục
+
+    setCurrentIndex(index);
+  };
+
   return (
     <View style={{ flex: 0.82, padding: 16, marginTop: 15 }}>
       <FlatList
+        ref={flatListRef}
         data={DATA}
         horizontal={true}
-        className="rounded-sm"
-        renderItem={({ item, index }) => (
+        showsHorizontalScrollIndicator={false}
+        renderItem={({ item }) => (
           <View>
-            <View>
-              <Image
-                source={{ uri: item?.id }}
-                className="h-[200px] w-[330px] mr-3 rounded-lg object-contain"
-              />
-            </View>
+            <Image
+              source={{ uri: item?.id }}
+              style={{
+                height: 200,
+                width: 330,
+                marginRight: 3,
+                borderRadius: 10,
+              }}
+            />
           </View>
         )}
+        keyExtractor={(item) => item.id}
+        pagingEnabled={true}
+        decelerationRate={"fast"}
+        snapToInterval={330} // Kích thước của mỗi mục
+        snapToAlignment={"start"}
+        onScroll={handleScroll}
+        scrollEventThrottle={16} // Cập nhật index mỗi khi cuộn
       />
     </View>
   );

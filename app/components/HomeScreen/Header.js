@@ -35,7 +35,7 @@ export default function Header() {
             className="rounded-full w-12 h-12"
           />
           <View>
-            <Text className="text-[16px] color-white">Xin chào !</Text>
+            <Text className="text-[16px] color-white">Xin chào !x</Text>
             <Text className="text-[16px] font-bold color-white">
               {user?.fullName}
             </Text>
@@ -45,7 +45,7 @@ export default function Header() {
         <Ionicons name="notifications-outline" size={24} color="#FFF" />
       </View>
 
-      <View
+      <TouchableOpacity
         style={{
           backgroundColor: "#FFF",
           padding: 12,
@@ -67,7 +67,7 @@ export default function Header() {
             flex: 1,
           }}
         />
-      </View>
+      </TouchableOpacity>
     </View>
   );
 }
