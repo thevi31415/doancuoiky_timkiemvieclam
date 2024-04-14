@@ -17,7 +17,11 @@ export default function MainContainer() {
     <View style={styles.container}>
       <StatusBar style="auto" />
       <NavigationContainer>
-        <Tab.Navigator>
+        <Tab.Navigator
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
           <Tab.Screen
             name="Home"
             component={Home}
