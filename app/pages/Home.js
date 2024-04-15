@@ -5,6 +5,8 @@ import { app } from "../../firebaseConfig";
 import React, { useEffect, useState } from "react";
 import { getFirestore } from "firebase/firestore";
 import { collection, getDocs } from "firebase/firestore";
+import TopCompany from "../components/HomeScreen/TopCompany";
+import LastJob from "../components/HomeScreen/LastJob";
 
 export default function Home() {
   const db = getFirestore(app);
@@ -23,8 +25,12 @@ export default function Home() {
 
   return (
     <View style={{ flex: 1 }}>
-      <Header />
-      <Slider />
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <Header />
+        <Slider />
+        <TopCompany />
+        <LastJob />
+      </ScrollView>
     </View>
   );
 }

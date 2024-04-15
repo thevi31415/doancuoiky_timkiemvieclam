@@ -35,13 +35,13 @@ export default function Slider() {
 
   const handleScroll = (event) => {
     const { contentOffset } = event.nativeEvent;
-    const index = Math.floor(contentOffset.x / 330); // Kích thước của mỗi mục
+    const index = Math.floor(contentOffset.x / 330);
 
     setCurrentIndex(index);
   };
 
   return (
-    <View style={{ flex: 0.82, padding: 16, marginTop: 15 }}>
+    <View style={{ flex: 0.82, padding: 16, marginTop: 20 }}>
       <FlatList
         ref={flatListRef}
         data={DATA}

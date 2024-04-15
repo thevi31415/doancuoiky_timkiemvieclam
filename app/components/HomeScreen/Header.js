@@ -26,7 +26,7 @@ export default function Header() {
           flexDirection: "row",
           justifyContent: "space-between",
           alignItems: "center",
-          marginTop: 32,
+          marginTop: 10,
         }}
       >
         <View className="flex flex-row items-center gap-2">
@@ -35,7 +35,7 @@ export default function Header() {
             className="rounded-full w-12 h-12"
           />
           <View>
-            <Text className="text-[16px] color-white">Xin chào !x</Text>
+            <Text className="text-[16px] color-white">Xin chào !</Text>
             <Text className="text-[16px] font-bold color-white">
               {user?.fullName}
             </Text>
@@ -52,8 +52,8 @@ export default function Header() {
           borderRadius: 16,
           flexDirection: "row",
           alignItems: "center",
-          position: "absolute",
-          bottom: -25,
+          position: "relative",
+          bottom: -40,
           width: 350,
           alignSelf: "center",
         }}
