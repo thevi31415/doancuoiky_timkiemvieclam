@@ -13,7 +13,8 @@ export default function App() {
           <MainContainer />
         </SignedIn>
         <SignedOut>
-          <Login />
+          {/* <Login /> */}
+          <MainContainer />
         </SignedOut>
       </View>
     </ClerkProvider>

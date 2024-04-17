@@ -63,10 +63,10 @@ export default function Slider() {
         keyExtractor={(item) => item.id}
         pagingEnabled={true}
         decelerationRate={"fast"}
-        snapToInterval={330} // Kích thước của mỗi mục
+        snapToInterval={330}
         snapToAlignment={"start"}
         onScroll={handleScroll}
-        scrollEventThrottle={16} // Cập nhật index mỗi khi cuộn
+        scrollEventThrottle={16}
       />
     </View>
   );

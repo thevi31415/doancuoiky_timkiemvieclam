@@ -10,6 +10,7 @@ export default function LastJob() {
           fontSize: 20,
           fontWeight: "600",
           marginBottom: 20,
+          color: "#2c67f2",
         }}
       >
         Công việc mới nhất

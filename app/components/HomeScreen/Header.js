@@ -17,7 +17,7 @@ export default function Header() {
     <View
       style={{
         flex: 0.18,
-        backgroundColor: "#3F6CDF",
+        backgroundColor: "#2c67f2",
         padding: 16,
       }}
     >
@@ -58,7 +58,7 @@ export default function Header() {
           alignSelf: "center",
         }}
       >
-        <Ionicons name="search" size={24} color="#171716" />
+        <Ionicons name="search" size={24} color="#2c67f2" />
         <TextInput
           placeholder="Search job, company, etc.."
           placeholderTextColor={"#171716"}

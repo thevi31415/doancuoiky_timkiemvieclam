@@ -10,17 +10,20 @@ export default function TopCompany() {
           fontSize: 20,
           fontWeight: "600",
           marginBottom: 20,
+          color: "#2c67f2",
         }}
       >
         Top công ty hàng đầu
       </Text>
       <View style={{ height: 200 }}>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          <View
+          <TouchableOpacity
             style={{
               backgroundColor: "#FFF",
               padding: 16,
               borderRadius: 16,
+              borderWidth: 1,
+              borderColor: "#2c67f2",
               width: 300,
               marginRight: 16,
             }}
@@ -31,22 +34,29 @@ export default function TopCompany() {
                 justifyContent: "space-between",
               }}
             >
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
                 <Image
-                  source={require("../../pages/assets/facebook_logo.png")}
+                  source={require("../../pages/assets/logo.png")}
+                  style={{ width: 50, height: 50 }}
                 />
                 <View style={{ marginLeft: 8 }}>
                   <Text
                     style={{
-                      fontSize: 16,
+                      fontSize: 23,
                       fontWeight: "600",
+                      color: "#222F3F",
                     }}
                   >
                     Facebook
                   </Text>
                   <Text
                     style={{
-                      fontSize: 12,
+                      fontSize: 14,
                       fontWeight: "400",
                     }}
                   >
@@ -57,12 +67,43 @@ export default function TopCompany() {
               <Ionicons name="bookmark-outline" size={24} color="#000" />
             </View>
 
-            <Text style={{ marginTop: 16, fontSize: 18, fontWeight: "600" }}>
+            {/* <Text style={{ marginTop: 16, fontSize: 18, fontWeight: "600" }}>
               UI Designer
-            </Text>
-            <Text style={{ fontSize: 12, fontWeight: "400" }}>
-              Senior • Remote • Fulltime
-            </Text>
+            </Text> */}
+            <View
+              style={{
+                marginTop: 16,
+              }}
+            >
+              <View
+                style={{
+                  flexDirection: "row",
+                }}
+              >
+                <Ionicons
+                  name="people-outline"
+                  size={20}
+                  color="black"
+                  style={{ marginRight: 10 }}
+                />
+                <Text style={{ fontSize: 12, fontWeight: "400" }}>
+                  1000 Employee
+                </Text>
+              </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                }}
+              >
+                <Ionicons
+                  name="bag-remove-outline"
+                  size={20}
+                  color="black"
+                  style={{ marginRight: 10 }}
+                />
+                <Text style={{ fontSize: 12, fontWeight: "400" }}>0 Jobs</Text>
+              </View>
+            </View>
 
             <View
               style={{
@@ -72,37 +113,26 @@ export default function TopCompany() {
                 justifyContent: "space-between",
               }}
             >
-              <TouchableOpacity
-                style={{
-                  backgroundColor: "#3F6CDF",
-                  padding: 12,
-                  borderRadius: 16,
-                }}
-              >
-                <Text
-                  style={{
-                    color: "#FFF",
-                  }}
-                >
-                  Apply Now
-                </Text>
+              <TouchableOpacity className="bg-blue-100 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">
+                <Text className=" text-blue-800">Công nghệ</Text>
               </TouchableOpacity>
-              <Text
+              {/* <Text
                 style={{
                   fontSize: 18,
                   fontWeight: "500",
                 }}
               >
-                $100K/year
-              </Text>
+                Công nghệ
+              </Text> */}
             </View>
-          </View>
-
-          <View
+          </TouchableOpacity>
+          <TouchableOpacity
             style={{
               backgroundColor: "#FFF",
               padding: 16,
               borderRadius: 16,
+              borderWidth: 1,
+              borderColor: "#2c67f2",
               width: 300,
               marginRight: 16,
             }}
@@ -113,22 +143,29 @@ export default function TopCompany() {
                 justifyContent: "space-between",
               }}
             >
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
                 <Image
-                  source={require("../../pages/assets/pinterest_logo.png")}
+                  source={require("../../pages/assets/logo.png")}
+                  style={{ width: 50, height: 50 }}
                 />
                 <View style={{ marginLeft: 8 }}>
                   <Text
                     style={{
-                      fontSize: 16,
+                      fontSize: 23,
                       fontWeight: "600",
+                      color: "#222F3F",
                     }}
                   >
-                    Pinterest
+                    Facebook
                   </Text>
                   <Text
                     style={{
-                      fontSize: 12,
+                      fontSize: 14,
                       fontWeight: "400",
                     }}
                   >
@@ -139,12 +176,43 @@ export default function TopCompany() {
               <Ionicons name="bookmark-outline" size={24} color="#000" />
             </View>
 
-            <Text style={{ marginTop: 16, fontSize: 18, fontWeight: "600" }}>
+            {/* <Text style={{ marginTop: 16, fontSize: 18, fontWeight: "600" }}>
               UI Designer
-            </Text>
-            <Text style={{ fontSize: 12, fontWeight: "400" }}>
-              Senior • Remote • Fulltime
-            </Text>
+            </Text> */}
+            <View
+              style={{
+                marginTop: 16,
+              }}
+            >
+              <View
+                style={{
+                  flexDirection: "row",
+                }}
+              >
+                <Ionicons
+                  name="people-outline"
+                  size={20}
+                  color="black"
+                  style={{ marginRight: 10 }}
+                />
+                <Text style={{ fontSize: 12, fontWeight: "400" }}>
+                  1000 Employee
+                </Text>
+              </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                }}
+              >
+                <Ionicons
+                  name="bag-remove-outline"
+                  size={20}
+                  color="black"
+                  style={{ marginRight: 10 }}
+                />
+                <Text style={{ fontSize: 12, fontWeight: "400" }}>0 Jobs</Text>
+              </View>
+            </View>
 
             <View
               style={{
@@ -154,31 +222,19 @@ export default function TopCompany() {
                 justifyContent: "space-between",
               }}
             >
-              <TouchableOpacity
-                style={{
-                  backgroundColor: "#3F6CDF",
-                  padding: 12,
-                  borderRadius: 16,
-                }}
-              >
-                <Text
-                  style={{
-                    color: "#FFF",
-                  }}
-                >
-                  Apply Now
-                </Text>
+              <TouchableOpacity className="bg-blue-100 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">
+                <Text className=" text-blue-800">Công nghệ</Text>
               </TouchableOpacity>
-              <Text
+              {/* <Text
                 style={{
                   fontSize: 18,
                   fontWeight: "500",
                 }}
               >
-                $80K/year
-              </Text>
+                Công nghệ
+              </Text> */}
             </View>
-          </View>
+          </TouchableOpacity>
         </ScrollView>
       </View>
     </View>
