@@ -16,7 +16,10 @@ export default function Header() {
 
   return (
     <View>
-      <ImageBackground source={require("../../pages/assets/BG_header.jpg")}>
+      <ImageBackground
+        source={require("../../pages/assets/BG_header.jpg")}
+        style={{ flex: 1 }}
+      >
         <View
           style={{
             flex: 0.18,
