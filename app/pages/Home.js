@@ -12,8 +12,10 @@ export default function Home() {
   const db = getFirestore(app);
   useEffect(() => {
     getUsers();
+    getTopCompanies();
   }, []);
   const [userList, setUserList] = useState([]);
+  const [topCompanyList, setTopCompanyList] = useState([]);
   const getUsers = async () => {
     setUserList([]);
     const querySnapshot = await getDocs(collection(db, "User"));
@@ -22,13 +24,21 @@ export default function Home() {
       setUserList((userList) => [...userList, doc.data()]);
     });
   };
+  const getTopCompanies = async () => {
+    setTopCompanyList([]);
+    const querySnapshot = await getDocs(collection(db, "Company"));
+    querySnapshot.forEach((doc) => {
+      console.log(doc.id, " => ", doc.data());
+      setTopCompanyList((topCompanyList) => [...topCompanyList, doc.data()]);
+    });
+  };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: "#fff" }}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <Header />
         <Slider />
-        <TopCompany />
+        <TopCompany topCompanyList={topCompanyList} />
         <LastJob />
       </ScrollView>
     </View>
