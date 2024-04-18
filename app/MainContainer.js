@@ -4,11 +4,11 @@ import { NavigationContainer } from "@react-navigation/native";
 import Constants from "expo-constants";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
-
 import Home from "./pages/Home";
 import Companies from "./pages/Companies";
 import Notification from "./pages/Notification";
 import Account from "./pages/Account";
+import HomeScreenStackNav from "./pages/HomeScreenStackNav";
 
 const Tab = createBottomTabNavigator();
 
@@ -23,8 +23,8 @@ export default function MainContainer() {
           }}
         >
           <Tab.Screen
-            name="Home"
-            component={Home}
+            name="home-nav"
+            component={HomeScreenStackNav}
             options={{
               tabBarIcon: ({ color, size }) => (
                 <Ionicons name="home" size={size} color={color} />
