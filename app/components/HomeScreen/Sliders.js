@@ -3,15 +3,15 @@ import { View, FlatList, Image } from "react-native";
 
 const DATA = [
   {
-    id: "https://res.cloudinary.com/dhs93uix6/image/upload/v1713091267/wp3592806-job-wallpapers_osw154.jpg",
+    id: "https://res.cloudinary.com/dhs93uix6/image/upload/v1713453326/17348611_5816231_cnjrji.jpg",
     title: "First Item",
   },
   {
-    id: "https://res.cloudinary.com/dhs93uix6/image/upload/v1713091273/wp3592845-job-wallpapers_a35cgr.jpg",
+    id: "https://res.cloudinary.com/dhs93uix6/image/upload/v1713453298/13859499_5384040_zzhp7k.jpg",
     title: "Second Item",
   },
   {
-    id: "https://res.cloudinary.com/dhs93uix6/image/upload/v1713091281/wp3592900-job-wallpapers_tdorqv.jpg",
+    id: "https://res.cloudinary.com/dhs93uix6/image/upload/v1713453498/16326494_rm222-mind-16_rjizb9.jpg",
     title: "Third Item",
   },
 ];

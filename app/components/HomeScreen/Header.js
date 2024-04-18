@@ -11,6 +11,7 @@ import React from "react";
 import LinearGradient from "react-native-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import { useUser } from "@clerk/clerk-expo";
+
 export default function Header() {
   const { user } = useUser();
 

@@ -3,6 +3,7 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from "./Home";
 import CompaniesDetail from "./CompanyDetail";
+import Account from "./Account";
 
 const Stack = createStackNavigator();
 
