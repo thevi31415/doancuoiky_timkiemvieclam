@@ -62,7 +62,7 @@ export default function TopCompany({ topCompanyList }) {
                   >
                     <Image
                       source={{ uri: item?.Logo }}
-                      style={{ width: 40, height: 40 }}
+                      style={{ width: 40, height: 40, borderRadius: 5 }}
                     />
                     <View style={{ marginLeft: 8 }}>
                       <Text

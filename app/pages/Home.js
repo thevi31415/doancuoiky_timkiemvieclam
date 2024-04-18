@@ -54,6 +54,7 @@ import { app } from "../../firebaseConfig";
 import { getFirestore } from "firebase/firestore";
 import { collection, getDocs } from "firebase/firestore";
 import { useFocusEffect } from "@react-navigation/native";
+import TypeJob from "../components/HomeScreen/TypeJob";
 
 export default function Home() {
   const db = getFirestore(app);
@@ -87,6 +88,7 @@ export default function Home() {
     <View style={{ flex: 1, backgroundColor: "#fff" }}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <Header />
+        <TypeJob />
         <Slider />
         <TopCompany topCompanyList={topCompanyList} />
         <LastJob />
