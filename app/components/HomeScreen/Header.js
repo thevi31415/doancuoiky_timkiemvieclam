@@ -22,7 +22,13 @@ const storeData = async (value) => {
     await AsyncStorage.setItem("userAccount", jsonValue);
   } catch (e) {}
 };
-
+removeValue = async () => {
+  try {
+    await AsyncStorage.removeItem("userAccount");
+  } catch (e) {
+    // remove error
+  }
+};
 export default function Header() {
   const db = getFirestore(app);
   const { user } = useUser();
@@ -37,6 +43,7 @@ export default function Header() {
         console.log(targetUser);
         console.log("Tìm thấy nhân user header");
         setUserAccount(targetUser);
+        removeValue();
         storeData(targetUser);
       } else {
         const userNew = {
@@ -51,6 +58,8 @@ export default function Header() {
         const docRef = await addDoc(collection(db, "User"), userNew);
         if (docRef.id) {
           console.log("Document Added");
+          removeValue();
+
           storeData(userNew);
         }
       }
