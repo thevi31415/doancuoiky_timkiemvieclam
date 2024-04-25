@@ -60,7 +60,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Home() {
   const db = getFirestore(app);
-  const { userAccount } = useUser();
+
   const [topCompanyList, setTopCompanyList] = useState([]);
   const fetchData = async () => {
     const companySnapshot = await getDocs(collection(db, "Company"));
