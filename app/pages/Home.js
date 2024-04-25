@@ -52,28 +52,22 @@ import TopCompany from "../components/HomeScreen/TopCompany";
 import LastJob from "../components/HomeScreen/LastJob";
 import { app } from "../../firebaseConfig";
 import { getFirestore } from "firebase/firestore";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, setDoc, addDoc } from "firebase/firestore";
 import { useFocusEffect } from "@react-navigation/native";
 import TypeJob from "../components/HomeScreen/TypeJob";
+import { useUser } from "@clerk/clerk-expo";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Home() {
   const db = getFirestore(app);
-  const [userList, setUserList] = useState([]);
+  const { userAccount } = useUser();
   const [topCompanyList, setTopCompanyList] = useState([]);
-
   const fetchData = async () => {
-    // Fetch users
-    const userSnapshot = await getDocs(collection(db, "User"));
-    const users = userSnapshot.docs.map((doc) => doc.data());
-    setUserList(users);
-
-    // Fetch top companies
     const companySnapshot = await getDocs(collection(db, "Company"));
     const companies = companySnapshot.docs.map((doc) => doc.data());
     setTopCompanyList(companies);
   };
 
-  // Fetch data on component mount and every time the screen is focused
   useEffect(() => {
     fetchData();
   }, []);

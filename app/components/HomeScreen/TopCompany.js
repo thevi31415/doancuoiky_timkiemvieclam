@@ -23,7 +23,11 @@ export default function TopCompany({ topCompanyList }) {
       >
         Top công ty hàng đầu
       </Text>
-      <View style={{ height: 200 }}>
+      <View
+        style={{
+          height: 200,
+        }}
+      >
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           <FlatList
             data={topCompanyList}

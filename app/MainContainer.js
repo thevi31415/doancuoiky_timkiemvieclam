@@ -9,7 +9,6 @@ import Companies from "./pages/Companies";
 import Notification from "./pages/Notification";
 import Account from "./pages/Account";
 import HomeScreenStackNav from "./pages/HomeScreenStackNav";
-
 const Tab = createBottomTabNavigator();
 
 export default function MainContainer() {

@@ -7,14 +7,61 @@ import {
   Image,
   ImageBackground,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import LinearGradient from "react-native-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import { useUser } from "@clerk/clerk-expo";
+import { useFocusEffect } from "@react-navigation/native";
+import { collection, getDocs, setDoc, addDoc } from "firebase/firestore";
+import { app } from "../../../firebaseConfig";
+import { getFirestore } from "firebase/firestore";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+const storeData = async (value) => {
+  try {
+    const jsonValue = JSON.stringify(value);
+    await AsyncStorage.setItem("userAccount", jsonValue);
+  } catch (e) {}
+};
 
 export default function Header() {
-  const { user } = useUser();
+  const db = getFirestore(app);
 
+  const { user } = useUser();
+  const [userAccount, setUserAccount] = useState([]);
+
+  console.log("User name" + user.primaryEmailAddress);
+  const fetchData = async () => {
+    try {
+      const userSnapshot = await getDocs(collection(db, "User"));
+      const users = userSnapshot.docs.map((doc) => doc.data());
+      const targetUser = users.find(
+        (users) => users.email == user?.primaryEmailAddress
+      );
+      if (targetUser) {
+        console.log(targetUser);
+        console.log("Tìm thấy nhân user header");
+        setUserAccount(targetUser);
+        storeData(userAccount);
+      } else {
+        //Nếu không tìm thấy user thì tự động tạo một tài khoản mới từ db
+      }
+    } catch (error) {
+      console.error("Lỗi khi lấy dữ liệu từ Firebase:", error);
+    }
+    console.log(
+      "User: Name: " + userAccount.name + "Email: " + userAccount.email
+    );
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchData();
+    }, [])
+  );
   return (
     <View>
       <ImageBackground
