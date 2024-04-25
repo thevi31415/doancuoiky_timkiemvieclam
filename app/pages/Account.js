@@ -48,7 +48,7 @@ export default function Account() {
     //     </View>
     //   )}
     // </View>
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#f6f6f6" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
       <View style={styles.container}>
         {/* <View style={styles.header}>
           <Text style={styles.title}>Settings</Text>
