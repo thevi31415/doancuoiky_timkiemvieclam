@@ -42,6 +42,7 @@ export default function Header() {
         const userNew = {
           ID: user?.id,
           SDT: "0949Y845xxx",
+          imageUrl: user?.imageUrl,
           name: user?.fullName,
           email: user?.primaryEmailAddress?.toString(),
         };
