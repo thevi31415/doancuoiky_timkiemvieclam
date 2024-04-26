@@ -15,6 +15,7 @@ import {
   StyleSheet,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+
 WebBrowser.maybeCompleteAuthSession();
 const { height } = Dimensions.get("window");
 export default function LoginScreen() {
