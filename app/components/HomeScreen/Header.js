@@ -15,6 +15,8 @@ import { useFocusEffect } from "@react-navigation/native";
 import { collection, getDocs, setDoc, addDoc } from "firebase/firestore";
 import { app } from "../../../firebaseConfig";
 import { getFirestore } from "firebase/firestore";
+import { useNavigation } from "@react-navigation/native";
+import { Searchbar } from "react-native-paper";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 const storeData = async (value) => {
   try {
@@ -30,6 +32,7 @@ removeValue = async () => {
   }
 };
 export default function Header() {
+  const navigation = useNavigation();
   const db = getFirestore(app);
   const { user } = useUser();
   const [userAccount, setUserAccount] = useState([]);
@@ -128,8 +131,13 @@ export default function Header() {
               borderWidth: 1.5,
               borderColor: "#2c67f2",
             }}
+            // onPress={()=>navigation.push("search-detail", {})}
           >
-            <Ionicons name="search" size={24} color="#2c67f2" />
+            <TouchableOpacity
+              onPress={() => navigation.push("search-detail", {})}
+            >
+              <Ionicons name="search" size={24} color="#2c67f2" />
+            </TouchableOpacity>
             <TextInput
               placeholder="Search job, company, etc.."
               placeholderTextColor={"#171716"}

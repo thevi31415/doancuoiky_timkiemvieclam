@@ -12,8 +12,10 @@ import {
 import FeatherIcon from "react-native-vector-icons/Feather";
 import React, { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ClerkProvider, SignedIn, SignedOut, useAuth } from "@clerk/clerk-expo";
 
 export default function Account() {
+  const { isLoaded, signOut } = useAuth();
   const [userAccount, setUserAccount] = useState(null);
 
   const getData = async () => {
@@ -157,7 +159,12 @@ export default function Account() {
               <Text style={styles.sectionTitle}>Tài khoản</Text>
 
               <View style={styles.sectionBody}>
-                <TouchableOpacity style={[styles.rowWrapper, styles.rowFirst]}>
+                <TouchableOpacity
+                  style={[styles.rowWrapper, styles.rowFirst]}
+                  onPress={() => {
+                    signOut();
+                  }}
+                >
                   <View style={styles.row}>
                     <View
                       style={[styles.rowIcon, { backgroundColor: "#FF0000" }]}

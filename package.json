@@ -28,6 +28,8 @@
     "react-native-drop-shadow": "^1.0.0",
     "react-native-gesture-handler": "~2.14.0",
     "react-native-linear-gradient": "^2.8.3",
+    "react-native-paper": "^5.12.3",
+    "react-native-reanimated": "^3.8.1",
     "typescript": "^5.3.0"
   },
   "devDependencies": {
