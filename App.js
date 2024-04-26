@@ -3,7 +3,8 @@ import { StyleSheet, Text, View } from "react-native";
 import MainContainer from "./app/MainContainer";
 import Login from "./app/pages/Login";
 import { ClerkProvider, SignedIn, SignedOut } from "@clerk/clerk-expo";
-
+import { LogBox } from "react-native";
+LogBox.ignoreAllLogs();
 export default function App() {
   return (
     <ClerkProvider publishableKey="pk_test_cHJlcGFyZWQtaHVza3ktMi5jbGVyay5hY2NvdW50cy5kZXYk">
