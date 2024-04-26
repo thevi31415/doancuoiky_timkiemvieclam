@@ -30,11 +30,8 @@ export default function Search() {
               borderWidth: 1.5,
               borderColor: "#2c67f2",
             }}
-            // onPress={()=>navigation.push("search-detail", {})}
           >
-            <TouchableOpacity
-              onPress={() => navigation.push("search-detail", {})}
-            >
+            <TouchableOpacity onPress={() => "search"}>
               <Ionicons name="search" size={24} color="#2c67f2" />
             </TouchableOpacity>
             <TextInput
@@ -51,7 +48,12 @@ export default function Search() {
           </TouchableOpacity>
         </View>
       </View>
-      {/* <Tabs items={tabs} /> */}
+      <View className="mt-3 p-3">
+        <Image
+          className="w-[160px] h-[170px]"
+          source={require("./assets/searchbg.jpg")}
+        />
+      </View>
     </View>
   );
 }

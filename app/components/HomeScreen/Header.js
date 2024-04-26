@@ -141,11 +141,15 @@ export default function Header() {
             <TextInput
               placeholder="Search job, company, etc.."
               placeholderTextColor={"#171716"}
+              onFocus={() => navigation.push("search-detail", {})}
               style={{
                 marginLeft: 8,
                 flex: 1,
               }}
             />
+            <TouchableOpacity>
+              <Ionicons name="filter" size={24} color="#2c67f2" />
+            </TouchableOpacity>
           </TouchableOpacity>
         </View>
       </ImageBackground>
