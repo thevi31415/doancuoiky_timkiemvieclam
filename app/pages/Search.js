@@ -157,23 +157,30 @@ export default function Search() {
       )}
       {showSearchResult && (
         <>
-          <Text
-            className="m-3 mt-5"
-            style={{ color: "#2c67f2", fontWeight: "bold", fontSize: 15 }}
+          <ScrollView
+            style={{ flex: 1, marginTop: 20 }}
+            showsVerticalScrollIndicator={false}
           >
-            Kết quả tìm kiếm "{searchText}"
-          </Text>
-          <FlatList
-            data={searchResult}
-            className=" bg-white  border-spacing-x-32 rounded-t "
-            style={{ paddingLeft: 10, paddingRight: 10 }}
-            renderItem={({ item }) => (
-              <TouchableOpacity onPress={() => handleHintPress(item)}>
-                <CompaniesItem item={item} />
-              </TouchableOpacity>
-            )}
-            keyExtractor={(item) => item.ID}
-          />
+            <View>
+              <Text
+                className="m-3 mt-5"
+                style={{ color: "#2c67f2", fontWeight: "bold", fontSize: 15 }}
+              >
+                Kết quả tìm kiếm "{searchText}"
+              </Text>
+              <FlatList
+                data={searchResult}
+                className=" bg-white  border-spacing-x-32 rounded-t "
+                style={{ paddingLeft: 10, paddingRight: 10 }}
+                renderItem={({ item }) => (
+                  <TouchableOpacity onPress={() => handleHintPress(item)}>
+                    <CompaniesItem item={item} />
+                  </TouchableOpacity>
+                )}
+                keyExtractor={(item) => item.ID}
+              />
+            </View>
+          </ScrollView>
         </>
       )}
     </View>

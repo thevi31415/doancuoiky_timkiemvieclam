@@ -11,7 +11,7 @@ import { Ionicons } from "@expo/vector-icons";
 import CompaniesItem from "./CompanyItem";
 export default function TopCompany({ topCompanyList }) {
   return (
-    <View style={{ flex: 0.82, padding: 16 }}>
+    <View style={{ flex: 0.82, padding: 16, justifyContent: "center" }}>
       <Text
         style={{
           marginVertical: 0,
