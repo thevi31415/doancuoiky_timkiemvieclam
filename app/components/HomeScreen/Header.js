@@ -117,7 +117,7 @@ export default function Header() {
             <Ionicons name="notifications-outline" size={24} color="#FFF" />
           </View>
 
-          <TouchableOpacity
+          <View
             style={{
               backgroundColor: "#FFF",
               padding: 12,
@@ -150,7 +150,7 @@ export default function Header() {
             <TouchableOpacity>
               <Ionicons name="filter" size={24} color="#2c67f2" />
             </TouchableOpacity>
-          </TouchableOpacity>
+          </View>
         </View>
       </ImageBackground>
     </View>

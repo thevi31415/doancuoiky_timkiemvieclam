@@ -15,32 +15,83 @@ import { app } from "../../firebaseConfig";
 import { getFirestore } from "firebase/firestore";
 import { collection, getDocs, setDoc, addDoc } from "firebase/firestore";
 import { useFocusEffect } from "@react-navigation/native";
+import ItemHint from "../components/SearchScreen/ItemHint";
+import { useNavigation } from "@react-navigation/native";
+import TopCompany from "../components/HomeScreen/TopCompany";
+import CompaniesItem from "../components/HomeScreen/CompanyItem";
 
 export default function Search() {
+  const navigation = useNavigation();
   const db = getFirestore(app);
   const [searchText, setSearchText] = useState("");
   const [filteredCompanies, setFilteredCompanies] = useState([]);
+  const [showHints, setShowHints] = useState();
+  const [searchResult, setSearchResult] = useState([]);
+  const [showSearchResult, setShowSearchResult] = useState();
+  const [init, setInit] = useState(true);
+  useEffect(() => {
+    if (init) {
+      fetchDataHint();
+      setShowHints(true);
+    }
+  }, [init]);
 
   useEffect(() => {
     if (searchText.length >= 2) {
-      // Kiểm tra độ dài của TextInput
-      fetchData();
+      fetchDataHint();
     } else {
-      setFilteredCompanies([]); // Đặt danh sách công ty đã lọc về rỗng nếu TextInput có độ dài ít hơn 2
+      setFilteredCompanies([]);
     }
   }, [searchText]);
 
-  const fetchData = async () => {
+  const removeAccents = (str) => {
+    return str
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/\s+/g, "");
+  };
+  const fetchDataHint = async () => {
     try {
       const companySnapshot = await getDocs(collection(db, "Company"));
       const companies = companySnapshot.docs.map((doc) => doc.data());
+      const searchTextWithoutAccents = removeAccents(searchText.toLowerCase());
       const filtered = companies.filter((company) =>
-        company.Name.toLowerCase().includes(searchText.toLowerCase())
+        removeAccents(company.Name.toLowerCase()).includes(
+          searchTextWithoutAccents
+        )
       );
       setFilteredCompanies(filtered);
+      setShowHints(true);
+      setShowSearchResult(false);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
+  };
+
+  const fetchSearchResultByName = async (nameText) => {
+    try {
+      const companySnapshot = await getDocs(collection(db, "Company"));
+      const companies = companySnapshot.docs.map((doc) => doc.data());
+      const searchTextWithoutAccents = removeAccents(nameText.toLowerCase());
+      const searchResult = companies.filter((company) =>
+        removeAccents(company.Name.toLowerCase()).includes(
+          searchTextWithoutAccents
+        )
+      );
+      setSearchResult(searchResult);
+      setShowHints(false);
+      setShowSearchResult(true);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const handleHintPress = (hint) => {
+    fetchSearchResultByName(hint.Name);
+  };
+  const handleSearchIconPress = () => {
+    setShowHints(true);
+    fetchSearchResultByName(searchText);
   };
 
   return (
@@ -48,7 +99,6 @@ export default function Search() {
       <View className="bg-white">
         <View className="bg-white">
           <View
-            onPress={fetchData}
             style={{
               backgroundColor: "#FFF",
               padding: 12,
@@ -64,7 +114,7 @@ export default function Search() {
               backgroundColor: "#F4F6F5",
             }}
           >
-            <TouchableOpacity>
+            <TouchableOpacity onPress={handleSearchIconPress}>
               <Ionicons name="search" size={24} color="#2c67f2" />
             </TouchableOpacity>
             <TextInput
@@ -84,36 +134,47 @@ export default function Search() {
           </View>
         </View>
       </View>
-      <Text
-        className="m-3 mt-5"
-        style={{ color: "#2c67f2", fontWeight: "bold", fontSize: 15 }}
-      >
-        Gợi ý tìm kiếm
-      </Text>
-      {searchText.length >= 2 && ( // Hiển thị FlatList nếu độ dài của TextInput lớn hơn hoặc bằng 2
-        <FlatList
-          data={filteredCompanies}
-          className=" bg-white  border-spacing-x-32 rounded-t "
-          style={{ paddingLeft: 10, paddingRight: 10 }}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              style={{
-                paddingLeft: 5,
-                paddingRight: 5,
-                paddingBottom: 15,
-                marginBottom: 15,
-                borderBottomWidth: 1,
-                flexDirection: "row",
-                borderBottomColor: "#F5F6F6",
-              }}
-            >
-              <Ionicons name="search" size={20} color="#808080" />
-
-              <Text style={{ marginLeft: 10, fontSize: 16 }}>{item.Name}</Text>
-            </TouchableOpacity>
-          )}
-          keyExtractor={(item) => item.ID}
-        />
+      {showHints && (
+        <>
+          <Text
+            className="m-3 mt-5"
+            style={{ color: "#2c67f2", fontWeight: "bold", fontSize: 15 }}
+          >
+            Gợi ý tìm kiếm
+          </Text>
+          <FlatList
+            data={filteredCompanies}
+            className=" bg-white  border-spacing-x-32 rounded-t "
+            style={{ paddingLeft: 10, paddingRight: 10 }}
+            renderItem={({ item }) => (
+              <TouchableOpacity onPress={() => handleHintPress(item)}>
+                <ItemHint itemHint={item} />
+              </TouchableOpacity>
+            )}
+            keyExtractor={(item) => item.ID}
+          />
+        </>
+      )}
+      {showSearchResult && (
+        <>
+          <Text
+            className="m-3 mt-5"
+            style={{ color: "#2c67f2", fontWeight: "bold", fontSize: 15 }}
+          >
+            Kết quả tìm kiếm "{searchText}"
+          </Text>
+          <FlatList
+            data={searchResult}
+            className=" bg-white  border-spacing-x-32 rounded-t "
+            style={{ paddingLeft: 10, paddingRight: 10 }}
+            renderItem={({ item }) => (
+              <TouchableOpacity onPress={() => handleHintPress(item)}>
+                <CompaniesItem item={item} />
+              </TouchableOpacity>
+            )}
+            keyExtractor={(item) => item.ID}
+          />
+        </>
       )}
     </View>
   );
