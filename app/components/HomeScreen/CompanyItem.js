@@ -15,6 +15,13 @@ export default function CompaniesItem({ item }) {
         width: 300,
         padding: 10,
         marginRight: 16,
+        shadowColor: "#000",
+        shadowRadius: 4,
+        shadowOpacity: 0.1,
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
       }}
       onPress={() =>
         navigation.push("company-detail", {
