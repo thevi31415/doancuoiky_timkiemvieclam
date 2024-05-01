@@ -9,8 +9,14 @@ import {
   StyleSheet,
   FlatList,
   Animated,
+  Modal,
 } from "react-native";
 import React, { useState, useEffect } from "react";
+import {
+  BottomSheetModal,
+  BottomSheetView,
+  BottomSheetModalProvider,
+} from "@gorhom/bottom-sheet";
 import { app } from "../../firebaseConfig";
 import { getFirestore } from "firebase/firestore";
 import { collection, getDocs, setDoc, addDoc } from "firebase/firestore";
@@ -26,6 +32,11 @@ import ResultSearchCompaniesStackNav from "../components/SearchScreen/ResultSear
 
 export default function Search() {
   const Tab = createMaterialTopTabNavigator();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const toggleModal = () => {
+    setIsModalVisible(!isModalVisible);
+  };
 
   const db = getFirestore(app);
   const [searchText, setSearchText] = useState("");
@@ -131,6 +142,7 @@ export default function Search() {
     fetchSearchResultJobByName(searchText);
   };
   const navigation = useNavigation();
+
   return (
     <View className="bg-white" style={{ flex: 1, backgroundColor: "#fff" }}>
       <View
@@ -185,7 +197,10 @@ export default function Search() {
             className=" bg-white  border-spacing-x-32 rounded-t "
             style={{ paddingLeft: 10, paddingRight: 10 }}
             renderItem={({ item }) => (
-              <TouchableOpacity onPress={() => handleHintPress(item)}>
+              <TouchableOpacity
+                key={item.ID}
+                onPress={() => handleHintPress(item)}
+              >
                 <ItemHint itemHint={item} />
               </TouchableOpacity>
             )}
@@ -195,7 +210,12 @@ export default function Search() {
       )}
       {showSearchResult && (
         <>
-          <Tab.Navigator style={{ flex: 1 }}>
+          <Tab.Navigator
+            style={{ flex: 1 }}
+            screenOptions={{
+              tabBarActiveTintColor: "#2c67f2",
+            }}
+          >
             <Tab.Screen name="All" component={ResultSearchCompaniesStackNav} />
 
             <Tab.Screen name="Job">
