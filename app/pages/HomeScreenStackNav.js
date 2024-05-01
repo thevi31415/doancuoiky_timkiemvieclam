@@ -36,6 +36,7 @@ export default function HomeScreenStackNav() {
           },
           headerTintColor: "#fff",
           headerTitle: "Search",
+          headerShown: false,
         }}
       />
     </Stack.Navigator>
