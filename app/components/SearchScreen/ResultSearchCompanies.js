@@ -13,15 +13,8 @@ export default function ResultSearchCompanies({ itemList }) {
         style={{
           flex: 1,
           backgroundColor: "#ffff",
-          marginVertical: 10,
         }}
       >
-        {/* <Text
-          className="m-3 mt-5"
-          style={{ color: "#2c67f2", fontWeight: "bold", fontSize: 15 }}
-        >
-          Kết quả tìm kiếm "{searchText}"
-        </Text> */}
         <FlatList
           showsVerticalScrollIndicator={false}
           data={itemList}

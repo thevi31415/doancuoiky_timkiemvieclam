@@ -195,7 +195,7 @@ export default function Search() {
       )}
       {showSearchResult && (
         <>
-          <Tab.Navigator style={{ flex: 1, marginTop: 14 }}>
+          <Tab.Navigator style={{ flex: 1 }}>
             <Tab.Screen name="All" component={ResultSearchCompaniesStackNav} />
 
             <Tab.Screen name="Job">
