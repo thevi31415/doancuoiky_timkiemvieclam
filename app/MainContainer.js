@@ -1,71 +1,72 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
-import Constants from "expo-constants";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Ionicons } from "@expo/vector-icons";
+import React from "react";
 import Home from "./pages/Home";
-import Companies from "./pages/Companies";
+import Login from "./pages/Login";
 import Notification from "./pages/Notification";
+
+import { Entypo } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import Companies from "./pages/Companies";
 import Account from "./pages/Account";
 import HomeScreenStackNav from "./pages/HomeScreenStackNav";
 const Tab = createBottomTabNavigator();
-
-export default function MainContainer() {
+export default function MainComponent() {
   return (
-    <View style={styles.container}>
-      <StatusBar style="auto" />
-      <NavigationContainer>
-        <Tab.Navigator
-          screenOptions={{
-            headerShown: false,
+    <NavigationContainer>
+      <Tab.Navigator
+        screenOptions={{
+          tabBarActiveTintColor: "red",
+          headerShown: false,
+        }}
+      >
+        <Tab.Screen
+          name="Home"
+          component={HomeScreenStackNav}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <Entypo name="home" size={size} color={color} />
+            ),
           }}
-        >
-          <Tab.Screen
-            name="home-nav"
-            component={HomeScreenStackNav}
-            options={{
-              tabBarIcon: ({ color, size }) => (
-                <Ionicons name="home" size={size} color={color} />
-              ),
-            }}
-          ></Tab.Screen>
-          <Tab.Screen
-            name="Companies"
-            component={Companies}
-            options={{
-              tabBarIcon: ({ color, size }) => (
-                <Ionicons name="business" size={size} color={color} />
-              ),
-            }}
-          ></Tab.Screen>
-          <Tab.Screen
-            name="Notification"
-            component={Notification}
-            options={{
-              tabBarIcon: ({ color, size }) => (
-                <Ionicons name="notifications" size={size} color={color} />
-              ),
-            }}
-          ></Tab.Screen>
-          <Tab.Screen
-            name="  Account"
-            component={Account}
-            options={{
-              tabBarIcon: ({ color, size }) => (
-                <Ionicons name="person" size={size} color={color} />
-              ),
-            }}
-          ></Tab.Screen>
-        </Tab.Navigator>
-      </NavigationContainer>
-    </View>
+        />
+        <Tab.Screen
+          name="Companies"
+          component={Companies}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <FontAwesome name="cog" size={size} color={color} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Notification"
+          component={Notification}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <FontAwesome name="cog" size={size} color={color} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Account"
+          component={Account}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons name="person" size={size} color={color} />
+            ),
+          }}
+        />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: Constants.statusBarHeight,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

@@ -4,7 +4,7 @@ import React from "react";
 export default function Companies() {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text> Companies</Text>
+      <Text>Company Name</Text>
     </View>
   );
 }

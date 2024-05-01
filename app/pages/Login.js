@@ -2,23 +2,16 @@ import React from "react";
 import * as WebBrowser from "expo-web-browser";
 import { useWarmUpBrowser } from "../../hooks/useWarmUpBrowser";
 import { useOAuth } from "@clerk/clerk-expo";
-import Ionicons from "@expo/vector-icons/Ionicons";
 import {
   Text,
   View,
   Image,
   TouchableOpacity,
   ImageBackground,
-  Dimensions,
-  Spacing,
-  FontSize,
   StyleSheet,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-
 WebBrowser.maybeCompleteAuthSession();
-const { height } = Dimensions.get("window");
-export default function LoginScreen() {
+export default function Login() {
   useWarmUpBrowser();
 
   const { startOAuthFlow } = useOAuth({ strategy: "oauth_google" });

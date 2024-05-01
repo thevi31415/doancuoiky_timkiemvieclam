@@ -1,24 +1,14 @@
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  ScrollView,
-  Image,
-  ImageBackground,
-  StyleSheet,
-  FlatList,
-} from "react-native";
-
 import React from "react";
-import Ionicons from "@expo/vector-icons/Ionicons";
+import { View, Text, FlatList, TouchableOpacity, Image } from "react-native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
-const navigation = useNavigation();
+export default function ResultSearchCompanies({ itemList }) {
+  const navigation = useNavigation();
 
-export default function ResultSearchCompanies({ listItem }) {
   return (
-    <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
+    <View style={{ flex: 1 }}>
       <View
         style={{
           flex: 1,
@@ -34,7 +24,7 @@ export default function ResultSearchCompanies({ listItem }) {
         </Text> */}
         <FlatList
           showsVerticalScrollIndicator={false}
-          data={listItem}
+          data={itemList}
           renderItem={({ item }) => (
             <TouchableOpacity
               onPress={() =>
@@ -43,22 +33,18 @@ export default function ResultSearchCompanies({ listItem }) {
                 })
               }
               style={{
-                flexDirection: "row",
                 borderBottomWidth: 1,
-                flexDirection: "row",
                 borderBottomColor: "#F5F6F6",
               }}
             >
               {/* <CompaniesItem item={item} /> */}
               <View
-                style={[
-                  {
-                    marginVertical: 16,
-                    marginHorizontal: 25,
-                    flexDirection: "row",
-                    alignItems: "center",
-                  },
-                ]}
+                style={{
+                  marginVertical: 16,
+                  marginHorizontal: 25,
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
               >
                 <Image
                   source={{ uri: item?.Logo }}
@@ -140,6 +126,6 @@ export default function ResultSearchCompanies({ listItem }) {
           keyExtractor={(item) => item.ID}
         />
       </View>
-    </ScrollView>
+    </View>
   );
 }

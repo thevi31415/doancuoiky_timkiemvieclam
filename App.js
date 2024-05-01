@@ -1,9 +1,10 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
-import MainContainer from "./app/MainContainer";
-import Login from "./app/pages/Login";
 import { ClerkProvider, SignedIn, SignedOut } from "@clerk/clerk-expo";
 import { LogBox } from "react-native";
+import MainComponent from "./app/MainContainer";
+import Login from "./app/pages/Login";
+
 LogBox.ignoreAllLogs();
 export default function App() {
   return (
@@ -11,11 +12,11 @@ export default function App() {
       <View className="flex-1  bg-white">
         <StatusBar style="auto" />
         <SignedIn>
-          <MainContainer />
+          <MainComponent />
         </SignedIn>
         <SignedOut>
+          {/* <Text>DX</Text> */}
           <Login />
-          {/* <MainContainer /> */}
         </SignedOut>
       </View>
     </ClerkProvider>

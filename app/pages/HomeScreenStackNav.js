@@ -2,13 +2,11 @@ import { View, Text } from "react-native";
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from "./Home";
-import CompaniesDetail from "./CompanyDetail";
-import Account from "./Account";
 import Search from "./Search";
-
-const Stack = createStackNavigator();
+import CompaniesDetail from "./CompanyDetail";
 
 export default function HomeScreenStackNav() {
+  const Stack = createStackNavigator();
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -18,7 +16,6 @@ export default function HomeScreenStackNav() {
           headerShown: false,
         }}
       />
-
       <Stack.Screen
         name="company-detail"
         component={CompaniesDetail}

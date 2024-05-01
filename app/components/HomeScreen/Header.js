@@ -98,7 +98,7 @@ export default function Header() {
               flexDirection: "row",
               justifyContent: "space-between",
               alignItems: "center",
-              marginTop: 10,
+              marginTop: 30,
             }}
           >
             <View className="flex flex-row items-center gap-2">
