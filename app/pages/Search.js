@@ -31,10 +31,10 @@ import BottomSheet, { BottomSheetMethods } from "@devvie/bottom-sheet";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { MaterialIcons } from "@expo/vector-icons";
 const LocationData = [
-  { label: "All locations", value: "1" },
-  { label: "Hồ Chí Minh", value: "2" },
-  { label: "Hà Nội", value: "3" },
-  { label: "Đà Nẵng", value: "4" },
+  { label: "All locations", value: "" },
+  { label: "Hồ Chí Minh", value: "Ho Chi Minh" },
+  { label: "Hà Nội", value: "Ha Noi" },
+  { label: "Đà Nẵng", value: "Da Nang" },
 ];
 const SalaryData = [
   { label: "Tất cả", value: "1" },
@@ -54,12 +54,15 @@ export default function Search() {
   const [showHints, setShowHints] = useState(true);
   const [searchResult, setSearchResult] = useState([]);
   const [searchResultJob, setSearchResultJob] = useState([]);
-
   const [showSearchResult, setShowSearchResult] = useState(false);
   const [init, setInit] = useState(true);
-
+  const [filter, setFilter] = useState(false);
   const [status, setStatus] = React.useState(false);
+  const [valueLocation, setValueLocation] = useState("");
+  const [valueSalary, setValueSalary] = useState("");
 
+  const [searchLocation, setSearchLocation] = useState("");
+  const [isFocus, setIsFocus] = useState(false);
   useEffect(() => {
     if (init) {
       fetchDataHint();
@@ -144,6 +147,34 @@ export default function Search() {
 
     console.log("Fetch Results" + showHints + "-" + showSearchResult);
   };
+
+  const fetchSearchResultByFilter = async (nameText, valueLocation) => {
+    try {
+      setSearchText(nameText);
+      const companySnapshot = await getDocs(collection(db, "Company"));
+      const companies = companySnapshot.docs.map((doc) => doc.data());
+      const searchTextWithoutAccents = removeAccents(nameText.toLowerCase());
+      const searchLocationWithoutAccents = removeAccents(
+        valueLocation.toLowerCase()
+      );
+      const searchResult = companies.filter((company) =>
+        removeAccents(company.Name.toLowerCase()).includes(
+          searchTextWithoutAccents
+        )
+      );
+      const searchResultFinal = searchResult.filter((company) =>
+        removeAccents(company.Location.toLowerCase()).includes(
+          searchLocationWithoutAccents
+        )
+      );
+      setSearchResult(searchResultFinal);
+      setShowHints(false);
+      setShowSearchResult(true);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
   const changeSearchTextValue = () => {};
 
   const handleHintPress = (hint) => {
@@ -186,23 +217,11 @@ export default function Search() {
       setStatus(false);
     }, 800);
   };
-
-  //List
-  const [valueLocation, setValueLocation] = useState(null);
-  const [valueSalary, setValueSalary] = useState(null);
-
-  const [isFocus, setIsFocus] = useState(false);
-
-  const renderLabel = () => {
-    if (value || isFocus) {
-      return (
-        <Text style={[styles.label, isFocus && { color: "blue" }]}>
-          Dropdown label
-        </Text>
-      );
-    }
-    return null;
+  const handleSaveChanges = () => {
+    fetchSearchResultByFilter(searchText, valueLocation);
+    closeModal();
   };
+
   return (
     <View className="bg-white" style={{ flex: 1, backgroundColor: "#fff" }}>
       <View
@@ -315,7 +334,7 @@ export default function Search() {
                   maxHeight={300}
                   labelField="label"
                   valueField="value"
-                  placeholder={!isFocus ? "Select item" : "..."}
+                  placeholder={!isFocus ? "All location" : ""}
                   value={valueLocation}
                   onFocus={() => setIsFocus(true)}
                   onBlur={() => setIsFocus(false)}
@@ -346,7 +365,7 @@ export default function Search() {
                   maxHeight={300}
                   labelField="label"
                   valueField="value"
-                  placeholder={!isFocus ? "Select item" : "..."}
+                  placeholder={!isFocus ? "Tất cả" : ""}
                   value={valueSalary}
                   onFocus={() => setIsFocus(true)}
                   onBlur={() => setIsFocus(false)}
@@ -364,7 +383,10 @@ export default function Search() {
                   )}
                 />
 
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={handleSaveChanges}
+                >
                   <Text
                     style={{ fontSize: 18, fontWeight: "bold", color: "white" }}
                   >

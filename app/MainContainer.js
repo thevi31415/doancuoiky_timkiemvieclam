@@ -18,7 +18,7 @@ export default function MainComponent() {
     <NavigationContainer>
       <Tab.Navigator
         screenOptions={{
-          tabBarActiveTintColor: "red",
+          tabBarActiveTintColor: "#2c67f2",
           headerShown: false,
         }}
       >
