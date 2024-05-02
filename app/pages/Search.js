@@ -169,8 +169,8 @@ export default function Search() {
 
   const slideDown = () => {
     Animated.timing(slide, {
-      toValue: 300,
-      duration: 800,
+      toValue: 500,
+      duration: 1000,
       useNativeDriver: true,
     }).start();
   };
