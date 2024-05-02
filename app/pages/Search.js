@@ -10,13 +10,11 @@ import {
   FlatList,
   Animated,
   Modal,
+  Button,
+  Pressable,
 } from "react-native";
-import React, { useState, useEffect } from "react";
-import {
-  BottomSheetModal,
-  BottomSheetView,
-  BottomSheetModalProvider,
-} from "@gorhom/bottom-sheet";
+import React, { useState, useEffect, useRef } from "react";
+import { Dropdown } from "react-native-element-dropdown";
 import { app } from "../../firebaseConfig";
 import { getFirestore } from "firebase/firestore";
 import { collection, getDocs, setDoc, addDoc } from "firebase/firestore";
@@ -29,16 +27,28 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import ResultSearchCompanies from "../components/SearchScreen/ResultSearchCompanies";
 import ResultSearchCompaniesStackNav from "../components/SearchScreen/ResultSearchCompaniesStackNav";
-
+import BottomSheet, { BottomSheetMethods } from "@devvie/bottom-sheet";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import { MaterialIcons } from "@expo/vector-icons";
+const LocationData = [
+  { label: "All locations", value: "1" },
+  { label: "Hồ Chí Minh", value: "2" },
+  { label: "Hà Nội", value: "3" },
+  { label: "Đà Nẵng", value: "4" },
+];
+const SalaryData = [
+  { label: "Tất cả", value: "1" },
+  { label: "Dưới $300", value: "2" },
+  { label: "$300-$500", value: "3" },
+  { label: "$500-$700", value: "4" },
+];
 export default function Search() {
-  const Tab = createMaterialTopTabNavigator();
-  const [isModalVisible, setIsModalVisible] = useState(false);
-
-  const toggleModal = () => {
-    setIsModalVisible(!isModalVisible);
-  };
-
+  //Ket noi voi firebase
   const db = getFirestore(app);
+  //Tab khi hiển thị kết quả tìm kiểm theo All/Job/Company
+  const Tab = createMaterialTopTabNavigator();
+
+  // Noi dung tìm kiem trong search bar
   const [searchText, setSearchText] = useState("");
   const [filteredCompanies, setFilteredCompanies] = useState([]);
   const [showHints, setShowHints] = useState(true);
@@ -47,6 +57,9 @@ export default function Search() {
 
   const [showSearchResult, setShowSearchResult] = useState(false);
   const [init, setInit] = useState(true);
+
+  const [status, setStatus] = React.useState(false);
+
   useEffect(() => {
     if (init) {
       fetchDataHint();
@@ -143,6 +156,53 @@ export default function Search() {
   };
   const navigation = useNavigation();
 
+  //Cua so loc ke qua
+  const slide = React.useRef(new Animated.Value(300)).current;
+
+  const slideUp = () => {
+    Animated.timing(slide, {
+      toValue: 0,
+      duration: 800,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const slideDown = () => {
+    Animated.timing(slide, {
+      toValue: 300,
+      duration: 800,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  React.useEffect(() => {
+    slideUp();
+  });
+
+  const closeModal = () => {
+    slideDown();
+
+    setTimeout(() => {
+      setStatus(false);
+    }, 800);
+  };
+
+  //List
+  const [valueLocation, setValueLocation] = useState(null);
+  const [valueSalary, setValueSalary] = useState(null);
+
+  const [isFocus, setIsFocus] = useState(false);
+
+  const renderLabel = () => {
+    if (value || isFocus) {
+      return (
+        <Text style={[styles.label, isFocus && { color: "blue" }]}>
+          Dropdown label
+        </Text>
+      );
+    }
+    return null;
+  };
   return (
     <View className="bg-white" style={{ flex: 1, backgroundColor: "#fff" }}>
       <View
@@ -179,7 +239,7 @@ export default function Search() {
             value={searchText}
             onChangeText={setSearchText}
           />
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => setStatus(true)}>
             <Ionicons name="filter" size={24} color="#2c67f2" />
           </TouchableOpacity>
         </View>
@@ -229,6 +289,165 @@ export default function Search() {
           </Tab.Navigator>
         </>
       )}
+      {status && (
+        <Pressable onPress={closeModal} style={styles.backdrop}>
+          <Pressable style={{ width: "100%", height: "55%" }}>
+            <Animated.View
+              style={[
+                styles.bottomSheet,
+                { transform: [{ translateY: slide }] },
+              ]}
+            >
+              <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+                Advance Filter
+              </Text>
+              <View style={{ marginTop: 20 }}>
+                <Text style={{ fontSize: 15, marginBottom: 10 }}>Location</Text>
+                <Dropdown
+                  style={[
+                    styles.dropdown,
+                    isFocus && { borderColor: "#2c67f2" },
+                  ]}
+                  placeholderStyle={styles.placeholderStyle}
+                  selectedTextStyle={styles.selectedTextStyle}
+                  iconStyle={styles.iconStyle}
+                  data={LocationData}
+                  maxHeight={300}
+                  labelField="label"
+                  valueField="value"
+                  placeholder={!isFocus ? "Select item" : "..."}
+                  value={valueLocation}
+                  onFocus={() => setIsFocus(true)}
+                  onBlur={() => setIsFocus(false)}
+                  onChange={(item) => {
+                    setValueLocation(item.value);
+                    setIsFocus(false);
+                  }}
+                  renderLeftIcon={() => (
+                    <AntDesign
+                      style={styles.icon}
+                      color={isFocus ? "#2c67f2" : "black"}
+                      name="enviromento"
+                      size={20}
+                    />
+                  )}
+                />
+                <Text style={{ fontSize: 15, marginBottom: 10 }}>Salary</Text>
+
+                <Dropdown
+                  style={[
+                    styles.dropdown,
+                    isFocus && { borderColor: "#2c67f2" },
+                  ]}
+                  placeholderStyle={styles.placeholderStyle}
+                  selectedTextStyle={styles.selectedTextStyle}
+                  iconStyle={styles.iconStyle}
+                  data={SalaryData}
+                  maxHeight={300}
+                  labelField="label"
+                  valueField="value"
+                  placeholder={!isFocus ? "Select item" : "..."}
+                  value={valueSalary}
+                  onFocus={() => setIsFocus(true)}
+                  onBlur={() => setIsFocus(false)}
+                  onChange={(item) => {
+                    setValueSalary(item.value);
+                    setIsFocus(false);
+                  }}
+                  renderLeftIcon={() => (
+                    <MaterialIcons
+                      style={styles.icon}
+                      color={isFocus ? "#2c67f2" : "black"}
+                      name="attach-money"
+                      size={20}
+                    />
+                  )}
+                />
+
+                <TouchableOpacity style={styles.button}>
+                  <Text
+                    style={{ fontSize: 18, fontWeight: "bold", color: "white" }}
+                  >
+                    SAVE CHANGES
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </Animated.View>
+          </Pressable>
+        </Pressable>
+      )}
     </View>
   );
 }
+const styles = StyleSheet.create({
+  backdrop: {
+    position: "absolute",
+    flex: 1,
+    top: 0,
+    left: 0,
+    backgroundColor: "rgba(0,0,0,0.5)",
+    width: "100%",
+    height: "100%",
+    justifyContent: "flex-end",
+  },
+  bottomSheet: {
+    width: "100%",
+    height: "100%",
+    backgroundColor: "white",
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
+    paddingHorizontal: 15,
+    paddingVertical: 20,
+  },
+  input: {
+    width: "100%",
+    height: 40,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#bcbcbc",
+    paddingHorizontal: 15,
+    marginBottom: 10,
+  },
+  button: {
+    paddingHorizontal: 30,
+    paddingVertical: 10,
+    borderRadius: 10,
+    backgroundColor: "#2c67f2",
+    alignItems: "center",
+    marginTop: 15,
+  },
+  dropdown: {
+    height: 50,
+    borderColor: "gray",
+    borderWidth: 0.5,
+    borderRadius: 8,
+    paddingHorizontal: 8,
+    marginBottom: 10,
+  },
+  icon: {
+    marginRight: 5,
+  },
+  label: {
+    position: "absolute",
+    backgroundColor: "white",
+    left: 22,
+    top: 8,
+    zIndex: 999,
+    paddingHorizontal: 8,
+    fontSize: 14,
+  },
+  placeholderStyle: {
+    fontSize: 16,
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
+  },
+});
