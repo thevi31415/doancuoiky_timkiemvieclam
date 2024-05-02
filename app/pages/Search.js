@@ -221,6 +221,10 @@ export default function Search() {
     fetchSearchResultByFilter(searchText, valueLocation);
     closeModal();
   };
+  const handleResetFilter = () => {
+    setValueLocation("");
+    setValueSalary("");
+  };
 
   return (
     <View className="bg-white" style={{ flex: 1, backgroundColor: "#fff" }}>
@@ -321,7 +325,11 @@ export default function Search() {
                 Advance Filter
               </Text>
               <View style={{ marginTop: 20 }}>
-                <Text style={{ fontSize: 15, marginBottom: 10 }}>Location</Text>
+                <Text
+                  style={{ fontSize: 15, marginBottom: 10, color: "#b8b8b8" }}
+                >
+                  Location
+                </Text>
                 <Dropdown
                   style={[
                     styles.dropdown,
@@ -345,13 +353,17 @@ export default function Search() {
                   renderLeftIcon={() => (
                     <AntDesign
                       style={styles.icon}
-                      color={isFocus ? "#2c67f2" : "black"}
+                      color={isFocus ? "#2c67f2" : "#8f8f8f"}
                       name="enviromento"
                       size={20}
                     />
                   )}
                 />
-                <Text style={{ fontSize: 15, marginBottom: 10 }}>Salary</Text>
+                <Text
+                  style={{ fontSize: 15, marginBottom: 10, color: "#b8b8b8" }}
+                >
+                  Salary
+                </Text>
 
                 <Dropdown
                   style={[
@@ -376,7 +388,7 @@ export default function Search() {
                   renderLeftIcon={() => (
                     <MaterialIcons
                       style={styles.icon}
-                      color={isFocus ? "#2c67f2" : "black"}
+                      color={isFocus ? "#2c67f2" : "#8f8f8f"}
                       name="attach-money"
                       size={20}
                     />
@@ -391,6 +403,29 @@ export default function Search() {
                     style={{ fontSize: 18, fontWeight: "bold", color: "white" }}
                   >
                     SAVE CHANGES
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{
+                    paddingHorizontal: 30,
+                    paddingVertical: 10,
+                    borderRadius: 10,
+                    backgroundColor: "white",
+                    alignItems: "center",
+                    marginTop: 15,
+                    borderWidth: 1,
+                    borderColor: "#b8b8b8",
+                  }}
+                  onPress={handleResetFilter}
+                >
+                  <Text
+                    style={{
+                      fontSize: 18,
+                      fontWeight: "bold",
+                      color: "#666666",
+                    }}
+                  >
+                    RESET FILTER
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -440,8 +475,8 @@ const styles = StyleSheet.create({
   },
   dropdown: {
     height: 50,
-    borderColor: "gray",
-    borderWidth: 0.5,
+    borderColor: "#b8b8b8",
+    borderWidth: 1,
     borderRadius: 8,
     paddingHorizontal: 8,
     marginBottom: 10,
