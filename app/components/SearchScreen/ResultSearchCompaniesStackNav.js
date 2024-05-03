@@ -4,31 +4,25 @@ import { createStackNavigator } from "@react-navigation/stack";
 import ResultSearchCompanies from "./ResultSearchCompanies";
 import CompaniesDetail from "../../pages/CompanyDetail";
 
-export default function ResultSearchCompaniesStackNav({ itemList }) {
+export default function ResultSearchCompaniesStackNav({
+  itemList,
+  filterLocation,
+}) {
   const Stack = createStackNavigator();
   useEffect(() => {
     console.log("Stact", itemList);
+    console.log("Searchxx: ", filterLocation);
   }, [itemList]);
   return (
-    // <Stack.Navigator>
-    //   <Stack.Screen name="home" options={{ headerShown: false }}>
-    //     {(props) => <ResultSearchCompanies {...props} itemList={itemList} />}
-    //   </Stack.Screen>
-    //   <Stack.Screen
-    //     name="company-detail"
-    //     component={CompaniesDetail}
-    //     options={{
-    //       headerStyle: {
-    //         backgroundColor: "#2c67f2",
-    //       },
-    //       headerTintColor: "#fff",
-    //       headerTitle: "Detail",
-    //     }}
-    //   />
-    // </Stack.Navigator>
     <Stack.Navigator mode="modal" headerMode="none">
       <Stack.Screen name="home">
-        {(props) => <ResultSearchCompanies {...props} itemList={itemList} />}
+        {(props) => (
+          <ResultSearchCompanies
+            {...props}
+            itemList={itemList}
+            filterLocation={filterLocation}
+          />
+        )}
       </Stack.Screen>
       <Stack.Screen
         name="company-detail"

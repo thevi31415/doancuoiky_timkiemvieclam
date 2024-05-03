@@ -30,11 +30,13 @@ import ResultSearchCompaniesStackNav from "../components/SearchScreen/ResultSear
 import BottomSheet, { BottomSheetMethods } from "@devvie/bottom-sheet";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { MaterialIcons } from "@expo/vector-icons";
+import ResultSearchAll from "../components/SearchScreen/ResultSearchAll";
+import ResultSearchJob from "../components/SearchScreen/ResultSearchJob";
 const LocationData = [
   { label: "All locations", value: "" },
-  { label: "Hồ Chí Minh", value: "Ho Chi Minh" },
-  { label: "Hà Nội", value: "Ha Noi" },
-  { label: "Đà Nẵng", value: "Da Nang" },
+  { label: "Hồ Chí Minh", value: "Hồ Chí Minh" },
+  { label: "Hà Nội", value: "Hà Nội" },
+  { label: "Đà Nẵng", value: "Đã Nẵng" },
 ];
 const SalaryData = [
   { label: "Tất cả", value: "1" },
@@ -148,7 +150,7 @@ export default function Search() {
     console.log("Fetch Results" + showHints + "-" + showSearchResult);
   };
 
-  const fetchSearchResultByFilter = async (nameText, valueLocation) => {
+  const fetchSearchCompanyResultByFilter = async (nameText, valueLocation) => {
     try {
       setSearchText(nameText);
       const companySnapshot = await getDocs(collection(db, "Company"));
@@ -182,7 +184,8 @@ export default function Search() {
     console.log("Hint presss:" + showHints + "-" + showSearchResult);
   };
   const handleSearchIconPress = () => {
-    fetchSearchResultByName(searchText);
+    fetchSearchCompanyResultByFilter(searchText, valueLocation);
+
     fetchSearchResultJobByName(searchText);
   };
   const navigation = useNavigation();
@@ -218,7 +221,7 @@ export default function Search() {
     }, 800);
   };
   const handleSaveChanges = () => {
-    fetchSearchResultByFilter(searchText, valueLocation);
+    fetchSearchCompanyResultByFilter(searchText, valueLocation);
     closeModal();
   };
   const handleResetFilter = () => {
@@ -289,6 +292,9 @@ export default function Search() {
             )}
             keyExtractor={(item) => item.ID}
           />
+          <View>
+            <Text>Tìm kiếm</Text>
+          </View>
         </>
       )}
       {showSearchResult && (
@@ -299,15 +305,16 @@ export default function Search() {
               tabBarActiveTintColor: "#2c67f2",
             }}
           >
-            <Tab.Screen name="All" component={ResultSearchCompaniesStackNav} />
+            <Tab.Screen name="All" component={ResultSearchAll} />
 
-            <Tab.Screen name="Job">
-              {() => (
-                <ResultSearchCompaniesStackNav itemList={searchResultJob} />
-              )}
-            </Tab.Screen>
+            <Tab.Screen name="Job" component={ResultSearchJob} />
             <Tab.Screen name="Companies">
-              {() => <ResultSearchCompaniesStackNav itemList={searchResult} />}
+              {() => (
+                <ResultSearchCompaniesStackNav
+                  itemList={searchResult}
+                  filterLocation={valueLocation}
+                />
+              )}
             </Tab.Screen>
           </Tab.Navigator>
         </>
