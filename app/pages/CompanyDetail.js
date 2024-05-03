@@ -30,16 +30,19 @@ export default function CompaniesDetail() {
                 resizeMode: "cover",
               }}
             />
-            <Image
-              source={{ uri: company.Logo }}
-              className="h-[120px] w-[120px]"
-              style={{
-                position: "absolute",
-                borderRadius: 20,
-                alignSelf: "center",
-                bottom: -35,
-              }}
-            />
+            <View style={{ padding: 10 }}>
+              <Image
+                source={{ uri: company.Logo }}
+                className="h-[100px] w-[100px] "
+                style={{
+                  position: "absolute",
+                  borderRadius: 20,
+                  alignSelf: "center",
+                  padding: 10,
+                  bottom: -35,
+                }}
+              />
+            </View>
           </View>
           <View
             style={{

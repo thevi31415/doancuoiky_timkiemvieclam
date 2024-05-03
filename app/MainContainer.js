@@ -23,7 +23,7 @@ export default function MainComponent() {
         }}
       >
         <Tab.Screen
-          name="Home"
+          name="Trang chủ"
           component={HomeScreenStackNav}
           options={{
             tabBarIcon: ({ color, size }) => (
@@ -32,25 +32,25 @@ export default function MainComponent() {
           }}
         />
         <Tab.Screen
-          name="Companies"
+          name="Hồ sơ"
           component={Companies}
           options={{
             tabBarIcon: ({ color, size }) => (
-              <FontAwesome name="cog" size={size} color={color} />
+              <Ionicons name="clipboard" size={size} color={color} />
             ),
           }}
         />
         <Tab.Screen
-          name="Notification"
+          name="Thông Báo"
           component={Notification}
           options={{
             tabBarIcon: ({ color, size }) => (
-              <FontAwesome name="cog" size={size} color={color} />
+              <Ionicons name="notifications" size={size} color={color} />
             ),
           }}
         />
         <Tab.Screen
-          name="Account"
+          name="Tài Khoản"
           component={Account}
           options={{
             tabBarIcon: ({ color, size }) => (

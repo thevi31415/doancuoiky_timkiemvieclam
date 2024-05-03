@@ -292,9 +292,6 @@ export default function Search() {
             )}
             keyExtractor={(item) => item.ID}
           />
-          <View>
-            <Text>Tìm kiếm</Text>
-          </View>
         </>
       )}
       {showSearchResult && (
