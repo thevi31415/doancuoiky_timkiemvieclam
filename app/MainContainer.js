@@ -12,6 +12,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Companies from "./pages/Companies";
 import Account from "./pages/Account";
 import HomeScreenStackNav from "./pages/HomeScreenStackNav";
+import CV from "./pages/CV";
 const Tab = createBottomTabNavigator();
 export default function MainComponent() {
   return (
@@ -33,7 +34,7 @@ export default function MainComponent() {
         />
         <Tab.Screen
           name="Hồ sơ"
-          component={Companies}
+          component={CV}
           options={{
             tabBarIcon: ({ color, size }) => (
               <Ionicons name="clipboard" size={size} color={color} />
