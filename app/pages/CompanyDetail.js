@@ -5,6 +5,8 @@ import {
   TouchableOpacity,
   Dimensions,
   Linking,
+  Button,
+  TextInput,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
@@ -13,7 +15,11 @@ import { useRoute } from "@react-navigation/native";
 import { ScrollView } from "react-native-gesture-handler";
 import { Card } from "react-native-shadow-cards";
 import AntDesign from "@expo/vector-icons/AntDesign";
-export default function CompaniesDetail() {
+import { useNavigation } from "@react-navigation/native";
+
+export default function CompaniesDetail({ checkNav }) {
+  const navigation = useNavigation();
+
   const { params } = useRoute();
   const [company, setCompany] = useState([]);
   useEffect(() => {
@@ -21,8 +27,50 @@ export default function CompaniesDetail() {
     params && setCompany(params.company);
   }, [params]);
   const { width, height } = Dimensions.get("window");
+  console.log("Check Nav" + checkNav);
   return (
     <>
+      {/* <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "center",
+          marginTop: 40,
+          padding: 15,
+          backgroundColor: "white",
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={{ position: "absolute", left: 20 }} // Icon ở bên trái
+        >
+          <Ionicons name="arrow-back-outline" size={32} color="#2c67f2" />
+        </TouchableOpacity>
+        <Text style={{ fontSize: 20, fontWeight: "bold" }}>Detail Company</Text>
+      </View> */}
+      {checkNav && (
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center",
+            marginTop: 40,
+            padding: 13,
+            backgroundColor: "white",
+          }}
+        >
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            style={{ position: "absolute", left: 20 }} // Icon ở bên trái
+          >
+            <Ionicons name="arrow-back-outline" size={30} color="#2c67f2" />
+          </TouchableOpacity>
+          <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+            Detail Company
+          </Text>
+        </View>
+      )}
+
       <ScrollView>
         <View
           style={{
@@ -32,7 +80,7 @@ export default function CompaniesDetail() {
         >
           <Card
             style={{
-              borderRadius: 10,
+              borderRadius: 20,
               width: "full",
             }}
           >

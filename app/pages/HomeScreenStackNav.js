@@ -18,15 +18,18 @@ export default function HomeScreenStackNav() {
       />
       <Stack.Screen
         name="company-detail"
-        component={CompaniesDetail}
         options={{
           headerStyle: {
             backgroundColor: "#2c67f2",
           },
           headerTintColor: "#fff",
-          headerTitle: "Detail",
+          headerTitle: "Search",
+          headerShown: false,
         }}
-      />
+      >
+        {(props) => <CompaniesDetail {...props} checkNav={true} />}
+      </Stack.Screen>
+
       <Stack.Screen
         name="search-detail"
         component={Search}
