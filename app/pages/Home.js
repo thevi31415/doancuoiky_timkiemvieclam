@@ -16,10 +16,16 @@ export default function Home() {
   const db = getFirestore(app);
 
   const [topCompanyList, setTopCompanyList] = useState([]);
+  const [lastJobList, setLastJobList] = useState([]);
+
   const fetchData = async () => {
     const companySnapshot = await getDocs(collection(db, "Company"));
     const companies = companySnapshot.docs.map((doc) => doc.data());
     setTopCompanyList(companies);
+
+    const lastJobSnapshot = await getDocs(collection(db, "Jobs"));
+    const job = lastJobSnapshot.docs.map((doc) => doc.data());
+    setLastJobList(job);
   };
 
   useEffect(() => {
@@ -39,7 +45,7 @@ export default function Home() {
         <TypeJob />
         <Slider />
         <TopCompany topCompanyList={topCompanyList} />
-        <LastJob />
+        <LastJob lastJobsList={lastJobList} />
       </ScrollView>
     </View>
   );
