@@ -134,6 +134,31 @@ export default function CompaniesDetail({ checkNav }) {
               >
                 "{company?.Slogan}"
               </Text>
+              <TouchableOpacity
+                style={{
+                  paddingHorizontal: 30,
+                  paddingVertical: 10,
+                  borderRadius: 10,
+                  backgroundColor: "white",
+                  flexDirection: "row", // Thêm thuộc tính flexDirection: "row" để hiển thị icon và chữ trên cùng một hàng
+                  alignItems: "center",
+                  marginTop: 15,
+                  borderColor: "#2c67f2",
+                  borderWidth: 1,
+                }}
+              >
+                <AntDesign name="bells" size={24} color="#2c67f2" />
+                <Text
+                  style={{
+                    fontSize: 15,
+                    fontWeight: "bold",
+                    color: "#2c67f2",
+                    marginLeft: 6,
+                  }}
+                >
+                  FOLLOW
+                </Text>
+              </TouchableOpacity>
               <View
                 style={{ margin: 10, padding: 5, marginBottom: 20 }}
                 className="bg-blue-100  text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400"
