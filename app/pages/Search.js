@@ -130,7 +130,7 @@ export default function Search() {
 
     console.log("Fetch Results" + showHints + "-" + showSearchResult);
   };
-  const fetchSearchResultJobByName = async (nameText) => {
+  const fetchSearchJobResultByFilter = async (nameText, valueLocation) => {
     try {
       setSearchText(nameText);
       const jobSnapshot = await getDocs(collection(db, "Jobs"));
@@ -186,7 +186,7 @@ export default function Search() {
   const handleSearchIconPress = () => {
     fetchSearchCompanyResultByFilter(searchText, valueLocation);
 
-    fetchSearchResultJobByName(searchText);
+    fetchSearchJobResultByFilter(searchText, valueLocation);
   };
   const navigation = useNavigation();
 
@@ -304,7 +304,10 @@ export default function Search() {
           >
             <Tab.Screen name="All" component={ResultSearchAll} />
 
-            <Tab.Screen name="Job" component={ResultSearchJob} />
+            {/* <Tab.Screen name="Job" component={ResultSearchJob} /> */}
+            <Tab.Screen name="Job">
+              {() => <ResultSearchJob itemList={searchResult} />}
+            </Tab.Screen>
             <Tab.Screen name="Companies">
               {() => (
                 <ResultSearchCompaniesStackNav

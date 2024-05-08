@@ -97,7 +97,7 @@ export default function JobItem({ job }) {
               marginLeft: 8,
             }}
           >
-            {job?.Experience} {""} Kinh nghiệm
+            {job?.Experience} Kinh nghiệm
           </Text>
         </View>
         <View
@@ -131,10 +131,10 @@ export default function JobItem({ job }) {
               style={{ marginTop: 10, padding: 5 }}
               className="bg-blue-100  text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400"
             >
-              <Text> Công nghệ </Text>
+              <Text>{job?.TypeJob}</Text>
             </View>
           </View>
-          <Text style={{ marginTop: 10 }}>2 ngày trước</Text>
+          <Text style={{ marginTop: 10 }}>{job?.DateCreated}</Text>
         </View>
       </View>
     </TouchableOpacity>

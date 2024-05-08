@@ -15,17 +15,22 @@ import JobItem from "./JobItem";
 export default function LastJob({ lastJobsList }) {
   return (
     <View style={{ flex: 0.82, padding: 16 }}>
-      <Text
-        style={{
-          marginVertical: 0,
-          fontSize: 20,
-          fontWeight: "600",
-          marginBottom: 20,
-          color: "#2c67f2",
-        }}
+      <View
+        style={{ flexDirection: "row", alignItems: "center", marginBottom: 15 }}
       >
-        Công việc mới nhất
-      </Text>
+        <Text
+          style={{
+            marginVertical: 0,
+            fontSize: 18,
+            fontWeight: "600",
+            color: "black",
+            flex: 1,
+          }}
+        >
+          Công việc mới nhất
+        </Text>
+        <Text style={{ marginLeft: "auto", color: "#2c67f2" }}>View More</Text>
+      </View>
 
       <ScrollView showsVerticalScrollIndicator={false}>
         <FlatList

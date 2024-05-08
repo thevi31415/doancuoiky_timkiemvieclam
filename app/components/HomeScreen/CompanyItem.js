@@ -8,12 +8,12 @@ export default function CompaniesItem({ item }) {
     <TouchableOpacity
       style={{
         backgroundColor: "#ffff",
-
         borderRadius: 16,
-        borderWidth: 1.5,
+        borderWidth: 2,
+        borderLeftWidth: 8,
         borderColor: "#2c67f2",
         width: 300,
-        padding: 10,
+        padding: 16,
         marginRight: 16,
         shadowColor: "#000",
         shadowRadius: 4,
@@ -44,7 +44,7 @@ export default function CompaniesItem({ item }) {
         >
           <Image
             source={{ uri: item?.Logo }}
-            style={{ width: 40, height: 40, borderRadius: 5 }}
+            style={{ width: 45, height: 45, borderRadius: 5 }}
           />
           <View style={{ marginLeft: 8 }}>
             <Text

@@ -14,17 +14,23 @@ import { Card } from "react-native-shadow-cards";
 export default function TopCompany({ topCompanyList }) {
   return (
     <View style={{ flex: 0.82, padding: 16, justifyContent: "center" }}>
-      <Text
-        style={{
-          marginVertical: 0,
-          fontSize: 20,
-          fontWeight: "600",
-          marginBottom: 16,
-          color: "#2c67f2",
-        }}
+      <View
+        style={{ flexDirection: "row", alignItems: "center", marginBottom: 5 }}
       >
-        Top công ty hàng đầu
-      </Text>
+        <Text
+          style={{
+            marginVertical: 0,
+            fontSize: 18,
+            fontWeight: "600",
+            color: "black",
+            flex: 1,
+          }}
+        >
+          Top công ty hàng đầu
+        </Text>
+        <Text style={{ marginLeft: "auto", color: "#2c67f2" }}>View More</Text>
+      </View>
+
       <View
         style={{
           height: 200,
