@@ -341,10 +341,12 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     padding: 12,
-    backgroundColor: "#FFF",
+    backgroundColor: "#fffff",
     justifyContent: "space-between",
     alignItems: "center",
     flexDirection: "row",
+    borderTopWidth: 1,
+    borderTopColor: "#e1e1e2",
   },
   likeBtn: {
     width: 55,
