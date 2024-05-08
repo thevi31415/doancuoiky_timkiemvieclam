@@ -3,6 +3,7 @@ import { View, Text, FlatList, TouchableOpacity, Image } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import AntDesign from "@expo/vector-icons/AntDesign";
 
 export default function ResultSearchCompanies({ itemList, filterLocation }) {
   const navigation = useNavigation();
@@ -104,54 +105,69 @@ export default function ResultSearchCompanies({ itemList, filterLocation }) {
                     >
                       {item?.Name}
                     </Text>
-                    <TouchableOpacity onPress={() => {}}>
-                      <Text
-                        style={{
-                          fontSize: 16,
-                          color: "lightgray",
-                          fontWeight: "bold",
-                          marginTop: 3,
-                        }}
-                      >
-                        {item?.Name}
-                      </Text>
-                    </TouchableOpacity>
-                    <Text
+
+                    <View
                       style={{
-                        fontSize: 14,
-                        color: "gray",
-                        marginTop: 3,
+                        flexDirection: "row",
+                        alignItems: "center",
+
+                        marginTop: 7,
                       }}
                     >
-                      {item?.Location}
-                    </Text>
-                    {item.hasSchoolAlumni ? (
-                      <View style={Styles.flexCenter}>
-                        <Image
-                          source={Images.LOGOS.UNIVERSITY}
-                          style={{
-                            height: 25,
-                            width: 25,
-                            marginVertical: 5,
-                          }}
-                        />
-                        <Text
-                          style={{
-                            fontSize: 13,
-                            color: "gray",
-                            marginLeft: 10,
-                          }}
-                        >
-                          {item.alumniCount} School Alumni
-                        </Text>
-                      </View>
-                    ) : null}
+                      <Ionicons
+                        name="location-outline"
+                        size={20}
+                        color="#8f8f8f"
+                      />
 
-                    <Text style={{ fontSize: 13, color: "gray" }}>
-                      {item.daysAgo}
-                      {item.daysAgo > 1 ? " days " : " day "}
-                      Ago
-                    </Text>
+                      <Text
+                        numberOfLines={4}
+                        style={{
+                          color: "gray",
+                          fontSize: 13,
+                          marginLeft: 4,
+                        }}
+                      >
+                        {item?.Location}
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        marginTop: 4,
+                        marginLeft: 3,
+                      }}
+                    >
+                      <AntDesign name="team" size={16} color="#8f8f8f" />
+                      <Text
+                        style={{
+                          color: "gray",
+                          fontSize: 13,
+                          marginLeft: 4,
+                        }}
+                      >
+                        {item?.Employee}
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        marginTop: 4,
+                      }}
+                    >
+                      <Ionicons name="bag-outline" size={20} color="#8f8f8f" />
+                      <Text
+                        style={{
+                          color: "gray",
+                          fontSize: 13,
+                          marginLeft: 4,
+                        }}
+                      >
+                        {item?.Job} jobs
+                      </Text>
+                    </View>
                   </View>
                   <TouchableOpacity onPress={() => {}}>
                     <Ionicons

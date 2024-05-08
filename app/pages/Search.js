@@ -55,7 +55,11 @@ export default function Search() {
   const [filteredCompanies, setFilteredCompanies] = useState([]);
   const [showHints, setShowHints] = useState(true);
   const [searchResult, setSearchResult] = useState([]);
+
+  //Luu ket qua tim kim List
   const [searchResultJob, setSearchResultJob] = useState([]);
+  const [searchResultCompany, setSearchResultCompany] = useState([]);
+
   const [showSearchResult, setShowSearchResult] = useState(false);
   const [init, setInit] = useState(true);
   const [filter, setFilter] = useState(false);
@@ -109,48 +113,7 @@ export default function Search() {
     console.log("Fetch Hint" + showHints + "-" + showSearchResult);
   };
 
-  const fetchSearchResultByName = async (nameText) => {
-    try {
-      setSearchText(nameText);
-      const companySnapshot = await getDocs(collection(db, "Company"));
-      const companies = companySnapshot.docs.map((doc) => doc.data());
-      const searchTextWithoutAccents = removeAccents(nameText.toLowerCase());
-      const searchResult = companies.filter((company) =>
-        removeAccents(company.Name.toLowerCase()).includes(
-          searchTextWithoutAccents
-        )
-      );
-      setSearchResult(searchResult);
-      setShowHints(false);
-      setShowSearchResult(true);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-    console.log("Result: " + init);
-
-    console.log("Fetch Results" + showHints + "-" + showSearchResult);
-  };
-  const fetchSearchJobResultByFilter = async (nameText, valueLocation) => {
-    try {
-      setSearchText(nameText);
-      const jobSnapshot = await getDocs(collection(db, "Jobs"));
-      const jobs = jobSnapshot.docs.map((doc) => doc.data());
-      const searchTextWithoutAccents = removeAccents(nameText.toLowerCase());
-      const searchResultJob = jobs.filter((job) =>
-        removeAccents(job.Name.toLowerCase()).includes(searchTextWithoutAccents)
-      );
-      setSearchResultJob(searchResultJob);
-      setShowHints(false);
-      setShowSearchResult(true);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-    console.log("Result: " + init);
-
-    console.log("Fetch Results" + showHints + "-" + showSearchResult);
-  };
-
-  const fetchSearchCompanyResultByFilter = async (nameText, valueLocation) => {
+  const fetchSearchCompanyResult = async (nameText, valueLocation) => {
     try {
       setSearchText(nameText);
       const companySnapshot = await getDocs(collection(db, "Company"));
@@ -169,7 +132,36 @@ export default function Search() {
           searchLocationWithoutAccents
         )
       );
-      setSearchResult(searchResultFinal);
+      setSearchResultCompany(searchResultFinal);
+      setShowHints(false);
+      setShowSearchResult(true);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+  const fetchSearchJobResult = async (nameText, valueLocation) => {
+    try {
+      setSearchText(nameText);
+      const jobSnapshot = await getDocs(collection(db, "Jobs"));
+      const jobs = jobSnapshot.docs.map((doc) => doc.data());
+      const searchTextWithoutAccents = removeAccents(nameText.toLowerCase());
+      const searchLocationWithoutAccents = removeAccents(
+        valueLocation.toLowerCase()
+      );
+
+      const searchResult = jobs.filter((job) => {
+        const nameJobLower = removeAccents(job.NameJob.toLowerCase());
+        const nameCompanyLower = removeAccents(job.NameCompany.toLowerCase());
+        const locationJobLower = removeAccents(job.LocationJob.toLowerCase());
+
+        return (
+          (nameJobLower.includes(searchTextWithoutAccents) ||
+            nameCompanyLower.includes(searchTextWithoutAccents)) &&
+          locationJobLower.includes(searchLocationWithoutAccents)
+        );
+      });
+
+      setSearchResultJob(searchResult);
       setShowHints(false);
       setShowSearchResult(true);
     } catch (error) {
@@ -177,16 +169,17 @@ export default function Search() {
     }
   };
 
-  const changeSearchTextValue = () => {};
-
   const handleHintPress = (hint) => {
-    fetchSearchResultByName(hint.Name);
+    // fetchSearchResultByName(hint.Name);
+    fetchSearchCompanyResult(hint.Name, valueLocation);
+    fetchSearchJobResult(hint.Name, valueLocation);
+
     console.log("Hint presss:" + showHints + "-" + showSearchResult);
   };
   const handleSearchIconPress = () => {
-    fetchSearchCompanyResultByFilter(searchText, valueLocation);
-
-    fetchSearchJobResultByFilter(searchText, valueLocation);
+    // fetchSearchCompanyResultByFilter(searchText, valueLocation);
+    fetchSearchCompanyResult(searchText, valueLocation);
+    fetchSearchJobResult(searchText, valueLocation);
   };
   const navigation = useNavigation();
 
@@ -221,7 +214,9 @@ export default function Search() {
     }, 800);
   };
   const handleSaveChanges = () => {
-    fetchSearchCompanyResultByFilter(searchText, valueLocation);
+    // fetchSearchCompanyResultByFilter(searchText, valueLocation);
+    fetchSearchCompanyResult(searchText, valueLocation);
+
     closeModal();
   };
   const handleResetFilter = () => {
@@ -306,12 +301,12 @@ export default function Search() {
 
             {/* <Tab.Screen name="Job" component={ResultSearchJob} /> */}
             <Tab.Screen name="Job">
-              {() => <ResultSearchJob itemList={searchResult} />}
+              {() => <ResultSearchJob itemList={searchResultJob} />}
             </Tab.Screen>
             <Tab.Screen name="Companies">
               {() => (
                 <ResultSearchCompaniesStackNav
-                  itemList={searchResult}
+                  itemList={searchResultCompany}
                   filterLocation={valueLocation}
                 />
               )}
