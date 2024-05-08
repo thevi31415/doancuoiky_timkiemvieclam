@@ -23,6 +23,7 @@ import { app } from "../../firebaseConfig";
 import { getFirestore } from "firebase/firestore";
 import { collection, addDoc } from "firebase/firestore";
 import { useUser } from "@clerk/clerk-expo";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 export default function JobDetail({ checkNav }) {
   const db = getFirestore(app);
@@ -169,7 +170,7 @@ export default function JobDetail({ checkNav }) {
               <Text
                 style={{ fontSize: 20, fontWeight: "bold", color: "#2c67f2" }}
               >
-                Thông tin
+                Thông tin công việc
               </Text>
               <View
                 style={{
@@ -178,18 +179,17 @@ export default function JobDetail({ checkNav }) {
                   marginTop: 15,
                 }}
               >
-                <AntDesign name="earth" size={24} color="#8f8f8f" />
+                <AntDesign name="staro" size={24} color="#8f8f8f" />
 
                 <Text
                   style={{
-                    color: "#3996f5",
                     fontSize: 15,
-                    fontWeight: "bold",
+                    color: "#333333",
+
                     marginLeft: 8,
                   }}
-                  onPress={() => Linking.openURL(company?.Website)}
                 >
-                  xxx
+                  {job?.Experience} năm
                 </Text>
               </View>
               <View
@@ -208,10 +208,9 @@ export default function JobDetail({ checkNav }) {
                     marginLeft: 8,
                   }}
                 >
-                  xxx
+                  {job?.TypeJob}
                 </Text>
               </View>
-
               <View
                 style={{
                   flexDirection: "row",
@@ -228,7 +227,7 @@ export default function JobDetail({ checkNav }) {
                     marginLeft: 8,
                   }}
                 >
-                  xxx
+                  {job?.LocationJob}
                 </Text>
               </View>
               <View
@@ -238,7 +237,7 @@ export default function JobDetail({ checkNav }) {
                   marginTop: 15,
                 }}
               >
-                <AntDesign name="mail" size={24} color="#8f8f8f" />
+                <MaterialIcons name="attach-money" size={24} color="#8f8f8f" />
                 <Text
                   style={{
                     color: "#333333",
@@ -247,24 +246,64 @@ export default function JobDetail({ checkNav }) {
                     marginLeft: 8,
                   }}
                 >
-                  xxxx
+                  {job?.Salary} VND
                 </Text>
               </View>
             </View>
-            <View style={{ margin: 15 }}>
+            <View
+              style={{
+                marginTop: 5,
+                marginLeft: 15,
+                marginRight: 15,
+                marginBottom: 5,
+              }}
+            >
               <Text
-                style={{ fontSize: 20, fontWeight: "bold", color: "#2c67f2" }}
+                style={{
+                  fontSize: 20,
+                  fontWeight: "bold",
+                  color: "#2c67f2",
+                  marginBottom: 10,
+                }}
               >
-                xxx
+                Mô tả công việc
               </Text>
               <Text
                 style={{
                   color: "#333333",
-                  fontSize: 15,
-                  marginTop: 15,
+                  fontSize: 17,
+                  textAlign: "justify",
                 }}
               >
-                xxx
+                {job.DescriptionJob}
+              </Text>
+            </View>
+            <View
+              style={{
+                marginTop: 5,
+                marginLeft: 15,
+                marginRight: 15,
+                marginBottom: 100,
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 20,
+                  fontWeight: "bold",
+                  color: "#2c67f2",
+                  marginBottom: 10,
+                }}
+              >
+                Quyền lợi công việc
+              </Text>
+              <Text
+                style={{
+                  color: "#333333",
+                  fontSize: 17,
+                  textAlign: "justify",
+                }}
+              >
+                {job.BenefitJob}
               </Text>
             </View>
           </View>
