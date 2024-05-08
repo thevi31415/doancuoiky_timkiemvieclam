@@ -36,7 +36,7 @@ export default function LastJob({ lastJobsList }) {
         <FlatList
           data={lastJobsList}
           numColumns={10}
-          renderItem={({ item, index }) => <JobItem job={item} />}
+          renderItem={({ item, index }) => <JobItem item={item} />}
         />
       </ScrollView>
     </View>

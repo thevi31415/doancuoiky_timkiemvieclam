@@ -10,8 +10,10 @@ import React from "react";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
-export default function JobItem({ job }) {
+export default function JobItem({ item }) {
+  const navigation = useNavigation();
   return (
     <TouchableOpacity
       style={{
@@ -24,6 +26,11 @@ export default function JobItem({ job }) {
         width: "100%",
         borderColor: "#2c67f2",
       }}
+      onPress={() =>
+        navigation.push("job-detail", {
+          job: item,
+        })
+      }
     >
       <View
         style={{
@@ -35,7 +42,7 @@ export default function JobItem({ job }) {
       >
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <Image
-            source={{ uri: job?.Logo }}
+            source={{ uri: item?.Logo }}
             style={{ width: 30, height: 30 }}
           />
 
@@ -47,7 +54,7 @@ export default function JobItem({ job }) {
               marginLeft: 13,
             }}
           >
-            {job?.NameCompany}
+            {item?.NameCompany}
           </Text>
         </View>
 
@@ -61,7 +68,7 @@ export default function JobItem({ job }) {
           color: "#2c67f2",
         }}
       >
-        {job?.NameJob}
+        {item?.NameJob}
       </Text>
       <View style={{ marginTop: 15 }}>
         <View
@@ -78,7 +85,7 @@ export default function JobItem({ job }) {
               marginLeft: 8,
             }}
           >
-            {job?.LocationJob}
+            {item?.LocationJob}
           </Text>
         </View>
         <View
@@ -97,7 +104,7 @@ export default function JobItem({ job }) {
               marginLeft: 8,
             }}
           >
-            {job?.Experience} Kinh nghiệm
+            {item?.Experience} Kinh nghiệm
           </Text>
         </View>
         <View
@@ -115,7 +122,7 @@ export default function JobItem({ job }) {
               marginLeft: 8,
             }}
           >
-            {job?.Salary} USD
+            {item?.Salary} USD
           </Text>
         </View>
         <View
@@ -131,10 +138,10 @@ export default function JobItem({ job }) {
               style={{ marginTop: 10, padding: 5 }}
               className="bg-blue-100  text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400"
             >
-              <Text>{job?.TypeJob}</Text>
+              <Text>{item?.TypeJob}</Text>
             </View>
           </View>
-          <Text style={{ marginTop: 10 }}>{job?.DateCreated}</Text>
+          <Text style={{ marginTop: 10 }}>{item?.DateCreated}</Text>
         </View>
       </View>
     </TouchableOpacity>
