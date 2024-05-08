@@ -8,6 +8,7 @@ import {
   Button,
   TextInput,
   StyleSheet,
+  ActivityIndicator,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
@@ -18,17 +19,47 @@ import { Card } from "react-native-shadow-cards";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { useNavigation } from "@react-navigation/native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { app } from "../../firebaseConfig";
+import { getFirestore } from "firebase/firestore";
+import { collection, addDoc } from "firebase/firestore";
+import { useUser } from "@clerk/clerk-expo";
+
 export default function JobDetail({ checkNav }) {
+  const db = getFirestore(app);
   const navigation = useNavigation();
+  const { user } = useUser();
 
   const { params } = useRoute();
   const [job, setJob] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     console.log(params);
     params && setJob(params.job);
   }, [params]);
-  const { width, height } = Dimensions.get("window");
-  console.log("Check Nav" + checkNav);
+  const generateRandomId = (length) => {
+    const characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    let randomId = "";
+
+    for (let i = 0; i < length; i++) {
+      randomId += characters.charAt(
+        Math.floor(Math.random() * characters.length)
+      );
+    }
+
+    return randomId;
+  };
+  const applyJob = async () => {
+    setIsLoading(true); // Set loading state to true when applying job
+    const docRef = await addDoc(collection(db, "ApplyJob"), {
+      ID: generateRandomId(8),
+      IDJob: job?.ID,
+      IDUser: user?.id,
+    });
+    setIsLoading(false); // Set loading state to false after job application is done
+    alert("Bạn đã Apply thành công");
+  };
+
   return (
     <>
       {checkNav && (
@@ -44,7 +75,7 @@ export default function JobDetail({ checkNav }) {
         >
           <TouchableOpacity
             onPress={() => navigation.goBack()}
-            style={{ position: "absolute", left: 20 }} // Icon ở bên trái
+            style={{ position: "absolute", left: 20 }}
           >
             <Ionicons name="arrow-back-outline" size={30} color="#2c67f2" />
           </TouchableOpacity>
@@ -249,8 +280,16 @@ export default function JobDetail({ checkNav }) {
           />
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.applyBtn}>
-          <Text style={styles.applyBtnText}>Apply for job</Text>
+        <TouchableOpacity
+          style={styles.applyBtn}
+          onPress={applyJob}
+          disabled={isLoading}
+        >
+          {isLoading ? (
+            <ActivityIndicator color="white" />
+          ) : (
+            <Text style={styles.applyBtnText}>Apply for job</Text>
+          )}
         </TouchableOpacity>
       </View>
     </>
