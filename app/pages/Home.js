@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, FlatList } from "react-native";
 import Header from "../components/HomeScreen/Header";
 import Slider from "../components/HomeScreen/Sliders";
 import TopCompany from "../components/HomeScreen/TopCompany";
@@ -11,6 +11,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import TypeJob from "../components/HomeScreen/TypeJob";
 import { useUser } from "@clerk/clerk-expo";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import HintSearch from "../components/HomeScreen/HintSearch";
 
 export default function Home() {
   const db = getFirestore(app);
@@ -42,7 +43,9 @@ export default function Home() {
     <View style={{ flex: 1, backgroundColor: "#fff" }}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <Header />
-        <TypeJob />
+        <HintSearch />
+
+        {/* <TypeJob /> */}
         <Slider />
         <TopCompany topCompanyList={topCompanyList} />
         <LastJob lastJobsList={lastJobList} />

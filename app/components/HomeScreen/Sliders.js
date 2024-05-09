@@ -41,7 +41,7 @@ export default function Slider() {
   };
 
   return (
-    <View style={{ flex: 0.82, padding: 16, marginTop: 20 }}>
+    <View style={{ flex: 0.82, padding: 16, marginTop: 0 }}>
       <FlatList
         ref={flatListRef}
         data={DATA}

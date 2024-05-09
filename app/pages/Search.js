@@ -216,6 +216,7 @@ export default function Search() {
   const handleSaveChanges = () => {
     // fetchSearchCompanyResultByFilter(searchText, valueLocation);
     fetchSearchCompanyResult(searchText, valueLocation);
+    fetchSearchJobResult(searchText, valueLocation);
 
     closeModal();
   };
