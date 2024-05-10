@@ -9,6 +9,7 @@ import {
   TextInput,
   StyleSheet,
   ActivityIndicator,
+  Alert,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
@@ -21,20 +22,51 @@ import { useNavigation } from "@react-navigation/native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { app } from "../../firebaseConfig";
 import { getFirestore } from "firebase/firestore";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
 import { useUser } from "@clerk/clerk-expo";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function JobDetail({ checkNav }) {
   const db = getFirestore(app);
   const navigation = useNavigation();
   const { user } = useUser();
-
   const { params } = useRoute();
   const [job, setJob] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [checkApply, setCheckApply] = useState(false);
+  const showAlertApply = () => {
+    Alert.alert(
+      "Thông báo",
+      "Bạn đã ứng tuyển và công việc này không thể ứng tuyển nữa nữa"
+    );
+  };
+  const fetchData = async () => {
+    try {
+      const applySnapshot = await getDocs(collection(db, "ApplyJob"));
+      const filteredApply = applySnapshot.docs.filter((doc) => {
+        const data = doc.data();
+        return data.IDJob == job?.ID && data.IDUser == user?.id;
+      });
+      const applyData = filteredApply.map((doc) => doc.data());
+      if (applyData.length > 0) {
+        setCheckApply(true);
+      } else {
+        setCheckApply(false);
+      }
+      console.log("Length:" + applyData.length);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
   useEffect(() => {
-    console.log(params);
+    fetchData();
+  }, [job]);
+  useEffect(() => {
+    console.log("Check Apply: " + checkApply);
+  }, [checkApply]);
+  useEffect(() => {
     params && setJob(params.job);
   }, [params]);
   const generateRandomId = (length) => {
@@ -51,14 +83,17 @@ export default function JobDetail({ checkNav }) {
     return randomId;
   };
   const applyJob = async () => {
-    setIsLoading(true); // Set loading state to true when applying job
+    setIsLoading(true);
     const docRef = await addDoc(collection(db, "ApplyJob"), {
       ID: generateRandomId(8),
       IDJob: job?.ID,
       IDUser: user?.id,
     });
-    setIsLoading(false); // Set loading state to false after job application is done
-    alert("Bạn đã Apply thành công");
+    setIsLoading(false);
+    setCheckApply(true);
+    alert(
+      "Bạn đã ứng tuyển thành công !. Nhà tuyển dụng sẽ xem được hồ sơ của bạn !"
+    );
   };
 
   return (
@@ -83,7 +118,6 @@ export default function JobDetail({ checkNav }) {
           <Text style={{ fontSize: 20, fontWeight: "bold" }}>Detail Job</Text>
         </View>
       )}
-
       <ScrollView>
         <View
           style={{
@@ -310,7 +344,7 @@ export default function JobDetail({ checkNav }) {
         </View>
       </ScrollView>
       <View style={styles.container}>
-        <TouchableOpacity style={styles.likeBtn}>
+        {/* <TouchableOpacity style={styles.likeBtn}>
           <FontAwesome
             resizeMode="contain"
             name="bookmark-o"
@@ -328,6 +362,33 @@ export default function JobDetail({ checkNav }) {
             <ActivityIndicator color="white" />
           ) : (
             <Text style={styles.applyBtnText}>Apply for job</Text>
+          )}
+        </TouchableOpacity> */}
+        <TouchableOpacity style={styles.likeBtn} disabled={checkApply}>
+          <FontAwesome
+            resizeMode="contain"
+            name={checkApply ? "bookmark" : "bookmark-o"}
+            size={24}
+            color={checkApply ? "#2c67f2" : "#000"} // Màu sắc phụ thuộc vào trạng thái checkApply
+          />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.disabledBtn, checkApply && styles.applyBtn]} // Nếu checkApply là true, áp dụng kiểu disabledBtn
+          onPress={checkApply ? showAlertApply : applyJob} // Không cho phép người dùng click nếu checkApply là true
+          // disabled={checkApply} // Disable nút nếu checkApply là true
+        >
+          {isLoading ? (
+            <ActivityIndicator color="white" />
+          ) : (
+            <Text
+              style={[
+                styles.applyBtnTextFalse,
+                checkApply && styles.applyBtnText,
+              ]}
+            >
+              {checkApply ? "Bạn đã ứng tuyển" : "Ứng tuyển ngay"}
+            </Text> // Thay đổi nội dung của nút dựa trên trạng thái checkApply
           )}
         </TouchableOpacity>
       </View>
@@ -367,8 +428,23 @@ const styles = StyleSheet.create({
     marginLeft: 16,
     borderRadius: 16,
   },
+  disabledBtn: {
+    flex: 1,
+    backgroundColor: "white",
+    height: "100%",
+    borderColor: "#2c67f2",
+    borderWidth: 2,
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: 16,
+    borderRadius: 16,
+  },
   applyBtnText: {
-    fontSize: 16,
+    fontSize: 18,
     color: "#F3F4F8",
+  },
+  applyBtnTextFalse: {
+    fontSize: 18,
+    color: "#2c67f2",
   },
 });
