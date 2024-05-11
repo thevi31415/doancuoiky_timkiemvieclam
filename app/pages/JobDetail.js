@@ -10,6 +10,7 @@ import {
   StyleSheet,
   ActivityIndicator,
   Alert,
+  ToastAndroid,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
@@ -22,6 +23,7 @@ import { useNavigation } from "@react-navigation/native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { app } from "../../firebaseConfig";
 import { getFirestore } from "firebase/firestore";
+
 import {
   collection,
   addDoc,
@@ -137,7 +139,12 @@ export default function JobDetail({ checkNav }) {
         await deleteDoc(reference);
         console.log("Bookmark deleted successfully.");
         setCheckBookmark(false);
-        alert("Đã bỏ lưu công việc thành công !");
+        // alert("Đã bỏ lưu công việc thành công !");
+        ToastAndroid.show(
+          "Bỏ lưu công việc thành công !",
+          ToastAndroid.SHORT,
+          ToastAndroid.BOTTOM
+        );
       } catch (error) {
         alert("Error deleting bookmark:", error);
       }
@@ -149,7 +156,11 @@ export default function JobDetail({ checkNav }) {
       });
       setCheckBookmark(true);
       console.log("Book Mark");
-      alert("Đã lưu công việc thành công !");
+      ToastAndroid.show(
+        "Lưu công việc thành công !",
+        ToastAndroid.SHORT,
+        ToastAndroid.BOTTOM
+      );
     }
   };
 
@@ -175,6 +186,7 @@ export default function JobDetail({ checkNav }) {
           <Text style={{ fontSize: 20, fontWeight: "bold" }}>Detail Job</Text>
         </View>
       )}
+
       <ScrollView>
         <View
           style={{
