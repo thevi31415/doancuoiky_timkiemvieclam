@@ -47,6 +47,8 @@ export default function JobDetail({ checkNav }) {
   const [checkApply, setCheckApply] = useState(false);
   const [checkBookmark, setCheckBookmark] = useState(false);
   const [IDBookMark, setIDBookmark] = useState(null);
+  const [loading, setLoading] = useState(false);
+
   const showAlertApply = () => {
     Alert.alert(
       "Thông báo",
@@ -118,6 +120,8 @@ export default function JobDetail({ checkNav }) {
     return randomId;
   };
   const applyJob = async () => {
+    setLoading(true); // Bắt đầu quá trình load
+
     setIsLoading(true);
     const docRef = await addDoc(collection(db, "ApplyJob"), {
       ID: generateRandomId(8),
@@ -126,12 +130,16 @@ export default function JobDetail({ checkNav }) {
     });
     setIsLoading(false);
     setCheckApply(true);
+    setLoading(false); // Bắt đầu quá trình load
+
     alert(
       "Bạn đã ứng tuyển thành công !. Nhà tuyển dụng sẽ xem được hồ sơ của bạn !"
     );
   };
 
   const bookMarkJob = async () => {
+    setLoading(true); // Bắt đầu quá trình load
+
     if (checkBookmark == true) {
       console.log("Delete: " + IDBookMark);
       try {
@@ -162,6 +170,7 @@ export default function JobDetail({ checkNav }) {
         ToastAndroid.BOTTOM
       );
     }
+    setLoading(false); // Bắt đầu quá trình load
   };
 
   return (
@@ -461,6 +470,11 @@ export default function JobDetail({ checkNav }) {
           )}
         </TouchableOpacity>
       </View>
+      {loading && (
+        <View style={styles.overlay}>
+          <ActivityIndicator size={70} color="#2c67f2" />
+        </View>
+      )}
     </>
   );
 }
@@ -477,6 +491,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     borderTopWidth: 1,
     borderTopColor: "#e1e1e2",
+  },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "center",
+    alignItems: "center",
   },
   likeBtn: {
     width: 55,

@@ -8,6 +8,8 @@ import {
   Button,
   TextInput,
   ToastAndroid,
+  ActivityIndicator,
+  StyleSheet,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
@@ -30,6 +32,7 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import { useUser } from "@clerk/clerk-expo";
+import LoadingOverlay from "../components/LoadingOverlay";
 export default function CompaniesDetail({ checkNav }) {
   const db = getFirestore(app);
   const { user } = useUser();
@@ -39,6 +42,7 @@ export default function CompaniesDetail({ checkNav }) {
   const { params } = useRoute();
   const [company, setCompany] = useState([]);
   const [IDFollow, setIDFollow] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     console.log(params);
@@ -70,14 +74,14 @@ export default function CompaniesDetail({ checkNav }) {
     }
   };
   const followCompany = async () => {
-    console.log("Follw" + checkFollowed);
+    setLoading(true); // Bắt đầu quá trình load
+    console.log("Follow" + checkFollowed);
     if (checkFollowed == true) {
       try {
         const reference = doc(db, "FollowCompany", IDFollow);
         await deleteDoc(reference);
         console.log("Bookmark deleted successfully.");
         setCheckFollowed(false);
-
         ToastAndroid.show(
           "Bỏ theo dõi thành công !",
           ToastAndroid.SHORT,
@@ -101,9 +105,10 @@ export default function CompaniesDetail({ checkNav }) {
           ToastAndroid.BOTTOM
         );
       } catch (error) {
-        console.error("Error while saving data:", error); // In ra console lỗi nếu có
+        console.error("Error while saving data:", error);
       }
     }
+    setLoading(false); // Kết thúc quá trình load
   };
   const generateRandomId = (length) => {
     const characters =
@@ -120,24 +125,6 @@ export default function CompaniesDetail({ checkNav }) {
   };
   return (
     <>
-      {/* <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "center",
-          marginTop: 40,
-          padding: 15,
-          backgroundColor: "white",
-        }}
-      >
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={{ position: "absolute", left: 20 }} // Icon ở bên trái
-        >
-          <Ionicons name="arrow-back-outline" size={32} color="#2c67f2" />
-        </TouchableOpacity>
-        <Text style={{ fontSize: 20, fontWeight: "bold" }}>Detail Company</Text>
-      </View> */}
       {checkNav && (
         <View
           style={{
@@ -224,6 +211,7 @@ export default function CompaniesDetail({ checkNav }) {
               >
                 "{company?.Slogan}"
               </Text>
+
               <TouchableOpacity
                 onPress={followCompany}
                 style={{
@@ -250,6 +238,7 @@ export default function CompaniesDetail({ checkNav }) {
                   {checkFollowed ? "FOLLOWED" : "FOLLOW"}
                 </Text>
               </TouchableOpacity>
+
               <View
                 style={{ margin: 10, padding: 5, marginBottom: 20 }}
                 className="bg-blue-100  text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400"
@@ -371,6 +360,19 @@ export default function CompaniesDetail({ checkNav }) {
           </View>
         </View>
       </ScrollView>
+      {loading && (
+        <View style={styles.overlay}>
+          <ActivityIndicator size={70} color="#2c67f2" />
+        </View>
+      )}
     </>
   );
 }
+const styles = StyleSheet.create({
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});
