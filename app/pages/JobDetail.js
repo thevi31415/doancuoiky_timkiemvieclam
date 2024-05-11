@@ -22,7 +22,15 @@ import { useNavigation } from "@react-navigation/native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { app } from "../../firebaseConfig";
 import { getFirestore } from "firebase/firestore";
-import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  query,
+  where,
+  getDocs,
+  doc,
+  deleteDoc,
+} from "firebase/firestore";
 import { useUser } from "@clerk/clerk-expo";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useFocusEffect } from "@react-navigation/native";
@@ -35,6 +43,8 @@ export default function JobDetail({ checkNav }) {
   const [job, setJob] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [checkApply, setCheckApply] = useState(false);
+  const [checkBookmark, setCheckBookmark] = useState(false);
+  const [IDBookMark, setIDBookmark] = useState(null);
   const showAlertApply = () => {
     Alert.alert(
       "Thông báo",
@@ -54,18 +64,41 @@ export default function JobDetail({ checkNav }) {
       } else {
         setCheckApply(false);
       }
+
       console.log("Length:" + applyData.length);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error fetching data applyjob:", error);
+    }
+  };
+
+  const fetchDataBookmark = async () => {
+    try {
+      const bookMarkSnapshot = await getDocs(collection(db, "BookmarkJob"));
+      const bookMark = bookMarkSnapshot.docs.filter((doc) => {
+        const data = doc.data();
+        return data.IDJob == job?.ID && data.IDUser == user?.id;
+      });
+      const IDBookmarkArray = bookMark.map((doc) => doc.id); // Lưu ID của các tài liệu vào mảng
+      if (IDBookmarkArray.length > 0) {
+        console.log("ID BookMark:", IDBookmarkArray[0]);
+        setIDBookmark(IDBookmarkArray[0]); // In ra phần tử ID đầu tiên
+        setBookmarkJob(bookMark[0].data()); // Set dữ liệu của tài liệu đầu tiên cho BookmarkJob
+        setCheckBookmark(true);
+      } else {
+        setCheckBookmark(false);
+      }
+    } catch (error) {
+      console.error("Error fetching data bookmark:", error);
     }
   };
 
   useEffect(() => {
     fetchData();
-  }, [job]);
+    fetchDataBookmark();
+  }, [job, checkApply, checkBookmark]);
   useEffect(() => {
     console.log("Check Apply: " + checkApply);
-  }, [checkApply]);
+  }, [checkApply, checkBookmark]);
   useEffect(() => {
     params && setJob(params.job);
   }, [params]);
@@ -94,6 +127,30 @@ export default function JobDetail({ checkNav }) {
     alert(
       "Bạn đã ứng tuyển thành công !. Nhà tuyển dụng sẽ xem được hồ sơ của bạn !"
     );
+  };
+
+  const bookMarkJob = async () => {
+    if (checkBookmark == true) {
+      console.log("Delete: " + IDBookMark);
+      try {
+        const reference = doc(db, "BookmarkJob", IDBookMark);
+        await deleteDoc(reference);
+        console.log("Bookmark deleted successfully.");
+        setCheckBookmark(false);
+        alert("Đã bỏ lưu công việc thành công !");
+      } catch (error) {
+        alert("Error deleting bookmark:", error);
+      }
+    } else {
+      const docRef = await addDoc(collection(db, "BookmarkJob"), {
+        ID: generateRandomId(8),
+        IDJob: job?.ID,
+        IDUser: user?.id,
+      });
+      setCheckBookmark(true);
+      console.log("Book Mark");
+      alert("Đã lưu công việc thành công !");
+    }
   };
 
   return (
@@ -364,12 +421,12 @@ export default function JobDetail({ checkNav }) {
             <Text style={styles.applyBtnText}>Apply for job</Text>
           )}
         </TouchableOpacity> */}
-        <TouchableOpacity style={styles.likeBtn} disabled={checkApply}>
+        <TouchableOpacity style={styles.likeBtn} onPress={bookMarkJob}>
           <FontAwesome
             resizeMode="contain"
-            name={checkApply ? "bookmark" : "bookmark-o"}
+            name={checkBookmark ? "bookmark" : "bookmark-o"}
             size={24}
-            color={checkApply ? "#2c67f2" : "#000"} // Màu sắc phụ thuộc vào trạng thái checkApply
+            color={checkBookmark ? "#2c67f2" : "#2c67f2"} // Màu sắc phụ thuộc vào trạng thái checkApply
           />
         </TouchableOpacity>
 
