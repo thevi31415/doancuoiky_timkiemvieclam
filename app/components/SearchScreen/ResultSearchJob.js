@@ -4,8 +4,11 @@ import JobItem from "../HomeScreen/JobItem";
 import { Ionicons } from "@expo/vector-icons";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { useNavigation } from "@react-navigation/native";
 
-export default function ResultSearchJob({ itemList }) {
+export default function ResultSearchJob({ itemList, filterLocation }) {
+  const navigation = useNavigation();
+
   return (
     <View style={{ flex: 1 }}>
       <View style={{ flex: 1, backgroundColor: "#ffff" }}>
@@ -63,8 +66,8 @@ export default function ResultSearchJob({ itemList }) {
             renderItem={({ item }) => (
               <TouchableOpacity
                 onPress={() =>
-                  navigation.push("company-detail", {
-                    company: item,
+                  navigation.push("job-detail", {
+                    job: item,
                   })
                 }
                 style={{

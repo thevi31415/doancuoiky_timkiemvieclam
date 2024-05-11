@@ -12,6 +12,7 @@ import {
   Modal,
   Button,
   Pressable,
+  ActivityIndicator,
 } from "react-native";
 import React, { useState, useEffect, useRef } from "react";
 import { Dropdown } from "react-native-element-dropdown";
@@ -32,6 +33,7 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import { MaterialIcons } from "@expo/vector-icons";
 import ResultSearchAll from "../components/SearchScreen/ResultSearchAll";
 import ResultSearchJob from "../components/SearchScreen/ResultSearchJob";
+import ResultSearchJobStackNav from "../components/SearchScreen/ResultSearchJobStackNav";
 const LocationData = [
   { label: "All locations", value: "" },
   { label: "Hồ Chí Minh", value: "Hồ Chí Minh" },
@@ -49,6 +51,7 @@ export default function Search() {
   const db = getFirestore(app);
   //Tab khi hiển thị kết quả tìm kiểm theo All/Job/Company
   const Tab = createMaterialTopTabNavigator();
+  const [loading, setLoading] = useState(false);
 
   // Noi dung tìm kiem trong search bar
   const [searchText, setSearchText] = useState("");
@@ -114,6 +117,7 @@ export default function Search() {
   };
 
   const fetchSearchCompanyResult = async (nameText, valueLocation) => {
+    setLoading(true); // Bắt đầu quá trình load
     try {
       setSearchText(nameText);
       const companySnapshot = await getDocs(collection(db, "Company"));
@@ -138,6 +142,7 @@ export default function Search() {
     } catch (error) {
       console.error("Error fetching data:", error);
     }
+    setLoading(false);
   };
   const fetchSearchJobResult = async (nameText, valueLocation) => {
     try {
@@ -302,7 +307,12 @@ export default function Search() {
 
             {/* <Tab.Screen name="Job" component={ResultSearchJob} /> */}
             <Tab.Screen name="Job">
-              {() => <ResultSearchJob itemList={searchResultJob} />}
+              {() => (
+                <ResultSearchJobStackNav
+                  itemList={searchResultJob}
+                  filterLocation={valueLocation}
+                />
+              )}
             </Tab.Screen>
             <Tab.Screen name="Companies">
               {() => (
@@ -436,6 +446,11 @@ export default function Search() {
           </Pressable>
         </Pressable>
       )}
+      {loading && (
+        <View style={styles.overlay}>
+          <ActivityIndicator size={70} color="#2c67f2" />
+        </View>
+      )}
     </View>
   );
 }
@@ -509,5 +524,11 @@ const styles = StyleSheet.create({
   inputSearchStyle: {
     height: 40,
     fontSize: 16,
+  },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
