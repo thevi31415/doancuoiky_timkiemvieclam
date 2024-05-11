@@ -56,6 +56,8 @@ export default function JobDetail({ checkNav }) {
     );
   };
   const fetchData = async () => {
+    setLoading(true); // Bắt đầu quá trình load
+
     try {
       const applySnapshot = await getDocs(collection(db, "ApplyJob"));
       const filteredApply = applySnapshot.docs.filter((doc) => {
@@ -73,6 +75,7 @@ export default function JobDetail({ checkNav }) {
     } catch (error) {
       console.error("Error fetching data applyjob:", error);
     }
+    setLoading(false); // Bắt đầu quá trình load
   };
 
   const fetchDataBookmark = async () => {

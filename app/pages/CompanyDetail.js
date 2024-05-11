@@ -52,6 +52,8 @@ export default function CompaniesDetail({ checkNav }) {
     fetchDataFollow();
   }, [company, checkFollowed]);
   const fetchDataFollow = async () => {
+    setLoading(true); // Bắt đầu quá trình load
+
     try {
       const followCompanySnapshot = await getDocs(
         collection(db, "FollowCompany")
@@ -72,9 +74,11 @@ export default function CompaniesDetail({ checkNav }) {
     } catch (error) {
       console.error("Error fetching data follwing:", error);
     }
+    setLoading(false); // Bắt đầu quá trình load
   };
   const followCompany = async () => {
     setLoading(true); // Bắt đầu quá trình load
+
     console.log("Follow" + checkFollowed);
     if (checkFollowed == true) {
       try {
@@ -108,7 +112,7 @@ export default function CompaniesDetail({ checkNav }) {
         console.error("Error while saving data:", error);
       }
     }
-    setLoading(false); // Kết thúc quá trình load
+    setLoading(false);
   };
   const generateRandomId = (length) => {
     const characters =
