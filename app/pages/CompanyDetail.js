@@ -7,6 +7,7 @@ import {
   Linking,
   Button,
   TextInput,
+  ToastAndroid,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
@@ -16,18 +17,107 @@ import { ScrollView } from "react-native-gesture-handler";
 import { Card } from "react-native-shadow-cards";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { useNavigation } from "@react-navigation/native";
+import { app } from "../../firebaseConfig";
+import { getFirestore } from "firebase/firestore";
 
+import {
+  collection,
+  addDoc,
+  query,
+  where,
+  getDocs,
+  doc,
+  deleteDoc,
+} from "firebase/firestore";
+import { useUser } from "@clerk/clerk-expo";
 export default function CompaniesDetail({ checkNav }) {
-  const navigation = useNavigation();
+  const db = getFirestore(app);
+  const { user } = useUser();
 
+  const navigation = useNavigation();
+  const [checkFollowed, setCheckFollowed] = useState(false);
   const { params } = useRoute();
   const [company, setCompany] = useState([]);
+  const [IDFollow, setIDFollow] = useState(null);
+
   useEffect(() => {
     console.log(params);
     params && setCompany(params.company);
   }, [params]);
-  const { width, height } = Dimensions.get("window");
-  console.log("Check Nav" + checkNav);
+  useEffect(() => {
+    fetchDataFollow();
+  }, [company, checkFollowed]);
+  const fetchDataFollow = async () => {
+    try {
+      const followCompanySnapshot = await getDocs(
+        collection(db, "FollowCompany")
+      );
+      const follow = followCompanySnapshot.docs.filter((doc) => {
+        const data = doc.data();
+        return data.IDCompany == company?.ID && data.IDUser == user?.id;
+      });
+      const IDFollowArray = follow.map((doc) => doc.id);
+      if (IDFollowArray.length > 0) {
+        console.log("ID Floww", IDFollowArray[0]);
+        setIDFollow(IDFollowArray[0]); // In ra phần tử ID đầu tiên
+
+        setCheckFollowed(true);
+      } else {
+        setCheckFollowed(false);
+      }
+    } catch (error) {
+      console.error("Error fetching data follwing:", error);
+    }
+  };
+  const followCompany = async () => {
+    console.log("Follw" + checkFollowed);
+    if (checkFollowed == true) {
+      try {
+        const reference = doc(db, "FollowCompany", IDFollow);
+        await deleteDoc(reference);
+        console.log("Bookmark deleted successfully.");
+        setCheckFollowed(false);
+
+        ToastAndroid.show(
+          "Bỏ theo dõi thành công !",
+          ToastAndroid.SHORT,
+          ToastAndroid.BOTTOM
+        );
+      } catch (error) {
+        alert("Error deleting bookmark:", error);
+      }
+    } else {
+      try {
+        const docRef = await addDoc(collection(db, "FollowCompany"), {
+          ID: generateRandomId(8),
+          IDCompany: company?.ID,
+          IDUser: user?.id,
+        });
+        setCheckFollowed(true);
+        console.log("Book Mark");
+        ToastAndroid.show(
+          "Theo dõi công ty thành công !",
+          ToastAndroid.SHORT,
+          ToastAndroid.BOTTOM
+        );
+      } catch (error) {
+        console.error("Error while saving data:", error); // In ra console lỗi nếu có
+      }
+    }
+  };
+  const generateRandomId = (length) => {
+    const characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    let randomId = "";
+
+    for (let i = 0; i < length; i++) {
+      randomId += characters.charAt(
+        Math.floor(Math.random() * characters.length)
+      );
+    }
+
+    return randomId;
+  };
   return (
     <>
       {/* <View
@@ -135,12 +225,13 @@ export default function CompaniesDetail({ checkNav }) {
                 "{company?.Slogan}"
               </Text>
               <TouchableOpacity
+                onPress={followCompany}
                 style={{
                   paddingHorizontal: 30,
                   paddingVertical: 10,
                   borderRadius: 10,
                   backgroundColor: "white",
-                  flexDirection: "row", // Thêm thuộc tính flexDirection: "row" để hiển thị icon và chữ trên cùng một hàng
+                  flexDirection: "row",
                   alignItems: "center",
                   marginTop: 15,
                   borderColor: "#2c67f2",
@@ -156,7 +247,7 @@ export default function CompaniesDetail({ checkNav }) {
                     marginLeft: 6,
                   }}
                 >
-                  FOLLOW
+                  {checkFollowed ? "FOLLOWED" : "FOLLOW"}
                 </Text>
               </TouchableOpacity>
               <View
