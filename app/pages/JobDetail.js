@@ -82,7 +82,7 @@ export default function JobDetail({ checkNav }) {
       if (IDBookmarkArray.length > 0) {
         console.log("ID BookMark:", IDBookmarkArray[0]);
         setIDBookmark(IDBookmarkArray[0]); // In ra phần tử ID đầu tiên
-        setBookmarkJob(bookMark[0].data()); // Set dữ liệu của tài liệu đầu tiên cho BookmarkJob
+        // Set dữ liệu của tài liệu đầu tiên cho BookmarkJob
         setCheckBookmark(true);
       } else {
         setCheckBookmark(false);
