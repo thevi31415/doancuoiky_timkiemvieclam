@@ -7,14 +7,19 @@ export default function Notification() {
   const [status, setStatus] = React.useState(false);
 
   return (
-    <View style={styles.container}>
-      <TouchableOpacity onPress={() => setStatus(true)} style={styles.button}>
-        <Text style={{ fontSize: 18, fontWeight: "bold", color: "white" }}>
-          Launch Modal
-        </Text>
-      </TouchableOpacity>
-
-      {status && <BottomSheet setStatus={setStatus} />}
+    <View
+      style={{
+        marginTop: 10,
+        paddingHorizontal: 10,
+        backgroundColor: "white",
+      }}
+    >
+      {/* <FlatList
+        showsVerticalScrollIndicator={false}
+        data={Notifications}
+        renderItem={ShowNotifications}
+        ListFooterComponent={() => <ShowAllFooter />}
+      /> */}
     </View>
   );
 }

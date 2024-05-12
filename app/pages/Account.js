@@ -8,15 +8,99 @@ import {
   Switch,
   Image,
   ImageBackground,
+  ActivityIndicator,
 } from "react-native";
+import {
+  collection,
+  addDoc,
+  query,
+  where,
+  getDocs,
+  doc,
+  deleteDoc,
+} from "firebase/firestore";
+import { useFocusEffect } from "@react-navigation/native";
+
 import FeatherIcon from "react-native-vector-icons/Feather";
 import React, { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ClerkProvider, SignedIn, SignedOut, useAuth } from "@clerk/clerk-expo";
+import { app } from "../../firebaseConfig";
+import { useUser } from "@clerk/clerk-expo";
 
+import { getFirestore } from "firebase/firestore";
 export default function Account() {
   const { isLoaded, signOut } = useAuth();
+  const db = getFirestore(app);
   const [userAccount, setUserAccount] = useState(null);
+  const [countBookMarkJob, setCountBookMarkJob] = useState(0);
+  const [countCompanyFollowed, setCountCompanyFollowed] = useState(0);
+  const [countJobApply, setCountJobApply] = useState(0);
+
+  const [loading, setLoading] = useState(false);
+  const { user } = useUser();
+
+  const fetchDataBookmark = async () => {
+    setLoading(true);
+
+    try {
+      const bookMarkSnapshot = await getDocs(collection(db, "BookmarkJob"));
+      const bookMark = bookMarkSnapshot.docs.filter((doc) => {
+        const data = doc.data();
+        return data.IDUser == user?.id;
+      });
+      const IDBookmarkArray = bookMark.map((doc) => doc.id);
+      if (IDBookmarkArray.length > 0) {
+        setCountBookMarkJob(IDBookmarkArray.length);
+      } else {
+        setCountBookMarkJob(0);
+      }
+    } catch (error) {
+      console.error("Error fetching data bookmark:", error);
+    }
+    try {
+      const companyFollowedSnapshot = await getDocs(
+        collection(db, "FollowCompany")
+      );
+      const companyFollowed = companyFollowedSnapshot.docs.filter((doc) => {
+        const data = doc.data();
+        return data.IDUser == user?.id;
+      });
+      const IDCompanyFollowed = companyFollowed.map((doc) => doc.id);
+      if (IDCompanyFollowed.length > 0) {
+        setCountCompanyFollowed(IDCompanyFollowed.length);
+      } else {
+        setCountCompanyFollowed(0);
+      }
+    } catch (error) {
+      console.error("Error fetching data bookmark:", error);
+    }
+    try {
+      const applyJobSnapshot = await getDocs(collection(db, "ApplyJob"));
+      const applyJob = applyJobSnapshot.docs.filter((doc) => {
+        const data = doc.data();
+        return data.IDUser == user?.id;
+      });
+      const IDApplyJob = applyJob.map((doc) => doc.id);
+      if (IDApplyJob.length > 0) {
+        setCountJobApply(IDApplyJob.length);
+      } else {
+        setCountJobApply(0);
+      }
+    } catch (error) {
+      console.error("Error fetching data bookmark:", error);
+    }
+    setLoading(false);
+    console.log("Viec da luu: " + countBookMarkJob);
+  };
+  useEffect(() => {
+    fetchDataBookmark();
+  }, [countBookMarkJob]);
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchDataBookmark();
+    }, [])
+  );
 
   const getData = async () => {
     try {
@@ -40,26 +124,8 @@ export default function Account() {
   });
   // console.log("Link: " + userAccount.imageUrl);
   return (
-    // <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-    //   <Text>Account Details</Text>
-    //   {userAccount && (
-    //     <View>
-    //       <Text>Name: {userAccount.name}</Text>
-    //       <Text>Email: {userAccount.email}</Text>
-    //       {/* Display other properties of userAccount */}
-    //     </View>
-    //   )}
-    // </View>
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
       <View style={styles.container}>
-        {/* <View style={styles.header}>
-          <Text style={styles.title}>Settings</Text>
-
-          <Text style={styles.subtitle}>
-            Lorem ipsum dolor sit amet consectetur.
-          </Text>
-        </View> */}
-
         <ScrollView>
           <View style={styles.profile}>
             <Image
@@ -122,7 +188,7 @@ export default function Account() {
                     <Text style={styles.rowLabel}>Việc làm đã ứng tuyển</Text>
 
                     <View style={styles.rowSpacer} />
-                    <Text style={styles.rowValue}>7</Text>
+                    <Text style={styles.rowValue}>{countJobApply}</Text>
                   </View>
                 </TouchableOpacity>
                 <TouchableOpacity style={[styles.rowWrapper, styles.rowFirst]}>
@@ -136,7 +202,7 @@ export default function Account() {
                     <Text style={styles.rowLabel}>Việc làm đã lưu</Text>
 
                     <View style={styles.rowSpacer} />
-                    <Text style={styles.rowValue}>10</Text>
+                    <Text style={styles.rowValue}>{countBookMarkJob}</Text>
                   </View>
                 </TouchableOpacity>
                 <TouchableOpacity style={[styles.rowWrapper, styles.rowFirst]}>
@@ -150,7 +216,7 @@ export default function Account() {
                     <Text style={styles.rowLabel}>Công ty đang theo dõi</Text>
 
                     <View style={styles.rowSpacer} />
-                    <Text style={styles.rowValue}>0</Text>
+                    <Text style={styles.rowValue}>{countCompanyFollowed}</Text>
                   </View>
                 </TouchableOpacity>
               </View>
@@ -195,6 +261,11 @@ export default function Account() {
           </View>
         </ScrollView>
       </View>
+      {loading && (
+        <View style={styles.overlay}>
+          <ActivityIndicator size={70} color="#2c67f2" />
+        </View>
+      )}
     </SafeAreaView>
   );
 }
@@ -205,6 +276,12 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     flexShrink: 1,
     flexBasis: 0,
+  },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "center",
+    alignItems: "center",
   },
   header: {
     paddingLeft: 24,
