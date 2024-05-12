@@ -28,11 +28,17 @@ export default function CV() {
         }}
       >
         <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Text style={{ fontSize: 20, fontWeight: "bold", marginRight: 127 }}>
+          <Text
+            style={{
+              fontSize: 20,
+              fontWeight: "bold",
+              marginRight: 130,
+            }}
+          >
             CV
           </Text>
           <TouchableOpacity>
-            <FontAwesome6 name="edit" size={30} color="#2c67f2" />
+            <FontAwesome6 name="edit" size={25} color="#2c67f2" />
           </TouchableOpacity>
         </View>
       </View>
@@ -45,7 +51,7 @@ export default function CV() {
         >
           <View style={{ backgroundColor: "white", marginBottom: 10 }}>
             <Image
-              source={require(".././pages/assets/BG_header.jpg")}
+              source={require(".././pages/assets/BG_CV.jpg")}
               style={{ width: "100%", height: 100 }}
             />
             <Image
@@ -344,6 +350,83 @@ export default function CV() {
               >
                 Đi ngủ.
               </Text>
+            </View>
+            <View style={{ marginBottom: 10 }}>
+              <Text
+                style={{
+                  fontSize: 19,
+                  color: "black",
+                  fontWeight: "bold",
+                  marginBottom: 10,
+                }}
+              >
+                Học vấn
+              </Text>
+              <View style={[styles.flexCenter, { paddingBottom: 10 }]}>
+                <Image
+                  source={require(".././pages/assets/Logo_HCMUTE.jpg")}
+                  style={{ height: 50, width: 50, marginHorizontal: 16 }}
+                />
+                <View>
+                  <Text
+                    style={{
+                      fontSize: 19,
+                      color: "black",
+                      fontWeight: "bold",
+                      width: 250,
+                    }}
+                  >
+                    Đại Học Sư Phạm Kỹ Thuật TP HCM
+                  </Text>
+                  <Text style={{ color: "black" }}>
+                    Chuyên Ngành Công Nghệ Thông Tin
+                  </Text>
+                  <Text>2021 - 2028</Text>
+                </View>
+              </View>
+            </View>
+            <View style={{ marginBottom: 10 }}>
+              <Text
+                style={{
+                  fontSize: 19,
+                  color: "black",
+                  fontWeight: "bold",
+                  marginBottom: 10,
+                }}
+              >
+                Chứng chỉ
+              </Text>
+              <View
+                style={[
+                  styles.flexCenter,
+                  {
+                    borderBottomColor: "lightgray",
+                    borderBottomWidth: 1,
+                    paddingVertical: 10,
+                  },
+                ]}
+              >
+                <Image
+                  source={require(".././pages/assets/Logo_HCMUTE.jpg")}
+                  style={{ height: 50, width: 50, marginRight: 10 }}
+                />
+                <View>
+                  <Text
+                    style={{
+                      fontSize: 19,
+                      color: "black",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    TOEIC
+                  </Text>
+                  <View style={styles.flexCenter}>
+                    <Text style={{ fontSize: 16 }}>Issued - 23/2/2024</Text>
+                    <Ionicons name="dot-single" size={16} color="gray" />
+                    <Text>Expires</Text>
+                  </View>
+                </View>
+              </View>
             </View>
           </View>
         </Card>

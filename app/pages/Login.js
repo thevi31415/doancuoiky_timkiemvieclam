@@ -29,22 +29,6 @@ export default function Login() {
     }
   }, []);
   return (
-    // <View>
-    //   <View className="p-8 bg-white mt-[-20px] rounded-t-3xl shadow-md">
-    //     <Text className="text-[30px] font-bold">Tim kiem viec lam !</Text>
-    //     <Text className="text-[18px] text-slate-500 mt-6">
-    //       Vui long dang nhap !
-    //     </Text>
-    //     <TouchableOpacity
-    //       onPress={onPress}
-    //       className="p-4 bg-blue-500 rounded-full mt-20"
-    //     >
-    //       <Text className="text-white text-center text-[18px]">
-    //         Login with Google
-    //       </Text>
-    //     </TouchableOpacity>
-    //   </View>
-    // </View>
     <View style={{ flex: 1 }}>
       <ImageBackground
         source={require("./assets/bg_login.jpg")}
