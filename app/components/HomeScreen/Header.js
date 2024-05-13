@@ -18,68 +18,26 @@ import { getFirestore } from "firebase/firestore";
 import { useNavigation } from "@react-navigation/native";
 import { Searchbar } from "react-native-paper";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-const storeData = async (value) => {
-  try {
-    const jsonValue = JSON.stringify(value);
-    await AsyncStorage.setItem("userAccount", jsonValue);
-  } catch (e) {}
-};
-removeValue = async () => {
-  try {
-    await AsyncStorage.removeItem("userAccount");
-  } catch (e) {
-    // remove error
-  }
-};
+
 export default function Header({ linkAvatar, nameUser }) {
   const navigation = useNavigation();
   const db = getFirestore(app);
   const { user } = useUser();
   const [userAccount, setUserAccount] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const jsonValue = await AsyncStorage.getItem("userAccount");
+        if (jsonValue !== null) {
+          setUserAccount(JSON.parse(jsonValue));
+        }
+      } catch (e) {
+        console.error("Error fetching user account data: ", e);
+      }
+    };
 
-  // const fetchData = async () => {
-  //   try {
-  //     const userSnapshot = await getDocs(collection(db, "User"));
-  //     const users = userSnapshot.docs.map((doc) => doc.data());
-  //     const targetUser = users.find((users) => users.ID == user?.id);
-  //     if (targetUser) {
-  //       console.log(targetUser);
-  //       console.log("Tìm thấy nhân user header");
-  //       setUserAccount(targetUser);
-  //       // removeValue();
-  //       // storeData(targetUser);
-  //     } else {
-  //       const userNew = {
-  //         ID: user?.id,
-  //         SDT: "0949Y845xxx",
-  //         imageUrl: user?.imageUrl,
-  //         role: "User",
-  //         name: user?.fullName,
-  //         email: user?.primaryEmailAddress?.toString(),
-  //       };
-  //       console.log("User name header3" + user.primaryEmailAddress);
-
-  //       const docRef = await addDoc(collection(db, "User"), userNew);
-  //       if (docRef.id) {
-  //         console.log("Document Added");
-  //         // removeValue();
-
-  //         // storeData(userNew);
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.error("Lỗi khi lấy dữ liệu từ Firebase:", error);
-  //   }
-  //   console.log(
-  //     "User: Name: " + userAccount.name + "Email: " + userAccount.email
-  //   );
-  // };
-
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     fetchData();
-  //   }, [])
-  // );
+    fetchData(); // Gọi hàm fetchData
+  }, []);
   return (
     <View>
       <ImageBackground
@@ -108,7 +66,13 @@ export default function Header({ linkAvatar, nameUser }) {
                 className="rounded-full w-12 h-12"
               />
               <View>
-                <Text className="text-[16px] color-white">Xin chào !</Text>
+                <Text style={{ color: "white", fontSize: 16 }}>
+                  Xin chào {""}
+                  {userAccount?.role === "Admin"
+                    ? "nhà tuyển dụng"
+                    : "ứng viên"}
+                  {""} ! 👋
+                </Text>
                 <Text className="text-[16px] font-bold color-white">
                   {user?.fullName}
                 </Text>

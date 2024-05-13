@@ -29,6 +29,11 @@ import { app } from "../../firebaseConfig";
 import { useUser } from "@clerk/clerk-expo";
 
 import { getFirestore } from "firebase/firestore";
+removeValue = async () => {
+  try {
+    await AsyncStorage.removeItem("userAccount");
+  } catch (e) {}
+};
 export default function Account() {
   const { isLoaded, signOut } = useAuth();
   const db = getFirestore(app);
@@ -225,6 +230,7 @@ export default function Account() {
                 <TouchableOpacity
                   style={[styles.rowWrapper, styles.rowFirst]}
                   onPress={() => {
+                    removeValue();
                     signOut();
                   }}
                 >
