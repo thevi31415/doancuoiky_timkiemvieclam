@@ -13,6 +13,7 @@ import {
   Button,
   Pressable,
   ActivityIndicator,
+  ToastAndroid,
 } from "react-native";
 import React, { useState, useEffect, useRef } from "react";
 import { Dropdown } from "react-native-element-dropdown";
@@ -183,8 +184,16 @@ export default function Search() {
   };
   const handleSearchIconPress = () => {
     // fetchSearchCompanyResultByFilter(searchText, valueLocation);
-    fetchSearchCompanyResult(searchText, valueLocation);
-    fetchSearchJobResult(searchText, valueLocation);
+    if (searchText.length <= 0) {
+      ToastAndroid.show(
+        "Vui lòng nhập thông tin để tìm kiếm !",
+        ToastAndroid.SHORT,
+        ToastAndroid.BOTTOM
+      );
+    } else {
+      fetchSearchCompanyResult(searchText, valueLocation);
+      fetchSearchJobResult(searchText, valueLocation);
+    }
   };
   const navigation = useNavigation();
 

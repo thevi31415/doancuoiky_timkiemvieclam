@@ -412,18 +412,18 @@ export default function CompaniesDetail({ checkNav }) {
               </Text>
 
               {listJob.length === 0 ? (
-                <View
-                  style={{ justifyContent: "center", alignItems: "center" }}
-                >
+                <View style={{ justifyContent: "center" }}>
                   <Text
                     style={{ fontSize: 16, color: "#333333", marginLeft: 10 }}
                   >
                     Công ty này chưa đăng bất cứ công việc nào !
                   </Text>
-                  <Image
-                    style={{ width: 200, height: 200 }}
-                    source={require("../../assets/not_found.jpg")}
-                  />
+                  <View style={{ alignItems: "center" }}>
+                    <Image
+                      style={{ width: 200, height: 200 }}
+                      source={require("../../assets/not_found.jpg")}
+                    />
+                  </View>
                 </View>
               ) : (
                 <FlatList

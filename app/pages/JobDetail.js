@@ -36,6 +36,7 @@ import {
 import { useUser } from "@clerk/clerk-expo";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useFocusEffect } from "@react-navigation/native";
+import CompaniesItem from "../components/HomeScreen/CompanyItem";
 
 export default function JobDetail({ checkNav }) {
   const db = getFirestore(app);
@@ -44,6 +45,7 @@ export default function JobDetail({ checkNav }) {
   const { params } = useRoute();
   const [job, setJob] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [companies, setCompanies] = useState(null);
   const [checkApply, setCheckApply] = useState(false);
   const [checkBookmark, setCheckBookmark] = useState(false);
   const [IDBookMark, setIDBookmark] = useState(null);
@@ -75,7 +77,19 @@ export default function JobDetail({ checkNav }) {
     } catch (error) {
       console.error("Error fetching data applyjob:", error);
     }
-    setLoading(false); // Bắt đầu quá trình load
+
+    try {
+      const companySnapshot = await getDocs(collection(db, "Company"));
+      const filteredCompany = companySnapshot.docs.filter((doc) => {
+        const data = doc.data();
+        return data.ID == job?.IDCompany;
+      });
+      const companiesData = filteredCompany.map((doc) => doc.data());
+      setCompanies(companiesData[0]);
+    } catch (error) {
+      console.error("Error fetching data applyjob:", error);
+    }
+    setLoading(false);
   };
 
   const fetchDataBookmark = async () => {
@@ -415,7 +429,7 @@ export default function JobDetail({ checkNav }) {
                 style={{
                   marginTop: 5,
 
-                  marginBottom: 100,
+                  marginBottom: 10,
                 }}
               >
                 <Text
@@ -448,31 +462,31 @@ export default function JobDetail({ checkNav }) {
                   </Text>
                 </View>
               </View>
+              <View
+                style={{
+                  marginTop: 5,
+                  marginBottom: 100,
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 17,
+                    fontWeight: "bold",
+                    color: "#333333",
+                    marginBottom: 20,
+                  }}
+                >
+                  Thông tin công ty
+                </Text>
+                <View style={{ marginLeft: 15 }}>
+                  <CompaniesItem style={{ margin: 10 }} item={companies} />
+                </View>
+              </View>
             </View>
           </View>
         </View>
       </ScrollView>
       <View style={styles.container}>
-        {/* <TouchableOpacity style={styles.likeBtn}>
-          <FontAwesome
-            resizeMode="contain"
-            name="bookmark-o"
-            size={24}
-            color="#2c67f2"
-          />
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.applyBtn}
-          onPress={applyJob}
-          disabled={isLoading}
-        >
-          {isLoading ? (
-            <ActivityIndicator color="white" />
-          ) : (
-            <Text style={styles.applyBtnText}>Apply for job</Text>
-          )}
-        </TouchableOpacity> */}
         <TouchableOpacity style={styles.likeBtn} onPress={bookMarkJob}>
           <FontAwesome
             resizeMode="contain"
