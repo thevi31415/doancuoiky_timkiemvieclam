@@ -73,7 +73,7 @@ export default function CompaniesDetail({ checkNav }) {
     setLoading(false);
   };
   const fetchDataFollow = async () => {
-    setLoading(true); // Bắt đầu quá trình load
+    setLoading(true);
 
     try {
       const followCompanySnapshot = await getDocs(
@@ -159,6 +159,8 @@ export default function CompaniesDetail({ checkNav }) {
             marginTop: 40,
             padding: 13,
             backgroundColor: "white",
+            borderBottomColor: "#e6e7e8",
+            borderBottomWidth: 2,
           }}
         >
           <TouchableOpacity

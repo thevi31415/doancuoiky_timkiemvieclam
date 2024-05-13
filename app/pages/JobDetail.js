@@ -201,6 +201,8 @@ export default function JobDetail({ checkNav }) {
             marginTop: 40,
             padding: 13,
             backgroundColor: "white",
+            borderBottomColor: "#e6e7e8",
+            borderBottomWidth: 2,
           }}
         >
           <TouchableOpacity
