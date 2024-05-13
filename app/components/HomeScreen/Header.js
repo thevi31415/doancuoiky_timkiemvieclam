@@ -31,54 +31,55 @@ removeValue = async () => {
     // remove error
   }
 };
-export default function Header() {
+export default function Header({ linkAvatar, nameUser }) {
   const navigation = useNavigation();
   const db = getFirestore(app);
   const { user } = useUser();
   const [userAccount, setUserAccount] = useState([]);
 
-  const fetchData = async () => {
-    try {
-      const userSnapshot = await getDocs(collection(db, "User"));
-      const users = userSnapshot.docs.map((doc) => doc.data());
-      const targetUser = users.find((users) => users.ID == user?.id);
-      if (targetUser) {
-        console.log(targetUser);
-        console.log("Tìm thấy nhân user header");
-        setUserAccount(targetUser);
-        removeValue();
-        storeData(targetUser);
-      } else {
-        const userNew = {
-          ID: user?.id,
-          SDT: "0949Y845xxx",
-          imageUrl: user?.imageUrl,
-          name: user?.fullName,
-          email: user?.primaryEmailAddress?.toString(),
-        };
-        console.log("User name header3" + user.primaryEmailAddress);
+  // const fetchData = async () => {
+  //   try {
+  //     const userSnapshot = await getDocs(collection(db, "User"));
+  //     const users = userSnapshot.docs.map((doc) => doc.data());
+  //     const targetUser = users.find((users) => users.ID == user?.id);
+  //     if (targetUser) {
+  //       console.log(targetUser);
+  //       console.log("Tìm thấy nhân user header");
+  //       setUserAccount(targetUser);
+  //       // removeValue();
+  //       // storeData(targetUser);
+  //     } else {
+  //       const userNew = {
+  //         ID: user?.id,
+  //         SDT: "0949Y845xxx",
+  //         imageUrl: user?.imageUrl,
+  //         role: "User",
+  //         name: user?.fullName,
+  //         email: user?.primaryEmailAddress?.toString(),
+  //       };
+  //       console.log("User name header3" + user.primaryEmailAddress);
 
-        const docRef = await addDoc(collection(db, "User"), userNew);
-        if (docRef.id) {
-          console.log("Document Added");
-          removeValue();
+  //       const docRef = await addDoc(collection(db, "User"), userNew);
+  //       if (docRef.id) {
+  //         console.log("Document Added");
+  //         // removeValue();
 
-          storeData(userNew);
-        }
-      }
-    } catch (error) {
-      console.error("Lỗi khi lấy dữ liệu từ Firebase:", error);
-    }
-    console.log(
-      "User: Name: " + userAccount.name + "Email: " + userAccount.email
-    );
-  };
+  //         // storeData(userNew);
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.error("Lỗi khi lấy dữ liệu từ Firebase:", error);
+  //   }
+  //   console.log(
+  //     "User: Name: " + userAccount.name + "Email: " + userAccount.email
+  //   );
+  // };
 
-  useFocusEffect(
-    React.useCallback(() => {
-      fetchData();
-    }, [])
-  );
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     fetchData();
+  //   }, [])
+  // );
   return (
     <View>
       <ImageBackground

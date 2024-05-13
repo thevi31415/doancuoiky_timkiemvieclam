@@ -117,12 +117,7 @@ export default function Account() {
   useEffect(() => {
     getData();
   }, []);
-  const [form, setForm] = useState({
-    darkMode: false,
-    emailNotifications: true,
-    pushNotifications: false,
-  });
-  // console.log("Link: " + userAccount.imageUrl);
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
       <View style={styles.container}>
@@ -130,13 +125,15 @@ export default function Account() {
           <View style={styles.profile}>
             <Image
               alt=""
-              source={{ uri: userAccount?.imageUrl }}
+              source={{ uri: user?.imageUrl }}
               style={styles.profileAvatar}
             />
 
-            <Text style={styles.profileName}> {userAccount?.name}</Text>
+            <Text style={styles.profileName}> {user?.fullName}</Text>
 
-            <Text style={styles.profileEmail}> {userAccount?.email}</Text>
+            <Text style={styles.profileEmail}>
+              {user?.primaryEmailAddress?.toString()}
+            </Text>
 
             <TouchableOpacity
               onPress={() => {
