@@ -282,7 +282,7 @@ export default function CompaniesDetail({ checkNav }) {
           >
             <View style={{ margin: 10 }}>
               <Text
-                style={{ fontSize: 20, fontWeight: "bold", color: "#2c67f2" }}
+                style={{ fontSize: 17, fontWeight: "bold", color: "#333333" }}
               >
                 Thông tin
               </Text>
@@ -376,7 +376,7 @@ export default function CompaniesDetail({ checkNav }) {
             </View>
             <View style={{ margin: 15 }}>
               <Text
-                style={{ fontSize: 20, fontWeight: "bold", color: "#2c67f2" }}
+                style={{ fontSize: 17, fontWeight: "bold", color: "#333333" }}
               >
                 Giới thiệu
               </Text>
@@ -401,9 +401,9 @@ export default function CompaniesDetail({ checkNav }) {
             <View style={{ margin: 3, marginBottom: 10 }}>
               <Text
                 style={{
-                  fontSize: 20,
+                  fontSize: 17,
                   fontWeight: "bold",
-                  color: "#2c67f2",
+                  color: "#333333",
                   marginBottom: 10,
                   marginLeft: 10,
                 }}

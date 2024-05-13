@@ -283,7 +283,7 @@ export default function JobDetail({ checkNav }) {
           >
             <View style={{ margin: 15 }}>
               <Text
-                style={{ fontSize: 20, fontWeight: "bold", color: "#2c67f2" }}
+                style={{ fontSize: 17, fontWeight: "bold", color: "#333333" }}
               >
                 Thông tin công việc
               </Text>
@@ -378,17 +378,15 @@ export default function JobDetail({ checkNav }) {
               </View>
               <View
                 style={{
-                  marginTop: 5,
-
+                  marginTop: 10,
                   marginBottom: 5,
                 }}
               >
                 <Text
                   style={{
-                    fontSize: 20,
+                    fontSize: 17,
                     fontWeight: "bold",
-                    color: "#2c67f2",
-                    marginBottom: 10,
+                    color: "#333333",
                   }}
                 >
                   Mô tả công việc
@@ -422,10 +420,10 @@ export default function JobDetail({ checkNav }) {
               >
                 <Text
                   style={{
-                    fontSize: 20,
+                    fontSize: 17,
                     fontWeight: "bold",
-                    color: "#2c67f2",
-                    marginBottom: 10,
+                    color: "#333333",
+                    marginBottom: 5,
                   }}
                 >
                   Quyền lợi công việc
