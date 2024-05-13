@@ -3,15 +3,15 @@ import { View, FlatList, Image } from "react-native";
 
 const DATA = [
   {
-    id: "https://res.cloudinary.com/dhs93uix6/image/upload/v1713453326/17348611_5816231_cnjrji.jpg",
+    id: "https://res.cloudinary.com/dhs93uix6/image/upload/v1715562348/9746620_4214553_jtpv6n.jpg",
     title: "First Item",
   },
   {
-    id: "https://res.cloudinary.com/dhs93uix6/image/upload/v1713453298/13859499_5384040_zzhp7k.jpg",
+    id: "https://res.cloudinary.com/dhs93uix6/image/upload/v1715562347/9702342_4221930_ibiepi.jpg",
     title: "Second Item",
   },
   {
-    id: "https://res.cloudinary.com/dhs93uix6/image/upload/v1713453498/16326494_rm222-mind-16_rjizb9.jpg",
+    id: "https://res.cloudinary.com/dhs93uix6/image/upload/v1715562347/9375722_4156595_gs1o0g.jpg",
     title: "Third Item",
   },
 ];
@@ -52,10 +52,11 @@ export default function Slider() {
             <Image
               source={{ uri: item?.id }}
               style={{
-                height: 200,
+                height: 170,
                 width: 330,
+                padding: 5,
                 marginRight: 3,
-                borderRadius: 10,
+                borderRadius: 13,
               }}
             />
           </View>

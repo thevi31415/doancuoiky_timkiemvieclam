@@ -10,6 +10,7 @@ import {
   ToastAndroid,
   ActivityIndicator,
   StyleSheet,
+  FlatList,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
@@ -41,6 +42,8 @@ export default function CompaniesDetail({ checkNav }) {
   const [checkFollowed, setCheckFollowed] = useState(false);
   const { params } = useRoute();
   const [company, setCompany] = useState([]);
+  const [listJob, setListJob] = useState([]);
+
   const [IDFollow, setIDFollow] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -50,7 +53,25 @@ export default function CompaniesDetail({ checkNav }) {
   }, [params]);
   useEffect(() => {
     fetchDataFollow();
+    fetchDataListJob();
   }, [company, checkFollowed]);
+
+  const fetchDataListJob = async () => {
+    try {
+      const q = query(
+        collection(db, "Jobs"),
+        where("IDCompany", "==", company.ID)
+      );
+
+      const jobSnapshot = await getDocs(q);
+      const jobData = jobSnapshot.docs.map((doc) => doc.data());
+      setListJob(jobData);
+      console.log("List job: " + jobData.length);
+    } catch (error) {
+      console.error("Error fetching data following:", error);
+    }
+    setLoading(false);
+  };
   const fetchDataFollow = async () => {
     setLoading(true); // Bắt đầu quá trình load
 
@@ -74,10 +95,10 @@ export default function CompaniesDetail({ checkNav }) {
     } catch (error) {
       console.error("Error fetching data follwing:", error);
     }
-    setLoading(false); // Bắt đầu quá trình load
+    setLoading(false);
   };
   const followCompany = async () => {
-    setLoading(true); // Bắt đầu quá trình load
+    setLoading(true);
 
     console.log("Follow" + checkFollowed);
     if (checkFollowed == true) {
@@ -360,6 +381,176 @@ export default function CompaniesDetail({ checkNav }) {
               >
                 {company?.Introduction}
               </Text>
+            </View>
+            <View style={{ margin: 3, marginBottom: 10 }}>
+              <Text
+                style={{
+                  fontSize: 20,
+                  fontWeight: "bold",
+                  color: "#2c67f2",
+                  marginBottom: 10,
+                  marginLeft: 10,
+                }}
+              >
+                Công việc ({listJob.length} công việc)
+              </Text>
+
+              {listJob.length === 0 ? (
+                <View
+                  style={{ justifyContent: "center", alignItems: "center" }}
+                >
+                  <Text
+                    style={{ fontSize: 16, color: "#333333", marginLeft: 10 }}
+                  >
+                    Công ty này chưa đăng bất cứ công việc nào !
+                  </Text>
+                  <Image
+                    style={{ width: 200, height: 200 }}
+                    source={require("../../assets/not_found.jpg")}
+                  />
+                </View>
+              ) : (
+                <FlatList
+                  showsVerticalScrollIndicator={false}
+                  data={listJob}
+                  renderItem={({ item }) => (
+                    <TouchableOpacity
+                      onPress={() =>
+                        navigation.push("job-detail", {
+                          job: item,
+                        })
+                      }
+                      style={{
+                        borderWidth: 1,
+                        borderColor: "#6b9bf5",
+                        borderBottomColor: "#F5F6F6",
+                        borderRadius: 10,
+                        backgroundColor: "#fafbff",
+                      }}
+                    >
+                      <View
+                        style={{
+                          marginVertical: 16,
+                          marginHorizontal: 25,
+                          flexDirection: "row",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Image
+                          source={{ uri: item?.Logo }}
+                          style={{
+                            height: 50,
+                            width: 50,
+                            marginRight: 16,
+                            borderRadius: 10,
+                          }}
+                        />
+                        <View>
+                          <Text
+                            style={{
+                              fontSize: 19,
+                              color: "#2c67f2",
+                              fontWeight: "bold",
+                              width: 230,
+                            }}
+                            numberOfLines={2}
+                            ellipsizeMode="tail"
+                          >
+                            {item?.NameJob}
+                          </Text>
+                          <TouchableOpacity onPress={() => {}}>
+                            <Text
+                              style={{
+                                fontSize: 16,
+                                color: "#333333",
+                                fontWeight: "bold",
+                                marginTop: 3,
+                              }}
+                            >
+                              {item?.NameCompany}
+                            </Text>
+                          </TouchableOpacity>
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              alignItems: "center",
+                              marginTop: 7,
+                            }}
+                          >
+                            <AntDesign name="staro" size={20} color="#6b9bf5" />
+
+                            <Text
+                              style={{
+                                color: "gray",
+                                fontSize: 13,
+                                marginLeft: 4,
+                              }}
+                            >
+                              {item?.Experience} Kinh nghiệm
+                            </Text>
+                          </View>
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              alignItems: "center",
+
+                              marginTop: 4,
+                            }}
+                          >
+                            <Ionicons
+                              name="location-outline"
+                              size={20}
+                              color="#6b9bf5"
+                            />
+
+                            <Text
+                              numberOfLines={4}
+                              style={{
+                                color: "gray",
+                                fontSize: 13,
+                                marginLeft: 4,
+                              }}
+                            >
+                              {item?.LocationJob}
+                            </Text>
+                          </View>
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              alignItems: "center",
+                              marginTop: 4,
+                              marginLeft: 3,
+                            }}
+                          >
+                            <AntDesign
+                              name="clockcircleo"
+                              size={16}
+                              color="#6b9bf5"
+                            />
+                            <Text
+                              style={{
+                                color: "gray",
+                                fontSize: 13,
+                                marginLeft: 4,
+                              }}
+                            >
+                              {item?.DateCreated}
+                            </Text>
+                          </View>
+                        </View>
+                        <TouchableOpacity onPress={() => {}}>
+                          <Ionicons
+                            name="bookmark-outline"
+                            size={28}
+                            color={"#6b9bf5"}
+                          />
+                        </TouchableOpacity>
+                      </View>
+                    </TouchableOpacity>
+                  )}
+                  keyExtractor={(item) => item.ID}
+                />
+              )}
             </View>
           </View>
         </View>

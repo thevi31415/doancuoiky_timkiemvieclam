@@ -17,14 +17,14 @@ export default function JobItem({ item }) {
   return (
     <TouchableOpacity
       style={{
-        backgroundColor: "#FFF",
+        backgroundColor: "#fafbff",
         padding: 16,
         borderRadius: 16,
         marginBottom: 16,
-        borderWidth: 2,
-        borderLeftWidth: 8,
+        borderWidth: 1,
+        borderLeftWidth: 1,
         width: "100%",
-        borderColor: "#2c67f2",
+        borderColor: "#a4c1f7",
       }}
       onPress={() =>
         navigation.push("job-detail", {
@@ -58,7 +58,7 @@ export default function JobItem({ item }) {
           </Text>
         </View>
 
-        <Ionicons name="bookmark-outline" size={24} color="#000" />
+        <Ionicons name="bookmark-outline" size={24} color="#a4c1f7" />
       </View>
       <Text
         style={{
@@ -70,14 +70,14 @@ export default function JobItem({ item }) {
       >
         {item?.NameJob}
       </Text>
-      <View style={{ marginTop: 15 }}>
+      <View style={{ marginTop: 7 }}>
         <View
           style={{
             flexDirection: "row",
             alignItems: "center",
           }}
         >
-          <Ionicons name="location-outline" size={24} color="#8f8f8f" />
+          <Ionicons name="location-outline" size={24} color="#a4c1f7" />
           <Text
             style={{
               color: "#3F3F3F",
@@ -92,10 +92,10 @@ export default function JobItem({ item }) {
           style={{
             flexDirection: "row",
             alignItems: "center",
-            marginTop: 7,
+            marginTop: 5,
           }}
         >
-          <AntDesign name="staro" size={24} color="#8f8f8f" />
+          <AntDesign name="staro" size={24} color="#a4c1f7" />
 
           <Text
             style={{
@@ -111,10 +111,10 @@ export default function JobItem({ item }) {
           style={{
             flexDirection: "row",
             alignItems: "center",
-            marginTop: 7,
+            marginTop: 5,
           }}
         >
-          <MaterialIcons name="attach-money" size={24} color="#8f8f8f" />
+          <MaterialIcons name="attach-money" size={24} color="#a4c1f7" />
           <Text
             style={{
               color: "#3F3F3F",
@@ -135,7 +135,7 @@ export default function JobItem({ item }) {
         >
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <View
-              style={{ marginTop: 10, padding: 5 }}
+              style={{ marginTop: 7, padding: 5 }}
               className="bg-blue-100  text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400"
             >
               <Text>{item?.TypeJob}</Text>

@@ -71,8 +71,14 @@ export default function ResultSearchCompanies({ itemList, filterLocation }) {
                   })
                 }
                 style={{
-                  borderBottomWidth: 1,
+                  marginLeft: 5,
+                  marginRight: 5,
+                  marginBottom: 10,
+                  borderWidth: 1,
+                  borderColor: "#6b9bf5",
                   borderBottomColor: "#F5F6F6",
+                  borderRadius: 10,
+                  backgroundColor: "#fafbff",
                 }}
               >
                 <View
@@ -117,7 +123,7 @@ export default function ResultSearchCompanies({ itemList, filterLocation }) {
                       <Ionicons
                         name="location-outline"
                         size={20}
-                        color="#8f8f8f"
+                        color="#6b9bf5"
                       />
 
                       <Text
@@ -139,7 +145,7 @@ export default function ResultSearchCompanies({ itemList, filterLocation }) {
                         marginLeft: 3,
                       }}
                     >
-                      <AntDesign name="team" size={16} color="#8f8f8f" />
+                      <AntDesign name="team" size={16} color="#6b9bf5" />
                       <Text
                         style={{
                           color: "gray",
@@ -157,7 +163,7 @@ export default function ResultSearchCompanies({ itemList, filterLocation }) {
                         marginTop: 4,
                       }}
                     >
-                      <Ionicons name="bag-outline" size={20} color="#8f8f8f" />
+                      <Ionicons name="bag-outline" size={20} color="#6b9bf5" />
                       <Text
                         style={{
                           color: "gray",
@@ -169,11 +175,14 @@ export default function ResultSearchCompanies({ itemList, filterLocation }) {
                       </Text>
                     </View>
                   </View>
-                  <TouchableOpacity onPress={() => {}}>
+                  <TouchableOpacity
+                    style={{ marginRight: 0 }}
+                    onPress={() => {}}
+                  >
                     <Ionicons
                       name="bookmark-outline"
-                      size={28}
-                      color={"gray"}
+                      size={25}
+                      color={"#6b9bf5"}
                     />
                   </TouchableOpacity>
                 </View>

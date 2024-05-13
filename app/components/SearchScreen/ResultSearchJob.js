@@ -71,8 +71,15 @@ export default function ResultSearchJob({ itemList, filterLocation }) {
                   })
                 }
                 style={{
-                  borderBottomWidth: 1,
+                  marginLeft: 5,
+                  marginRight: 5,
+                  borderWidth: 1,
+                  marginBottom: 10,
+
+                  borderColor: "#6b9bf5",
                   borderBottomColor: "#F5F6F6",
+                  borderRadius: 10,
+                  backgroundColor: "#fafbff",
                 }}
               >
                 <View
@@ -109,7 +116,7 @@ export default function ResultSearchJob({ itemList, filterLocation }) {
                       <Text
                         style={{
                           fontSize: 16,
-                          color: "lightgray",
+                          color: "#333333",
                           fontWeight: "bold",
                           marginTop: 3,
                         }}
@@ -124,7 +131,7 @@ export default function ResultSearchJob({ itemList, filterLocation }) {
                         marginTop: 7,
                       }}
                     >
-                      <AntDesign name="staro" size={20} color="#8f8f8f" />
+                      <AntDesign name="staro" size={20} color="#6b9bf5" />
 
                       <Text
                         style={{
@@ -147,7 +154,7 @@ export default function ResultSearchJob({ itemList, filterLocation }) {
                       <Ionicons
                         name="location-outline"
                         size={20}
-                        color="#8f8f8f"
+                        color="#6b9bf5"
                       />
 
                       <Text
@@ -172,7 +179,7 @@ export default function ResultSearchJob({ itemList, filterLocation }) {
                       <AntDesign
                         name="clockcircleo"
                         size={16}
-                        color="#8f8f8f"
+                        color="#6b9bf5"
                       />
                       <Text
                         style={{
@@ -188,8 +195,8 @@ export default function ResultSearchJob({ itemList, filterLocation }) {
                   <TouchableOpacity onPress={() => {}}>
                     <Ionicons
                       name="bookmark-outline"
-                      size={28}
-                      color={"gray"}
+                      size={25}
+                      color={"#6b9bf5"}
                     />
                   </TouchableOpacity>
                 </View>

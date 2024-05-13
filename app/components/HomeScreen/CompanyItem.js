@@ -7,11 +7,11 @@ export default function CompaniesItem({ item }) {
   return (
     <TouchableOpacity
       style={{
-        backgroundColor: "#ffff",
+        backgroundColor: "#fafbff",
         borderRadius: 16,
-        borderWidth: 2,
-        borderLeftWidth: 8,
-        borderColor: "#2c67f2",
+        borderWidth: 1,
+        borderLeftWidth: 1,
+        borderColor: "#a4c1f7",
         width: 300,
         padding: 16,
         marginRight: 16,
@@ -51,7 +51,7 @@ export default function CompaniesItem({ item }) {
               style={{
                 fontSize: 18,
                 fontWeight: "600",
-                color: "#222F3F",
+                color: "#333333",
               }}
             >
               {item?.Name}
@@ -66,7 +66,7 @@ export default function CompaniesItem({ item }) {
             </Text>
           </View>
         </View>
-        <Ionicons name="bookmark-outline" size={24} color="#000" />
+        <Ionicons name="bookmark-outline" size={24} color="#a4c1f7" />
       </View>
 
       {/* <Text style={{ marginTop: 16, fontSize: 18, fontWeight: "600" }}>
@@ -85,7 +85,7 @@ export default function CompaniesItem({ item }) {
           <Ionicons
             name="people-outline"
             size={20}
-            color="black"
+            color="#a4c1f7"
             style={{ marginRight: 10 }}
           />
           <Text style={{ fontSize: 12, fontWeight: "400" }}>
@@ -100,7 +100,7 @@ export default function CompaniesItem({ item }) {
           <Ionicons
             name="bag-remove-outline"
             size={20}
-            color="black"
+            color="#a4c1f7"
             style={{ marginRight: 10 }}
           />
           <Text style={{ fontSize: 12, fontWeight: "400" }}>
