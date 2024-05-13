@@ -280,7 +280,7 @@ export default function CompaniesDetail({ checkNav }) {
               borderTopColor: "#e1e1e2",
             }}
           >
-            <View style={{ margin: 15 }}>
+            <View style={{ margin: 10 }}>
               <Text
                 style={{ fontSize: 20, fontWeight: "bold", color: "#2c67f2" }}
               >
@@ -288,82 +288,90 @@ export default function CompaniesDetail({ checkNav }) {
               </Text>
               <View
                 style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  marginTop: 15,
+                  padding: 10,
+                  marginTop: 10,
+                  borderRadius: 10,
+                  backgroundColor: "#f4f4f6",
                 }}
               >
-                <AntDesign name="earth" size={24} color="#8f8f8f" />
-
-                <Text
+                <View
                   style={{
-                    color: "#3996f5",
-                    fontSize: 15,
-                    fontWeight: "bold",
-                    marginLeft: 8,
-                  }}
-                  onPress={() => Linking.openURL(company?.Website)}
-                >
-                  {company?.Website}
-                </Text>
-              </View>
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  marginTop: 15,
-                }}
-              >
-                <AntDesign name="team" size={24} color="#8f8f8f" />
-                <Text
-                  style={{
-                    color: "#333333",
-                    fontSize: 15,
-
-                    marginLeft: 8,
+                    flexDirection: "row",
+                    alignItems: "center",
+                    marginTop: 0,
                   }}
                 >
-                  {company?.Employee}
-                </Text>
-              </View>
+                  <AntDesign name="earth" size={24} color="#8f8f8f" />
 
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  marginTop: 15,
-                }}
-              >
-                <AntDesign name="enviromento" size={24} color="#8f8f8f" />
-                <Text
+                  <Text
+                    style={{
+                      color: "#3996f5",
+                      fontSize: 15,
+                      fontWeight: "bold",
+                      marginLeft: 8,
+                    }}
+                    onPress={() => Linking.openURL(company?.Website)}
+                  >
+                    {company?.Website}
+                  </Text>
+                </View>
+                <View
                   style={{
-                    color: "#333333",
-                    fontSize: 15,
-
-                    marginLeft: 8,
+                    flexDirection: "row",
+                    alignItems: "center",
+                    marginTop: 15,
                   }}
                 >
-                  {company?.Location}
-                </Text>
-              </View>
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  marginTop: 15,
-                }}
-              >
-                <AntDesign name="mail" size={24} color="#8f8f8f" />
-                <Text
-                  style={{
-                    color: "#333333",
-                    fontSize: 15,
+                  <AntDesign name="team" size={24} color="#8f8f8f" />
+                  <Text
+                    style={{
+                      color: "#333333",
+                      fontSize: 15,
 
-                    marginLeft: 8,
+                      marginLeft: 8,
+                    }}
+                  >
+                    {company?.Employee}
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    marginTop: 15,
                   }}
                 >
-                  {company?.Email}
-                </Text>
+                  <AntDesign name="enviromento" size={24} color="#8f8f8f" />
+                  <Text
+                    style={{
+                      color: "#333333",
+                      fontSize: 15,
+
+                      marginLeft: 8,
+                    }}
+                  >
+                    {company?.Location}
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    marginTop: 15,
+                  }}
+                >
+                  <AntDesign name="mail" size={24} color="#8f8f8f" />
+                  <Text
+                    style={{
+                      color: "#333333",
+                      fontSize: 15,
+
+                      marginLeft: 8,
+                    }}
+                  >
+                    {company?.Email}
+                  </Text>
+                </View>
               </View>
             </View>
             <View style={{ margin: 15 }}>
@@ -372,15 +380,23 @@ export default function CompaniesDetail({ checkNav }) {
               >
                 Giới thiệu
               </Text>
-              <Text
+              <View
                 style={{
-                  color: "#333333",
-                  fontSize: 15,
-                  marginTop: 15,
+                  padding: 10,
+                  marginTop: 10,
+                  borderRadius: 10,
+                  backgroundColor: "#f4f4f6",
                 }}
               >
-                {company?.Introduction}
-              </Text>
+                <Text
+                  style={{
+                    color: "#333333",
+                    fontSize: 15,
+                  }}
+                >
+                  {company?.Introduction}
+                </Text>
+              </View>
             </View>
             <View style={{ margin: 3, marginBottom: 10 }}>
               <Text
@@ -413,6 +429,7 @@ export default function CompaniesDetail({ checkNav }) {
                 <FlatList
                   showsVerticalScrollIndicator={false}
                   data={listJob}
+                  style={{ margin: 8 }}
                   renderItem={({ item }) => (
                     <TouchableOpacity
                       onPress={() =>
@@ -538,13 +555,13 @@ export default function CompaniesDetail({ checkNav }) {
                             </Text>
                           </View>
                         </View>
-                        <TouchableOpacity onPress={() => {}}>
+                        {/* <TouchableOpacity onPress={() => {}}>
                           <Ionicons
                             name="bookmark-outline"
                             size={28}
                             color={"#6b9bf5"}
                           />
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                       </View>
                     </TouchableOpacity>
                   )}

@@ -28,7 +28,7 @@ export default function Slider() {
           animated: true,
         });
       }
-    }, 3000);
+    }, 2000);
 
     return () => clearInterval(timer);
   }, [currentIndex]);

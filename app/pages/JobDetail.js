@@ -289,137 +289,167 @@ export default function JobDetail({ checkNav }) {
               </Text>
               <View
                 style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  marginTop: 15,
+                  padding: 10,
+                  marginTop: 10,
+                  borderRadius: 10,
+                  backgroundColor: "#f4f4f6",
                 }}
               >
-                <AntDesign name="staro" size={24} color="#8f8f8f" />
-
-                <Text
+                <View
                   style={{
-                    fontSize: 15,
-                    color: "#333333",
-
-                    marginLeft: 8,
+                    flexDirection: "row",
+                    alignItems: "center",
                   }}
                 >
-                  {job?.Experience} năm
-                </Text>
+                  <AntDesign name="staro" size={24} color="#8f8f8f" />
+
+                  <Text
+                    style={{
+                      fontSize: 15,
+                      color: "#333333",
+
+                      marginLeft: 8,
+                    }}
+                  >
+                    {job?.Experience} năm
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    marginTop: 15,
+                  }}
+                >
+                  <AntDesign name="team" size={24} color="#8f8f8f" />
+                  <Text
+                    style={{
+                      color: "#333333",
+                      fontSize: 15,
+
+                      marginLeft: 8,
+                    }}
+                  >
+                    {job?.TypeJob}
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    marginTop: 15,
+                  }}
+                >
+                  <AntDesign name="enviromento" size={24} color="#8f8f8f" />
+                  <Text
+                    style={{
+                      color: "#333333",
+                      fontSize: 15,
+
+                      marginLeft: 8,
+                    }}
+                  >
+                    {job?.LocationJob}
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    marginTop: 15,
+                  }}
+                >
+                  <MaterialIcons
+                    name="attach-money"
+                    size={24}
+                    color="#8f8f8f"
+                  />
+                  <Text
+                    style={{
+                      color: "#333333",
+                      fontSize: 15,
+
+                      marginLeft: 8,
+                    }}
+                  >
+                    {job?.Salary} VND
+                  </Text>
+                </View>
               </View>
               <View
                 style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  marginTop: 15,
+                  marginTop: 5,
+
+                  marginBottom: 5,
                 }}
               >
-                <AntDesign name="team" size={24} color="#8f8f8f" />
                 <Text
                   style={{
-                    color: "#333333",
-                    fontSize: 15,
-
-                    marginLeft: 8,
+                    fontSize: 20,
+                    fontWeight: "bold",
+                    color: "#2c67f2",
+                    marginBottom: 10,
                   }}
                 >
-                  {job?.TypeJob}
+                  Mô tả công việc
                 </Text>
+                <View
+                  style={{
+                    padding: 10,
+                    marginTop: 10,
+                    borderRadius: 10,
+                    width: "100",
+                    backgroundColor: "#f4f4f6",
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: "#333333",
+                      fontSize: 17,
+                      textAlign: "justify",
+                    }}
+                  >
+                    {job.DescriptionJob}
+                  </Text>
+                </View>
               </View>
               <View
                 style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  marginTop: 15,
+                  marginTop: 5,
+
+                  marginBottom: 100,
                 }}
               >
-                <AntDesign name="enviromento" size={24} color="#8f8f8f" />
                 <Text
                   style={{
-                    color: "#333333",
-                    fontSize: 15,
-
-                    marginLeft: 8,
+                    fontSize: 20,
+                    fontWeight: "bold",
+                    color: "#2c67f2",
+                    marginBottom: 10,
                   }}
                 >
-                  {job?.LocationJob}
+                  Quyền lợi công việc
                 </Text>
-              </View>
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  marginTop: 15,
-                }}
-              >
-                <MaterialIcons name="attach-money" size={24} color="#8f8f8f" />
-                <Text
+                <View
                   style={{
-                    color: "#333333",
-                    fontSize: 15,
-
-                    marginLeft: 8,
+                    padding: 10,
+                    marginTop: 10,
+                    borderRadius: 10,
+                    width: "100",
+                    backgroundColor: "#f4f4f6",
                   }}
                 >
-                  {job?.Salary} VND
-                </Text>
+                  <Text
+                    style={{
+                      color: "#333333",
+                      fontSize: 17,
+                      textAlign: "justify",
+                    }}
+                  >
+                    {job.BenefitJob}
+                  </Text>
+                </View>
               </View>
-            </View>
-            <View
-              style={{
-                marginTop: 5,
-                marginLeft: 15,
-                marginRight: 15,
-                marginBottom: 5,
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: 20,
-                  fontWeight: "bold",
-                  color: "#2c67f2",
-                  marginBottom: 10,
-                }}
-              >
-                Mô tả công việc
-              </Text>
-              <Text
-                style={{
-                  color: "#333333",
-                  fontSize: 17,
-                  textAlign: "justify",
-                }}
-              >
-                {job.DescriptionJob}
-              </Text>
-            </View>
-            <View
-              style={{
-                marginTop: 5,
-                marginLeft: 15,
-                marginRight: 15,
-                marginBottom: 100,
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: 20,
-                  fontWeight: "bold",
-                  color: "#2c67f2",
-                  marginBottom: 10,
-                }}
-              >
-                Quyền lợi công việc
-              </Text>
-              <Text
-                style={{
-                  color: "#333333",
-                  fontSize: 17,
-                  textAlign: "justify",
-                }}
-              >
-                {job.BenefitJob}
-              </Text>
             </View>
           </View>
         </View>
