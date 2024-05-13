@@ -65,8 +65,8 @@ export default function MainComponent() {
         const docRef = await addDoc(collection(db, "User"), userNew);
         if (docRef.id) {
           console.log("Document Added");
-          removeValue();
         }
+        removeValue();
         storeData(targetUser);
       }
     } catch (error) {
@@ -76,7 +76,7 @@ export default function MainComponent() {
   };
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [role]);
   return (
     <NavigationContainer>
       <Tab.Navigator
@@ -94,6 +94,7 @@ export default function MainComponent() {
             ),
           }}
         />
+
         {role === "Admin" ? (
           <Tab.Screen
             name="Quản lý"

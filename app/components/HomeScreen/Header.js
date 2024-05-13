@@ -24,20 +24,25 @@ export default function Header({ linkAvatar, nameUser }) {
   const db = getFirestore(app);
   const { user } = useUser();
   const [userAccount, setUserAccount] = useState([]);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const jsonValue = await AsyncStorage.getItem("userAccount");
-        if (jsonValue !== null) {
-          setUserAccount(JSON.parse(jsonValue));
-        }
-      } catch (e) {
-        console.error("Error fetching user account data: ", e);
+  const fetchData = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem("userAccount");
+      if (jsonValue !== null) {
+        setUserAccount(JSON.parse(jsonValue));
       }
-    };
-
-    fetchData(); // Gọi hàm fetchData
+      console.log("Role header");
+    } catch (e) {
+      console.error("Error fetching user account data: ", e);
+    }
+  };
+  useEffect(() => {
+    fetchData();
   }, []);
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     fetchData();
+  //   }, [])
+  // );
   return (
     <View>
       <ImageBackground
