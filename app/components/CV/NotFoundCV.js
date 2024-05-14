@@ -1,8 +1,11 @@
 import { View, Text, TouchableOpacity, ScrollView, Image } from "react-native";
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
-
+import { useNavigation } from "@react-navigation/native";
+import { Formik } from "formik";
 export default function NotFoundCV() {
+  const navigation = useNavigation();
+
   return (
     <>
       <View
@@ -17,13 +20,7 @@ export default function NotFoundCV() {
           borderBottomWidth: 2,
         }}
       >
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={{ position: "absolute", left: 20 }}
-        >
-          <Ionicons name="arrow-back-outline" size={30} color="#2c67f2" />
-        </TouchableOpacity>
-        <Text style={{ fontSize: 20, fontWeight: "bold" }}>CV</Text>
+        <Text style={{ fontSize: 20, fontWeight: "bold" }}> Quản lý CV</Text>
       </View>
       <ScrollView style={{ backgroundColor: "white" }}>
         <View style={{ alignItems: "center" }}>
@@ -56,10 +53,11 @@ export default function NotFoundCV() {
               padding: 12,
               marginTop: 10,
               borderRadius: 10,
-              flexDirection: "row", // Sắp xếp các phần tử theo hàng ngang
-              alignItems: "center", // Căn chỉnh các phần tử theo chiều dọc
-              justifyContent: "center", // Căn chỉnh các phần tử theo chiều ngang
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
             }}
+            onPress={() => navigation.push("add-cv")}
           >
             <Ionicons name="add" size={26} color="white" />
             <Text

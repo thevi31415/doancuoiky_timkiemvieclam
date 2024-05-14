@@ -28,6 +28,7 @@ import {
 } from "firebase/firestore";
 import CVDetail from "../components/CV/CVDetail";
 import NotFoundCV from "../components/CV/NotFoundCV";
+import NotFoundCVStackNav from "../components/CV/NotFoundCVStackNav";
 export default function CV() {
   const db = getFirestore(app);
 
@@ -63,5 +64,7 @@ export default function CV() {
       console.log("Name CV2: " + listCV[0].IDUser);
     }
   }, [listCV]);
-  return <>{listCV.length > 0 ? <CVDetail CV={CV} /> : <NotFoundCV />}</>;
+  return (
+    <>{listCV.length > 0 ? <CVDetail CV={CV} /> : <NotFoundCVStackNav />}</>
+  );
 }
