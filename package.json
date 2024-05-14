@@ -53,7 +53,8 @@
     "react-native-toast-message": "^2.2.0",
     "react-native-vector-icons": "^10.0.3",
     "react-navigation": "^5.0.0",
-    "typescript": "^5.3.0"
+    "typescript": "^5.3.0",
+    "@react-native-community/datetimepicker": "7.6.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

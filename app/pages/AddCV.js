@@ -9,6 +9,7 @@ import {
   KeyboardAvoidingView,
   TextInput,
   StyleSheet,
+  Pressable,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
@@ -18,10 +19,14 @@ import { getFirestore } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { Picker } from "@react-native-picker/picker";
 import { useUser } from "@clerk/clerk-expo";
+import DateTimePicker from "@react-native-community/datetimepicker";
 export default function AddCV() {
   const navigation = useNavigation();
   const [image, setImage] = useState(null);
   const storage = getStorage();
+  const [date, setDate] = useState(new Date());
+  const [showPicker, setShowPicker] = useState(false);
+  const [dateOfBirth, setDateOfBirth] = useState("");
   const db = getFirestore(app);
   const { user } = useUser();
   const [loading, setLoading] = useState(false);
@@ -67,6 +72,36 @@ export default function AddCV() {
       });
   };
 
+  const formatDate = (date) => {
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+    const formattedDay = String(day).padStart(2, "0");
+    const formattedMonth = String(month).padStart(2, "0");
+
+    return `${formattedDay}/${formattedMonth}/${year}`;
+  };
+  const toggleDatepicker = () => {
+    if (showPicker) {
+      setShowPicker(false);
+    } else {
+      setShowPicker(true);
+    }
+  };
+  const onChange = ({ type }, selectedDate) => {
+    console.log("Picker Date:  " + selectedDate);
+    if (type === "set") {
+      console.log("Setdate");
+      const currentDate = selectedDate;
+      setDateOfBirth(formatDate(currentDate));
+      toggleDatepicker();
+    }
+  };
+
+  useEffect(() => {
+    console.log("Ngày sinh đã được thiết lập mới:", dateOfBirth);
+    console.log("ShowPicker: " + showPicker);
+  }, [dateOfBirth, showPicker]);
   return (
     <>
       <View
@@ -93,7 +128,7 @@ export default function AddCV() {
       <KeyboardAvoidingView>
         <ScrollView
           style={{
-            margin: 10,
+            margin: 0,
             backgroundColor: "white",
             borderRadius: 10,
             marginBottom: 60,
@@ -137,11 +172,11 @@ export default function AddCV() {
                     {image ? (
                       <Image
                         source={{ uri: image }}
-                        style={{ width: 170, height: 170, borderRadius: 100 }}
+                        style={{ width: 150, height: 150, borderRadius: 100 }}
                       />
                     ) : (
                       <Image
-                        style={{ width: 170, height: 170, borderRadius: 100 }}
+                        style={{ width: 150, height: 150, borderRadius: 100 }}
                         source={require("./assets/not_avatar.jpg")}
                       />
                     )}
@@ -202,7 +237,126 @@ export default function AddCV() {
                         fontWeight: "bold",
                       }}
                     >
+                      Số điện thoại
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        color: "#f04439",
+                        marginLeft: 10,
+                        fontWeight: "bold",
+                      }}
+                    >
+                      *
+                    </Text>
+                  </View>
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Nhập số điện thoại"
+                    value={values?.title}
+                    onChangeText={handleChange("title")}
+                  />
+                  <View style={{ flexDirection: "row", alignItems: "center" }}>
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        color: "#333333",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Email
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        color: "#f04439",
+                        marginLeft: 10,
+                        fontWeight: "bold",
+                      }}
+                    >
+                      *
+                    </Text>
+                  </View>
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Nhập Email"
+                    value={values?.title}
+                    onChangeText={handleChange("title")}
+                  />
+                  <View style={{ flexDirection: "row", alignItems: "center" }}>
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        color: "#333333",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Website
+                    </Text>
+                    {/* <Text
+                      style={{
+                        fontSize: 18,
+                        color: "#f04439",
+                        marginLeft: 10,
+                        fontWeight: "bold",
+                      }}
+                    >
+                      *
+                    </Text> */}
+                  </View>
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Nhập link website"
+                    value={values?.title}
+                    onChangeText={handleChange("title")}
+                  />
+                  <View style={{ flexDirection: "row", alignItems: "center" }}>
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        color: "#333333",
+                        fontWeight: "bold",
+                      }}
+                    >
                       Ngày sinh
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        color: "#f04439",
+                        marginLeft: 10,
+                        fontWeight: "bold",
+                      }}
+                    >
+                      *
+                    </Text>
+                  </View>
+                  {showPicker && (
+                    <DateTimePicker
+                      value={date}
+                      mode="date"
+                      display="spinner"
+                      onChange={onChange}
+                    />
+                  )}
+                  <Pressable onPress={toggleDatepicker}>
+                    <TextInput
+                      style={styles.input}
+                      placeholder="12/10/2003"
+                      value={dateOfBirth}
+                      editable={false}
+                    />
+                  </Pressable>
+
+                  <View style={{ flexDirection: "row", alignItems: "center" }}>
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        color: "#333333",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Định hướng nghề nghiệp
                     </Text>
                     <Text
                       style={{
@@ -220,37 +374,9 @@ export default function AddCV() {
                     placeholder="Descrjihhption"
                     value={values?.desc}
                     numberOfLines={5}
+                    multiline={true}
                     onChangeText={handleChange("desc")}
                   />
-                  <TextInput
-                    style={styles.input}
-                    placeholder="Price"
-                    value={values?.price}
-                    keyboardType="number-pad"
-                    onChangeText={handleChange("price")}
-                  />
-                  <TextInput
-                    style={styles.input}
-                    placeholder="Address"
-                    value={values?.address}
-                    onChangeText={handleChange("address")}
-                  />
-                  <Picker
-                    selectedValue={values?.category}
-                    className="bolder-2"
-                    onValueChange={(itemValue) =>
-                      setFieldValue("category", itemValue)
-                    }
-                  >
-                    {/* {categoryList.length > 0 &&
-                      categoryList?.map((item, index) => (
-                        <Picker.Item
-                          key={index}
-                          label={item?.name}
-                          value={item?.name}
-                        />
-                      ))} */}
-                  </Picker>
                 </View>
 
                 <TouchableOpacity
@@ -288,6 +414,6 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingHorizontal: 17,
     fontSize: 15,
-    textAlignVertical: "center",
+    // textAlignVertical: "center",
   },
 });
