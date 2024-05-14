@@ -40,11 +40,15 @@ export default function CompaniesItem({ item }) {
           style={{
             flexDirection: "row",
             alignItems: "center",
+            padding: 3,
+            borderRadius: 16,
+            backgroundColor: "#eef5ff",
+            width: "96%",
           }}
         >
           <Image
             source={{ uri: item?.Logo }}
-            style={{ width: 45, height: 45, borderRadius: 5 }}
+            style={{ width: 45, height: 45, borderRadius: 5, margin: 3 }}
           />
           <View style={{ marginLeft: 8 }}>
             <Text

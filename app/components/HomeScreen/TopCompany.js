@@ -40,7 +40,7 @@ export default function TopCompany({ topCompanyList }) {
           <FlatList
             data={topCompanyList}
             numColumns={10}
-            style={{ margin: 10 }}
+            style={{ margin: 5 }}
             renderItem={({ item, index }) => <CompaniesItem item={item} />}
           />
         </ScrollView>
