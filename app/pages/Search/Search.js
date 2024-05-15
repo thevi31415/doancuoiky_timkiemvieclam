@@ -17,24 +17,24 @@ import {
 } from "react-native";
 import React, { useState, useEffect, useRef } from "react";
 import { Dropdown } from "react-native-element-dropdown";
-import { app } from "../../firebaseConfig";
+import { app } from "../../../firebaseConfig";
 import { getFirestore } from "firebase/firestore";
 import { collection, getDocs, setDoc, addDoc } from "firebase/firestore";
 import { useFocusEffect } from "@react-navigation/native";
-import ItemHint from "../components/SearchScreen/ItemHint";
+import ItemHint from "../../components/Search/ItemHint";
 import { useNavigation } from "@react-navigation/native";
-import TopCompany from "../components/HomeScreen/TopCompany";
-import CompaniesItem from "../components/HomeScreen/CompanyItem";
+import TopCompany from "../../components/Home/TopCompany";
+import CompaniesItem from "../../components/Home/CompanyItem";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import ResultSearchCompanies from "../components/SearchScreen/ResultSearchCompanies";
-import ResultSearchCompaniesStackNav from "../components/SearchScreen/ResultSearchCompaniesStackNav";
+import ResultSearchCompanies from "../../components/Search/ResultSearchCompanies";
+import ResultSearchCompaniesStackNav from "../../components/Search/ResultSearchCompaniesStackNav";
 import BottomSheet, { BottomSheetMethods } from "@devvie/bottom-sheet";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { MaterialIcons } from "@expo/vector-icons";
-import ResultSearchAll from "../components/SearchScreen/ResultSearchAll";
-import ResultSearchJob from "../components/SearchScreen/ResultSearchJob";
-import ResultSearchJobStackNav from "../components/SearchScreen/ResultSearchJobStackNav";
+import ResultSearchAll from "../../components/Search/ResultSearchAll";
+import ResultSearchJob from "../../components/Search/ResultSearchJob";
+import ResultSearchJobStackNav from "../../components/Search/ResultSearchJobStackNav";
 const LocationData = [
   { label: "All locations", value: "" },
   { label: "Hồ Chí Minh", value: "Hồ Chí Minh" },

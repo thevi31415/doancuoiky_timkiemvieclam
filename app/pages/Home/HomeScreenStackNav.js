@@ -2,9 +2,9 @@ import { View, Text } from "react-native";
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from "./Home";
-import Search from "./Search";
-import CompaniesDetail from "./CompanyDetail";
-import JobDetail from "./JobDetail";
+import Search from "../Search/Search";
+import CompaniesDetail from "../Company/CompanyDetail";
+import JobDetail from "../Job/JobDetail";
 
 export default function HomeScreenStackNav() {
   const Stack = createStackNavigator();

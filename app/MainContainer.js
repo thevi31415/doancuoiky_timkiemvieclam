@@ -1,18 +1,18 @@
 import { View, Text, StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Notification from "./pages/Notification";
+import Home from "./pages/Home/Home";
+import Login from "./pages/Login/Login";
+import Notification from "./pages/Notifications/Notification";
 
 import { Entypo } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Companies from "./pages/Companies";
-import Account from "./pages/Account";
-import HomeScreenStackNav from "./pages/HomeScreenStackNav";
-import CV from "./pages/CV";
+import Companies from "./pages/Company/Companies";
+import Account from "./pages/Account/Account";
+import HomeScreenStackNav from "./pages/Home/HomeScreenStackNav";
+import CV from "./pages/CV/CV";
 import { collection, getDocs, setDoc, addDoc } from "firebase/firestore";
 import { app } from "../firebaseConfig";
 import { getFirestore } from "firebase/firestore";

@@ -2,9 +2,9 @@ import { View, Text } from "react-native";
 import React, { useEffect } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import ResultSearchCompanies from "./ResultSearchCompanies";
-import CompaniesDetail from "../../pages/CompanyDetail";
+import CompaniesDetail from "../../pages/Company/CompanyDetail";
 import ResultSearchJob from "./ResultSearchJob";
-import JobDetail from "../../pages/JobDetail";
+import JobDetail from "../../pages/Job/JobDetail";
 
 export default function ResultSearchJobStackNav({ itemList, filterLocation }) {
   const Stack = createStackNavigator();

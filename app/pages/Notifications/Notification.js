@@ -10,7 +10,7 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
-import BottomSheet from "./BottomSheet";
+import BottomSheet from "../BottomSheet";
 export default function Notification() {
   const [status, setStatus] = React.useState(false);
   const [listNotifications, setListNotifications] = useState([]);
@@ -51,7 +51,7 @@ export default function Notification() {
         ]}
       >
         <Image
-          source={require("../pages/assets/Logo_HCMUTE.jpg")}
+          source={require("../assets/Logo_HCMUTE.jpg")}
           style={{ height: 50, width: 50, marginRight: 20 }}
         />
         <View>

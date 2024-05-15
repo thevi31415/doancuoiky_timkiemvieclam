@@ -2,7 +2,7 @@ import { View, Text } from "react-native";
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import NotFoundCV from "./NotFoundCV";
-import AddCV from "../../pages/AddCV";
+import AddCV from "./AddCV";
 const Stack = createStackNavigator();
 
 export default function NotFoundCVStackNav() {

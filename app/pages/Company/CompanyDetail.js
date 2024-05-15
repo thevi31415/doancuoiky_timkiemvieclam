@@ -20,7 +20,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { Card } from "react-native-shadow-cards";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { useNavigation } from "@react-navigation/native";
-import { app } from "../../firebaseConfig";
+import { app } from "../../../firebaseConfig";
 import { getFirestore } from "firebase/firestore";
 
 import {
@@ -33,7 +33,7 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import { useUser } from "@clerk/clerk-expo";
-import LoadingOverlay from "../components/LoadingOverlay";
+import LoadingOverlay from "../../components/LoadingOverlay";
 export default function CompaniesDetail({ checkNav }) {
   const db = getFirestore(app);
   const { user } = useUser();
@@ -423,7 +423,7 @@ export default function CompaniesDetail({ checkNav }) {
                   <View style={{ alignItems: "center" }}>
                     <Image
                       style={{ width: 200, height: 200 }}
-                      source={require("../../assets/not_found.jpg")}
+                      source={require("../assets/not_found.jpg")}
                     />
                   </View>
                 </View>

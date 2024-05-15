@@ -1,6 +1,6 @@
 import React from "react";
 import * as WebBrowser from "expo-web-browser";
-import { useWarmUpBrowser } from "../../hooks/useWarmUpBrowser";
+import { useWarmUpBrowser } from "../../../hooks/useWarmUpBrowser";
 import { useOAuth } from "@clerk/clerk-expo";
 import {
   Text,
@@ -31,11 +31,11 @@ export default function Login() {
   return (
     <View style={{ flex: 1 }}>
       <ImageBackground
-        source={require("./assets/bg_login.jpg")}
+        source={require("../assets/bg_login.jpg")}
         style={styles.background}
       >
         <Image
-          source={require("./assets/logo_final.png")}
+          source={require("../assets/logo_final.png")}
           style={styles.logo}
         />
         <Text style={styles.title}>JobVP</Text>

@@ -14,7 +14,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 import { Formik } from "formik";
-import { app } from "../../firebaseConfig";
+import { app } from "../../../firebaseConfig";
 import { getFirestore } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { Picker } from "@react-native-picker/picker";
@@ -177,7 +177,7 @@ export default function AddCV() {
                     ) : (
                       <Image
                         style={{ width: 150, height: 150, borderRadius: 100 }}
-                        source={require("./assets/not_avatar.jpg")}
+                        source={require("../assets/not_avatar.jpg")}
                       />
                     )}
                   </TouchableOpacity>

@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, ScrollView, FlatList } from "react-native";
-import Header from "../components/HomeScreen/Header";
-import Slider from "../components/HomeScreen/Sliders";
-import TopCompany from "../components/HomeScreen/TopCompany";
-import LastJob from "../components/HomeScreen/LastJob";
-import { app } from "../../firebaseConfig";
+import Header from "../../components/Home/Header";
+import Slider from "../../components/Home/Sliders";
+import TopCompany from "../../components/Home/TopCompany";
+import LastJob from "../../components/Home/LastJob";
+import { app } from "../../../firebaseConfig";
 import { getFirestore } from "firebase/firestore";
 import { collection, getDocs, setDoc, addDoc } from "firebase/firestore";
 import { useFocusEffect } from "@react-navigation/native";
-import TypeJob from "../components/HomeScreen/TypeJob";
+import TypeJob from "../../components/Home/TypeJob";
 import { useUser } from "@clerk/clerk-expo";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import HintSearch from "../components/HomeScreen/HintSearch";
+import HintSearch from "../../components/Home/HintSearch";
 
 export default function Home() {
   const db = getFirestore(app);

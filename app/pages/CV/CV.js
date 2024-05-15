@@ -12,7 +12,7 @@ import { Card } from "react-native-shadow-cards";
 import { Ionicons } from "@expo/vector-icons";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { app } from "../../firebaseConfig";
+import { app } from "../../../firebaseConfig";
 import { getFirestore } from "firebase/firestore";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { useUser } from "@clerk/clerk-expo";
@@ -26,9 +26,9 @@ import {
   doc,
   deleteDoc,
 } from "firebase/firestore";
-import CVDetail from "../components/CV/CVDetail";
-import NotFoundCV from "../components/CV/NotFoundCV";
-import NotFoundCVStackNav from "../components/CV/NotFoundCVStackNav";
+import CVDetail from "./CVDetail";
+import NotFoundCV from "./NotFoundCV";
+import NotFoundCVStackNav from "./NotFoundCVStackNav";
 export default function CV() {
   const db = getFirestore(app);
 

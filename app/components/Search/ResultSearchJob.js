@@ -1,13 +1,13 @@
-import React from "react";
 import { View, Text, FlatList, TouchableOpacity, Image } from "react-native";
-import { createStackNavigator } from "@react-navigation/stack";
+import React from "react";
+import JobItem from "../Home/JobItem";
 import { Ionicons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { useNavigation } from "@react-navigation/native";
 
-export default function ResultSearchCompanies({ itemList, filterLocation }) {
+export default function ResultSearchJob({ itemList, filterLocation }) {
   const navigation = useNavigation();
-  console.log("Search companies: " + filterLocation);
 
   return (
     <View style={{ flex: 1 }}>
@@ -23,7 +23,7 @@ export default function ResultSearchCompanies({ itemList, filterLocation }) {
             fontWeight: "bold",
           }}
         >
-          Companies
+          Jobs
         </Text>
 
         {itemList.length > 0 ? (
@@ -36,7 +36,7 @@ export default function ResultSearchCompanies({ itemList, filterLocation }) {
               color: "#4e4e4e",
             }}
           >
-            Tìm thấy {itemList.length} công ty tại {filterLocation}
+            Tìm thấy {itemList.length} công việc tại
           </Text>
         ) : (
           <View style={{ justifyContent: "center", alignItems: "center" }}>
@@ -54,7 +54,7 @@ export default function ResultSearchCompanies({ itemList, filterLocation }) {
             </Text>
             <Image
               style={{ width: 250, height: 250 }}
-              source={require("../../../assets/not_found.jpg")}
+              source={require("../../pages/assets/not_found.jpg")}
             />
           </View>
         )}
@@ -66,15 +66,16 @@ export default function ResultSearchCompanies({ itemList, filterLocation }) {
             renderItem={({ item }) => (
               <TouchableOpacity
                 onPress={() =>
-                  navigation.push("company-detail", {
-                    company: item,
+                  navigation.push("job-detail", {
+                    job: item,
                   })
                 }
                 style={{
                   marginLeft: 5,
                   marginRight: 5,
-                  marginBottom: 10,
                   borderWidth: 1,
+                  marginBottom: 10,
+
                   borderColor: "#6b9bf5",
                   borderBottomColor: "#F5F6F6",
                   borderRadius: 10,
@@ -109,15 +110,45 @@ export default function ResultSearchCompanies({ itemList, filterLocation }) {
                       numberOfLines={2}
                       ellipsizeMode="tail"
                     >
-                      {item?.Name}
+                      {item?.NameJob}
                     </Text>
+                    <TouchableOpacity onPress={() => {}}>
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          color: "#333333",
+                          fontWeight: "bold",
+                          marginTop: 3,
+                        }}
+                      >
+                        {item?.NameCompany}
+                      </Text>
+                    </TouchableOpacity>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        marginTop: 7,
+                      }}
+                    >
+                      <AntDesign name="staro" size={20} color="#6b9bf5" />
 
+                      <Text
+                        style={{
+                          color: "gray",
+                          fontSize: 13,
+                          marginLeft: 4,
+                        }}
+                      >
+                        {item?.Experience} Kinh nghiệm
+                      </Text>
+                    </View>
                     <View
                       style={{
                         flexDirection: "row",
                         alignItems: "center",
 
-                        marginTop: 7,
+                        marginTop: 4,
                       }}
                     >
                       <Ionicons
@@ -134,7 +165,7 @@ export default function ResultSearchCompanies({ itemList, filterLocation }) {
                           marginLeft: 4,
                         }}
                       >
-                        {item?.Location}
+                        {item?.LocationJob}
                       </Text>
                     </View>
                     <View
@@ -145,7 +176,11 @@ export default function ResultSearchCompanies({ itemList, filterLocation }) {
                         marginLeft: 3,
                       }}
                     >
-                      <AntDesign name="team" size={16} color="#6b9bf5" />
+                      <AntDesign
+                        name="clockcircleo"
+                        size={16}
+                        color="#6b9bf5"
+                      />
                       <Text
                         style={{
                           color: "gray",
@@ -153,32 +188,11 @@ export default function ResultSearchCompanies({ itemList, filterLocation }) {
                           marginLeft: 4,
                         }}
                       >
-                        {item?.Employee}
-                      </Text>
-                    </View>
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        alignItems: "center",
-                        marginTop: 4,
-                      }}
-                    >
-                      <Ionicons name="bag-outline" size={20} color="#6b9bf5" />
-                      <Text
-                        style={{
-                          color: "gray",
-                          fontSize: 13,
-                          marginLeft: 4,
-                        }}
-                      >
-                        {item?.Job} jobs
+                        {item?.DateCreated}
                       </Text>
                     </View>
                   </View>
-                  <TouchableOpacity
-                    style={{ marginRight: 0 }}
-                    onPress={() => {}}
-                  >
+                  <TouchableOpacity onPress={() => {}}>
                     <Ionicons
                       name="bookmark-outline"
                       size={25}

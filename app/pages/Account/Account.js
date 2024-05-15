@@ -25,7 +25,7 @@ import FeatherIcon from "react-native-vector-icons/Feather";
 import React, { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ClerkProvider, SignedIn, SignedOut, useAuth } from "@clerk/clerk-expo";
-import { app } from "../../firebaseConfig";
+import { app } from "../../../firebaseConfig";
 import { useUser } from "@clerk/clerk-expo";
 
 import { getFirestore } from "firebase/firestore";

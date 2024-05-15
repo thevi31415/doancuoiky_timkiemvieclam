@@ -21,7 +21,7 @@ import { Card } from "react-native-shadow-cards";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { useNavigation } from "@react-navigation/native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { app } from "../../firebaseConfig";
+import { app } from "../../../firebaseConfig";
 import { getFirestore } from "firebase/firestore";
 
 import {
@@ -36,7 +36,7 @@ import {
 import { useUser } from "@clerk/clerk-expo";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useFocusEffect } from "@react-navigation/native";
-import CompaniesItem from "../components/HomeScreen/CompanyItem";
+import CompaniesItem from "../../components/Home/CompanyItem";
 
 export default function JobDetail({ checkNav }) {
   const db = getFirestore(app);
