@@ -574,19 +574,7 @@ export default function CompaniesDetail({ checkNav }) {
           </View>
         </View>
       </ScrollView>
-      {loading && (
-        <View style={styles.overlay}>
-          <ActivityIndicator size={70} color="#2c67f2" />
-        </View>
-      )}
+      <LoadingOverlay loading={loading} />
     </>
   );
 }
-const styles = StyleSheet.create({
-  overlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});

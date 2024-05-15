@@ -35,6 +35,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import ResultSearchAll from "../../components/Search/ResultSearchAll";
 import ResultSearchJob from "../../components/Search/ResultSearchJob";
 import ResultSearchJobStackNav from "../../components/Search/ResultSearchJobStackNav";
+import LoadingOverlay from "../../components/LoadingOverlay";
 const LocationData = [
   { label: "All locations", value: "" },
   { label: "Hồ Chí Minh", value: "Hồ Chí Minh" },
@@ -455,11 +456,7 @@ export default function Search() {
           </Pressable>
         </Pressable>
       )}
-      {loading && (
-        <View style={styles.overlay}>
-          <ActivityIndicator size={70} color="#2c67f2" />
-        </View>
-      )}
+      <LoadingOverlay loading={loading} />
     </View>
   );
 }
@@ -533,11 +530,5 @@ const styles = StyleSheet.create({
   inputSearchStyle: {
     height: 40,
     fontSize: 16,
-  },
-  overlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    justifyContent: "center",
-    alignItems: "center",
   },
 });

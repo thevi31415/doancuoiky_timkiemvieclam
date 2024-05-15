@@ -37,6 +37,7 @@ import { useUser } from "@clerk/clerk-expo";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useFocusEffect } from "@react-navigation/native";
 import CompaniesItem from "../../components/Home/CompanyItem";
+import LoadingOverlay from "../../components/LoadingOverlay";
 
 export default function JobDetail({ checkNav }) {
   const db = getFirestore(app);
@@ -517,11 +518,7 @@ export default function JobDetail({ checkNav }) {
           )}
         </TouchableOpacity>
       </View>
-      {loading && (
-        <View style={styles.overlay}>
-          <ActivityIndicator size={70} color="#2c67f2" />
-        </View>
-      )}
+      <LoadingOverlay loading={loading} />
     </>
   );
 }
@@ -539,12 +536,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: "#e1e1e2",
   },
-  overlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    justifyContent: "center",
-    alignItems: "center",
-  },
+
   likeBtn: {
     width: 55,
     height: 55,

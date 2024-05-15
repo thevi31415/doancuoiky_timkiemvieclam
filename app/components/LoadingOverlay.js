@@ -1,11 +1,15 @@
 import React from "react";
 import { View, ActivityIndicator, StyleSheet } from "react-native";
 
-const LoadingOverlay = () => {
+const LoadingOverlay = ({ loading }) => {
   return (
-    <View style={styles.overlay}>
-      <ActivityIndicator size="large" color="#2c67f2" />
-    </View>
+    <>
+      {loading && (
+        <View style={styles.overlay}>
+          <ActivityIndicator size={70} color="#2c67f2" />
+        </View>
+      )}
+    </>
   );
 };
 

@@ -29,6 +29,7 @@ import { app } from "../../../firebaseConfig";
 import { useUser } from "@clerk/clerk-expo";
 
 import { getFirestore } from "firebase/firestore";
+import LoadingOverlay from "../../components/LoadingOverlay";
 removeValue = async () => {
   try {
     await AsyncStorage.removeItem("userAccount");
@@ -264,11 +265,7 @@ export default function Account() {
           </View>
         </ScrollView>
       </View>
-      {loading && (
-        <View style={styles.overlay}>
-          <ActivityIndicator size={70} color="#2c67f2" />
-        </View>
-      )}
+      <LoadingOverlay loading={loading} />
     </SafeAreaView>
   );
 }
@@ -280,12 +277,7 @@ const styles = StyleSheet.create({
     flexShrink: 1,
     flexBasis: 0,
   },
-  overlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    justifyContent: "center",
-    alignItems: "center",
-  },
+
   header: {
     paddingLeft: 24,
     paddingRight: 24,
