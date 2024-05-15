@@ -55,6 +55,7 @@ export default function MainComponent() {
         const userNew = {
           ID: user?.id,
           SDT: "0949Y845xxx",
+          IDCa: generateRandomId(7),
           imageUrl: user?.imageUrl,
           role: "User",
           name: user?.fullName,
@@ -77,6 +78,19 @@ export default function MainComponent() {
   useEffect(() => {
     fetchData();
   }, [role]);
+  const generateRandomId = (length) => {
+    const characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    let randomId = "";
+
+    for (let i = 0; i < length; i++) {
+      randomId += characters.charAt(
+        Math.floor(Math.random() * characters.length)
+      );
+    }
+
+    return randomId;
+  };
   return (
     <NavigationContainer>
       <Tab.Navigator

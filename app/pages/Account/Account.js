@@ -20,16 +20,16 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import { useFocusEffect } from "@react-navigation/native";
-
 import FeatherIcon from "react-native-vector-icons/Feather";
 import React, { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ClerkProvider, SignedIn, SignedOut, useAuth } from "@clerk/clerk-expo";
 import { app } from "../../../firebaseConfig";
 import { useUser } from "@clerk/clerk-expo";
-
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { getFirestore } from "firebase/firestore";
 import LoadingOverlay from "../../components/LoadingOverlay";
+import Entypo from "@expo/vector-icons/Entypo";
 removeValue = async () => {
   try {
     await AsyncStorage.removeItem("userAccount");
@@ -45,7 +45,7 @@ export default function Account() {
 
   const [loading, setLoading] = useState(false);
   const { user } = useUser();
-
+  const userId = user?.id?.substring(user?.id?.length - 7);
   const fetchDataBookmark = async () => {
     setLoading(true);
 
@@ -127,44 +127,87 @@ export default function Account() {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
       <View style={styles.container}>
-        <ScrollView>
+        <ScrollView showsHorizontalScrollIndicator={false}>
           <View style={styles.profile}>
-            <Image
-              alt=""
-              source={{ uri: user?.imageUrl }}
-              style={styles.profileAvatar}
-            />
-
-            <Text style={styles.profileName}> {user?.fullName}</Text>
-
-            <Text style={styles.profileEmail}>
-              {user?.primaryEmailAddress?.toString()}
-            </Text>
-
-            <TouchableOpacity
-              onPress={() => {
-                // handle onPress
+            <View
+              style={{
+                flexDirection: "row",
+                padding: 10,
+                marginTop: 20,
+                backgroundColor: "#ffffff",
+                borderRadius: 10,
+                shadowColor: "#000000",
+                shadowOffset: {
+                  width: 0,
+                  height: 2,
+                },
+                shadowOpacity: 0.25,
+                shadowRadius: 3.84,
+                elevation: 2,
               }}
             >
-              <View style={styles.profileAction}>
-                <Text style={styles.profileActionText}>Edit Profile</Text>
-
-                <FeatherIcon color="#fff" name="edit" size={16} />
+              <View
+                style={{
+                  flex: 1,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Image
+                  source={{ uri: user?.imageUrl }}
+                  style={{
+                    width: 80,
+                    height: 80,
+                    borderRadius: 40,
+                    padding: 15,
+                    borderWidth: 3, // Thêm đường viền
+                    borderColor: "#015aff", // Màu của đường viền
+                  }}
+                />
               </View>
-            </TouchableOpacity>
+              <View
+                style={{
+                  flex: 2,
+                  marginLeft: 1,
+                  justifyContent: "center",
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 18,
+                    fontWeight: "bold",
+                    color: "#333333",
+                  }}
+                >
+                  {user?.fullName}
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 13,
+                    color: "#666666",
+                  }}
+                >
+                  {user?.primaryEmailAddress?.toString()}
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 15,
+                    color: "#666666",
+                  }}
+                >
+                  Mã ứng viên:
+                  <Text style={{ fontWeight: "bold" }}> {userId}</Text>
+                </Text>
+              </View>
+            </View>
           </View>
 
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Thông tin cá nhân</Text>
 
             <View style={styles.sectionBody}>
-              <View style={[styles.rowWrapper, styles.rowFirst]}>
-                <TouchableOpacity
-                  onPress={() => {
-                    // handle onPress
-                  }}
-                  style={styles.row}
-                >
+              {/* <View style={[styles.rowWrapper, styles.rowFirst]}>
+                <TouchableOpacity style={styles.row}>
                   <View
                     style={[styles.rowIcon, { backgroundColor: "#2B66EF" }]}
                   >
@@ -173,10 +216,39 @@ export default function Account() {
 
                   <Text style={styles.rowLabel}>Hồ sơ cá nhân</Text>
                 </TouchableOpacity>
-              </View>
+              </View> */}
+
+              <TouchableOpacity
+                style={{
+                  height: 100,
+                  borderRadius: 17,
+                  backgroundColor: "#f1f2f4",
+                  justifyContent: "center",
+                  padding: 10,
+                }}
+              >
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                  }}
+                >
+                  <FeatherIcon color="#000" name="clipboard" size={30} />
+                  <Text style={{ marginLeft: 5 }}>Số lượng hồ sơ</Text>
+                  <View
+                    style={{
+                      flex: 1,
+                      flexDirection: "row",
+                      justifyContent: "flex-end",
+                    }}
+                  >
+                    <Text>0</Text>
+                  </View>
+                </View>
+              </TouchableOpacity>
             </View>
 
-            <View style={styles.section}>
+            {/* <View style={styles.section}>
               <Text style={styles.sectionTitle}>Quản lý tìm việc</Text>
 
               <View style={styles.sectionBody}>
@@ -222,6 +294,155 @@ export default function Account() {
                     <Text style={styles.rowValue}>{countCompanyFollowed}</Text>
                   </View>
                 </TouchableOpacity>
+              </View>
+            </View> */}
+            <View style={styles.section}>
+              <Text style={styles.sectionTitle}>Quản lý tìm việc</Text>
+              <View style={styles.container2}>
+                <View style={styles.row2}>
+                  <TouchableOpacity style={styles.rectangle2}>
+                    <FontAwesome
+                      name="bookmark"
+                      size={24}
+                      color="#015aff"
+                      style={{ marginBottom: 10 }}
+                    />
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          color: "#333333",
+                          fontSize: 15,
+                          fontWeight: "bold",
+                          alignSelf: "flex-start", // căn chỉnh văn bản ở góc trái
+                        }}
+                      >
+                        Việc làm đã lưu
+                      </Text>
+                      <Text
+                        style={{
+                          color: "#015aff",
+                          fontSize: 20,
+                          fontWeight: "bold",
+                          alignSelf: "flex-end", // căn chỉnh số ở góc phải
+                        }}
+                      >
+                        {countBookMarkJob}
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.rectangle2}>
+                    <FontAwesome
+                      name="bell"
+                      size={24}
+                      color="#015aff"
+                      style={{ marginBottom: 10 }}
+                    />
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          color: "#333333",
+                          fontSize: 15,
+                          fontWeight: "bold",
+                          alignSelf: "flex-start", // căn chỉnh văn bản ở góc trái
+                        }}
+                      >
+                        Công ty đang theo dõi
+                      </Text>
+                      <Text
+                        style={{
+                          color: "#015aff",
+                          fontSize: 20,
+                          fontWeight: "bold",
+                          alignSelf: "flex-end", // căn chỉnh số ở góc phải
+                        }}
+                      >
+                        {countCompanyFollowed}
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.row2}>
+                  <TouchableOpacity style={styles.rectangle2}>
+                    <FontAwesome
+                      name="shopping-bag"
+                      size={24}
+                      color="#015aff"
+                      style={{ marginBottom: 10 }}
+                    />
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          color: "#333333",
+                          fontSize: 15,
+                          fontWeight: "bold",
+                          alignSelf: "flex-start", // căn chỉnh văn bản ở góc trái
+                        }}
+                      >
+                        Việc làm đã ứng tuyển
+                      </Text>
+                      <Text
+                        style={{
+                          color: "#015aff",
+                          fontSize: 20,
+                          fontWeight: "bold",
+                          alignSelf: "flex-end", // căn chỉnh số ở góc phải
+                        }}
+                      >
+                        {countJobApply}
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.rectangle2}>
+                    <FontAwesome
+                      name="check-circle"
+                      size={24}
+                      color="#015aff"
+                      style={{ marginBottom: 10 }}
+                    />
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          color: "#333333",
+                          fontSize: 15,
+                          fontWeight: "bold",
+                          alignSelf: "flex-start", // căn chỉnh văn bản ở góc trái
+                        }}
+                      >
+                        Việc làm đã được tuyển
+                      </Text>
+                      <Text
+                        style={{
+                          color: "#015aff",
+                          fontSize: 20,
+                          fontWeight: "bold",
+                          alignSelf: "flex-end", // căn chỉnh số ở góc phải
+                        }}
+                      >
+                        x
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
             <View style={styles.section}>
@@ -274,6 +495,8 @@ const styles = StyleSheet.create({
     paddingVertical: 24,
     paddingHorizontal: 0,
     flexGrow: 1,
+    paddingLeft: 10,
+    paddingRight: 10,
     flexShrink: 1,
     flexBasis: 0,
   },
@@ -303,13 +526,10 @@ const styles = StyleSheet.create({
   },
   /** Profile */
   profile: {
-    padding: 16,
+    padding: 0,
     flexDirection: "column",
     alignItems: "center",
-    backgroundColor: "#fff",
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    borderColor: "#e3e3e3",
+    padding: 10,
   },
   profileAvatar: {
     width: 80,
@@ -350,18 +570,14 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     marginVertical: 8,
-    marginHorizontal: 24,
-    fontSize: 14,
-    fontWeight: "600",
-    color: "#2B66EF",
-    textTransform: "uppercase",
-    letterSpacing: 1.2,
+    marginHorizontal: 5,
+    fontSize: 17,
+    fontWeight: "bold",
+    color: "#373737",
   },
   sectionBody: {
-    paddingLeft: 24,
     backgroundColor: "#fff",
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
+
     borderColor: "#e3e3e3",
   },
   /** Row */
@@ -402,5 +618,27 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     color: "#004bd4",
     marginRight: 4,
+  },
+
+  container2: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  row2: {
+    flexDirection: "row",
+    marginBottom: 10,
+  },
+  rectangle2: {
+    width: 165,
+    height: 100,
+    borderRadius: 17,
+    backgroundColor: "#f1f2f4",
+    marginHorizontal: 5,
+    justifyContent: "center",
+    padding: 15,
+  },
+  text2: {
+    color: "white",
   },
 });

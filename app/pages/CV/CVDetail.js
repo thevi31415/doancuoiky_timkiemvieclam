@@ -91,7 +91,7 @@ export default function CVDetail({ CV }) {
                   marginLeft: 8,
                 }}
               >
-                {CV?.Date}
+                {CV?.DateBirth}
               </Text>
             </View>
 

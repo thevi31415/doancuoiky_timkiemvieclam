@@ -1,20 +1,9 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  Button,
-  ScrollView,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, ScrollView, TouchableOpacity, Image } from "react-native";
 import React, { useEffect, useState } from "react";
-import { Card } from "react-native-shadow-cards";
 import { Ionicons } from "@expo/vector-icons";
-import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { useNavigation } from "@react-navigation/native";
 import { app } from "../../../firebaseConfig";
 import { getFirestore } from "firebase/firestore";
-import AntDesign from "@expo/vector-icons/AntDesign";
 import { useUser } from "@clerk/clerk-expo";
 import { useFocusEffect } from "@react-navigation/native";
 import {
@@ -26,11 +15,8 @@ import {
   doc,
   deleteDoc,
 } from "firebase/firestore";
-import CVDetail from "./CVDetail";
-import NotFoundCV from "./NotFoundCV";
-import NotFoundCVStackNav from "./NotFoundCVStackNav";
-import ManagementCV from "./ManagementCV";
-export default function CV() {
+
+export default function ManagementCV() {
   const db = getFirestore(app);
 
   const [listCV, setListCV] = useState([]);
@@ -66,13 +52,24 @@ export default function CV() {
     }
   }, [listCV]);
   return (
-    // <>
-    //   {listCV.length > 0 ? (
-    //     <ManagementCV listCV={listCV} />
-    //   ) : (
-    //     <NotFoundCVStackNav />
-    //   )}
-    // </>
-    <>{listCV.length > 0 ? <CVDetail CV={CV} /> : <NotFoundCVStackNav />}</>
+    <>
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "center",
+          marginTop: 40,
+          padding: 13,
+          backgroundColor: "white",
+          borderBottomColor: "#e6e7e8",
+          borderBottomWidth: 2,
+        }}
+      >
+        <Text style={{ fontSize: 20, fontWeight: "bold" }}> Quản lý CV</Text>
+      </View>
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <Text>Quản lý cv {listCV.length}</Text>
+      </View>
+    </>
   );
 }
