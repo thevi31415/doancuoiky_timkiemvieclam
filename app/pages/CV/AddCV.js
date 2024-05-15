@@ -20,6 +20,7 @@ import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { Picker } from "@react-native-picker/picker";
 import { useUser } from "@clerk/clerk-expo";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import TitleInput from "../../components/CV/TitleInput";
 export default function AddCV() {
   const navigation = useNavigation();
   const [image, setImage] = useState(null);
@@ -202,135 +203,35 @@ export default function AddCV() {
                   </TouchableOpacity>
                 </View>
                 <View style={{ marginLeft: 10, marginRight: 10 }}>
-                  <View style={{ flexDirection: "row", alignItems: "center" }}>
-                    <Text
-                      style={{
-                        fontSize: 18,
-                        color: "#333333",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Họ tên
-                    </Text>
-                    <Text
-                      style={{
-                        fontSize: 18,
-                        color: "#f04439",
-                        marginLeft: 10,
-                        fontWeight: "bold",
-                      }}
-                    >
-                      *
-                    </Text>
-                  </View>
+                  <TitleInput text={"Họ tên"} />
                   <TextInput
                     style={styles.input}
                     placeholder="Nhập họ tên"
                     value={values?.title}
                     onChangeText={handleChange("title")}
                   />
-                  <View style={{ flexDirection: "row", alignItems: "center" }}>
-                    <Text
-                      style={{
-                        fontSize: 18,
-                        color: "#333333",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Số điện thoại
-                    </Text>
-                    <Text
-                      style={{
-                        fontSize: 18,
-                        color: "#f04439",
-                        marginLeft: 10,
-                        fontWeight: "bold",
-                      }}
-                    >
-                      *
-                    </Text>
-                  </View>
+                  <TitleInput text={"Số điện thoại"} />
                   <TextInput
                     style={styles.input}
                     placeholder="Nhập số điện thoại"
                     value={values?.title}
                     onChangeText={handleChange("title")}
                   />
-                  <View style={{ flexDirection: "row", alignItems: "center" }}>
-                    <Text
-                      style={{
-                        fontSize: 18,
-                        color: "#333333",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Email
-                    </Text>
-                    <Text
-                      style={{
-                        fontSize: 18,
-                        color: "#f04439",
-                        marginLeft: 10,
-                        fontWeight: "bold",
-                      }}
-                    >
-                      *
-                    </Text>
-                  </View>
+                  <TitleInput text={"Email"} />
                   <TextInput
                     style={styles.input}
                     placeholder="Nhập Email"
                     value={values?.title}
                     onChangeText={handleChange("title")}
                   />
-                  <View style={{ flexDirection: "row", alignItems: "center" }}>
-                    <Text
-                      style={{
-                        fontSize: 18,
-                        color: "#333333",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Website
-                    </Text>
-                    {/* <Text
-                      style={{
-                        fontSize: 18,
-                        color: "#f04439",
-                        marginLeft: 10,
-                        fontWeight: "bold",
-                      }}
-                    >
-                      *
-                    </Text> */}
-                  </View>
+                  <TitleInput text={"Website"} />
                   <TextInput
                     style={styles.input}
                     placeholder="Nhập link website"
                     value={values?.title}
                     onChangeText={handleChange("title")}
                   />
-                  <View style={{ flexDirection: "row", alignItems: "center" }}>
-                    <Text
-                      style={{
-                        fontSize: 18,
-                        color: "#333333",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Ngày sinh
-                    </Text>
-                    <Text
-                      style={{
-                        fontSize: 18,
-                        color: "#f04439",
-                        marginLeft: 10,
-                        fontWeight: "bold",
-                      }}
-                    >
-                      *
-                    </Text>
-                  </View>
+                  <TitleInput text={"Ngày sinh"} />
                   {showPicker && (
                     <DateTimePicker
                       value={date}
@@ -348,27 +249,7 @@ export default function AddCV() {
                     />
                   </Pressable>
 
-                  <View style={{ flexDirection: "row", alignItems: "center" }}>
-                    <Text
-                      style={{
-                        fontSize: 18,
-                        color: "#333333",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Định hướng nghề nghiệp
-                    </Text>
-                    <Text
-                      style={{
-                        fontSize: 18,
-                        color: "#f04439",
-                        marginLeft: 10,
-                        fontWeight: "bold",
-                      }}
-                    >
-                      *
-                    </Text>
-                  </View>
+                  <TitleInput text={"Định hướng nghề nghiệp"} />
                   <TextInput
                     style={styles.input}
                     placeholder="Descrjihhption"
