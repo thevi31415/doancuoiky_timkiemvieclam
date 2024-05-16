@@ -30,6 +30,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { getFirestore } from "firebase/firestore";
 import LoadingOverlay from "../../components/LoadingOverlay";
 import Entypo from "@expo/vector-icons/Entypo";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 removeValue = async () => {
   try {
     await AsyncStorage.removeItem("userAccount");
@@ -125,9 +126,12 @@ export default function Account() {
   }, []);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+    <SafeAreaView
+      style={{ flex: 1, backgroundColor: "#fff" }}
+      showsHorizontalScrollIndicator={false}
+    >
       <View style={styles.container}>
-        <ScrollView showsHorizontalScrollIndicator={false}>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.profile}>
             <View
               style={{
@@ -203,7 +207,7 @@ export default function Account() {
           </View>
 
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Thông tin cá nhân</Text>
+            <Text style={styles.sectionTitle}>Quản lý hồ sơ</Text>
 
             <View style={styles.sectionBody}>
               {/* <View style={[styles.rowWrapper, styles.rowFirst]}>
@@ -220,7 +224,7 @@ export default function Account() {
 
               <TouchableOpacity
                 style={{
-                  height: 100,
+                  height: 70,
                   borderRadius: 17,
                   backgroundColor: "#f1f2f4",
                   justifyContent: "center",
@@ -233,8 +237,17 @@ export default function Account() {
                     alignItems: "center",
                   }}
                 >
-                  <FeatherIcon color="#000" name="clipboard" size={30} />
-                  <Text style={{ marginLeft: 5 }}>Số lượng hồ sơ</Text>
+                  <Entypo name="clipboard" size={26} color="#015aff" />
+                  <Text
+                    style={{
+                      marginLeft: 10,
+                      color: "#333333",
+                      fontSize: 15,
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Số lượng hồ sơ
+                  </Text>
                   <View
                     style={{
                       flex: 1,
@@ -242,7 +255,15 @@ export default function Account() {
                       justifyContent: "flex-end",
                     }}
                   >
-                    <Text>0</Text>
+                    <Text
+                      style={{
+                        color: "#015aff",
+                        fontSize: 20,
+                        fontWeight: "bold",
+                      }}
+                    >
+                      0
+                    </Text>
                   </View>
                 </View>
               </TouchableOpacity>
@@ -438,7 +459,7 @@ export default function Account() {
                           alignSelf: "flex-end", // căn chỉnh số ở góc phải
                         }}
                       >
-                        x
+                        0
                       </Text>
                     </View>
                   </TouchableOpacity>
@@ -446,41 +467,64 @@ export default function Account() {
               </View>
             </View>
             <View style={styles.section}>
-              <Text style={styles.sectionTitle}>Tài khoản</Text>
+              {/* <Text style={styles.sectionTitle}>Tài khoản</Text> */}
 
               <View style={styles.sectionBody}>
                 <TouchableOpacity
-                  style={[styles.rowWrapper, styles.rowFirst]}
+                  style={{
+                    backgroundColor: "#e2e3e8",
+                    padding: 10,
+                    paddingBottom: 15,
+                    paddingTop: 15,
+                    justifyContent: "center",
+                    borderRadius: 16,
+                  }}
                   onPress={() => {
                     removeValue();
                     signOut();
                   }}
                 >
-                  <View style={styles.row}>
-                    <View
-                      style={[styles.rowIcon, { backgroundColor: "#FF0000" }]}
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Text
+                      style={{
+                        color: "#3a3a3b",
+                        fontSize: 17,
+                        fontWeight: "bold",
+                      }}
                     >
-                      <FeatherIcon color="#fff" name="log-out" size={20} />
-                    </View>
-
-                    <Text style={styles.rowLabel}>Đăng xuất</Text>
-
-                    <View style={styles.rowSpacer} />
+                      Đăng xuất
+                    </Text>
+                    <MaterialIcons
+                      name="logout"
+                      size={24}
+                      color="#3a3a3b"
+                      style={{ marginLeft: 10 }}
+                    />
                   </View>
                 </TouchableOpacity>
-                <TouchableOpacity style={[styles.rowWrapper, styles.rowFirst]}>
-                  <View style={styles.row}>
-                    <View
-                      style={[styles.rowIcon, { backgroundColor: "#FF0000" }]}
-                    >
-                      <FeatherIcon color="#fff" name="trash-2" size={20} />
-                    </View>
-
-                    <Text style={styles.rowLabel}>Xóa tài khoản</Text>
-
-                    <View style={styles.rowSpacer} />
-                  </View>
-                </TouchableOpacity>
+                <View
+                  style={{
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginTop: 20,
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontSize: 17,
+                      fontWeight: "bold",
+                      color: "#cecece",
+                    }}
+                  >
+                    Version 1.0.0
+                  </Text>
+                </View>
               </View>
             </View>
           </View>
@@ -495,8 +539,8 @@ const styles = StyleSheet.create({
     paddingVertical: 24,
     paddingHorizontal: 0,
     flexGrow: 1,
-    paddingLeft: 10,
-    paddingRight: 10,
+    paddingLeft: 13,
+    paddingRight: 13,
     flexShrink: 1,
     flexBasis: 0,
   },
@@ -529,7 +573,7 @@ const styles = StyleSheet.create({
     padding: 0,
     flexDirection: "column",
     alignItems: "center",
-    padding: 10,
+    padding: 5,
   },
   profileAvatar: {
     width: 80,
