@@ -16,6 +16,7 @@
     "@gorhom/bottom-sheet": "4",
     "@native-base/expo-template": "^1.2.1",
     "@react-native-async-storage/async-storage": "1.21.0",
+    "@react-native-community/datetimepicker": "7.6.1",
     "@react-native-google-signin/google-signin": "^11.0.1",
     "@react-native-picker/picker": "^2.7.5",
     "@react-navigation/bottom-tabs": "^6.5.20",
@@ -42,6 +43,7 @@
     "react-native": "0.73.6",
     "react-native-drop-shadow": "^1.0.0",
     "react-native-element-dropdown": "^2.10.4",
+    "react-native-elements": "^3.4.3",
     "react-native-gesture-handler": "~2.14.0",
     "react-native-linear-gradient": "^2.8.3",
     "react-native-modal": "^13.0.1",
@@ -53,8 +55,7 @@
     "react-native-toast-message": "^2.2.0",
     "react-native-vector-icons": "^10.0.3",
     "react-navigation": "^5.0.0",
-    "typescript": "^5.3.0",
-    "@react-native-community/datetimepicker": "7.6.1"
+    "typescript": "^5.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

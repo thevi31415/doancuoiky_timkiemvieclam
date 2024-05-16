@@ -23,6 +23,8 @@ import { Searchbar } from "react-native-paper";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import JobAndCompany from "./pages/JobAndCompany";
 import AccountScreenStackNav from "./pages/Account/AccountScreenStackNav";
+import { Badge } from "react-native-elements";
+
 const Tab = createBottomTabNavigator();
 const storeData = async (value) => {
   try {
@@ -92,11 +94,27 @@ export default function MainComponent() {
 
     return randomId;
   };
+  const renderCustomBadge = () => (
+    <View
+      style={{
+        width: 10,
+        height: 10,
+        borderRadius: 1,
+        backgroundColor: "blue",
+        position: "absolute",
+        top: -5,
+        right: -5,
+      }}
+    />
+  );
   return (
     <NavigationContainer>
       <Tab.Navigator
         screenOptions={{
-          tabBarActiveTintColor: "#2c67f2",
+          tabBarActiveTintColor: "#015aff",
+          tabBarInactiveTintColor: "#d2d7dd",
+          tabBarStyle: { height: 55 }, // Tăng độ cao lên 60
+          tabBarLabelStyle: { marginBottom: 0 }, //
           headerShown: false,
         }}
       >
@@ -107,6 +125,7 @@ export default function MainComponent() {
             tabBarIcon: ({ color, size }) => (
               <Entypo name="home" size={size} color={color} />
             ),
+            // Add custom badge for "Trang chủ"
           }}
         />
 
@@ -136,7 +155,14 @@ export default function MainComponent() {
           component={Notification}
           options={{
             tabBarIcon: ({ color, size }) => (
-              <Ionicons name="notifications" size={size} color={color} />
+              <View style={{ position: "relative" }}>
+                <Ionicons name="notifications" size={size} color={color} />
+                {/* Thêm badge ở đây */}
+                <Badge
+                  status="error"
+                  containerStyle={{ position: "absolute", top: -0, right: -0 }}
+                />
+              </View>
             ),
           }}
         />
