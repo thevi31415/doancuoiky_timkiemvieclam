@@ -11,77 +11,83 @@ import {
   TouchableOpacity,
 } from "react-native";
 import BottomSheet from "../BottomSheet";
+import { Ionicons } from "@expo/vector-icons";
+import AntDesign from "@expo/vector-icons/AntDesign";
 export default function Notification() {
   const [status, setStatus] = React.useState(false);
   const [listNotifications, setListNotifications] = useState([]);
-  const CTA = ({ title }) => (
-    <TouchableOpacity
-      onPress={() => {}}
-      style={{
-        borderRadius: 50,
-        borderColor: "blue",
-        borderWidth: 1,
-        paddingHorizontal: 10,
-        paddingVertical: 5,
-        marginTop: 10,
-        alignSelf: "flex-start",
-        width: "auto",
-      }}
-    >
-      <Text style={{ fontSize: 16, color: "blue" }}>{title}</Text>
-    </TouchableOpacity>
-  );
-  return (
-    <View
-      style={{
-        marginTop: 10,
-        paddingHorizontal: 10,
-        backgroundColor: "white",
-      }}
-    >
-      {/* <FlatList showsVerticalScrollIndicator={false} data={listNotifications} /> */}
-      <View
-        style={[
-          styles.flexCenter,
-          {
-            justifyContent: "space-evenly",
-            marginVertical: 10,
-            margin: 20,
-          },
-        ]}
-      >
-        <Image
-          source={require("../assets/Logo_HCMUTE.jpg")}
-          style={{ height: 50, width: 50, marginRight: 20 }}
-        />
-        <View>
-          <Text
-            style={{
-              width: 240,
-              fontSize: 16,
-              color: "black",
-              paddingRight: 5,
-            }}
-          >
-            Bhạdkggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggf
-          </Text>
 
-          <CTA title="View Job" />
-        </View>
-        <View>
-          <Text style={{ fontSize: 13, marginBottom: 5 }}>
-            JHFDJGHFJGHFHJGHGH
-          </Text>
-          {/* <TouchableOpacity onPress={() => {}}>
-            <Ic
-              name="ellipsis-vertical"
-              size={22}
-              color={"black"}
-            />
-          </TouchableOpacity> */}
-        </View>
+  return (
+    <>
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "center",
+          marginTop: 40,
+          padding: 13,
+          backgroundColor: "white",
+          borderBottomColor: "#e6e7e8",
+          borderBottomWidth: 2,
+        }}
+      >
+        {/* <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={{ position: "absolute", left: 20 }}
+        >
+          <Ionicons name="arrow-back-outline" size={30} color="#2c67f2" />
+        </TouchableOpacity> */}
+        <Text style={{ fontSize: 20, fontWeight: "bold" }}>Thông báo</Text>
       </View>
-    </View>
+      <View
+        style={{
+          backgroundColor: "white",
+          height: "100%",
+        }}
+      >
+        <TouchableOpacity
+          style={{
+            backgroundColor: "#E2F6FD",
+            margin: 5,
+            padding: 10,
+            borderRadius: 10,
+          }}
+        >
+          <Text style={{ fontSize: 16, fontWeight: "bold", color: "#015aff" }}>
+            [Bạn đã được tuyển] Công ty FPT đã ứng tuyển bạn
+          </Text>
+          <Text style={{ color: "#333333", marginTop: 5, marginBottom: 5 }}>
+            Vui lòng đến địa chỉ:Tòa nhà FPT, số 10 Phố Phạm Văn Bạch, Phuờng
+            Dịch Vọng, Quận Cầu Giấy, Thành phố Hà Nội, để phỏng vấn nhé ! -
+            Trân trọng
+          </Text>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <AntDesign name="clockcircle" size={15} color="#8f8f8f" />
+            <Text style={{ color: "#8f8f8f", marginLeft: 5 }}>12/2/2024 </Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            backgroundColor: "#EEEFF5",
+            margin: 5,
+            padding: 10,
+            borderRadius: 10,
+          }}
+        >
+          <Text style={{ fontSize: 16, fontWeight: "bold", color: "#015aff" }}>
+            [Bạn đã được tuyển] Công ty SamSung Việt Nam đã ứng tuyển bạn
+          </Text>
+          <Text style={{ color: "#333333", marginTop: 5, marginBottom: 5 }}>
+            Vui lòng đến tòa PVI Tower, số 1 Phan Văn Bạch, Cầu Giấy, Hà Nội để
+            phỏng vấn nhé. - Trân trọng !
+          </Text>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <AntDesign name="clockcircle" size={15} color="#8f8f8f" />
+            <Text style={{ color: "#8f8f8f", marginLeft: 5 }}>12/2/2024 </Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+    </>
   );
 }
 const styles = StyleSheet.create({
