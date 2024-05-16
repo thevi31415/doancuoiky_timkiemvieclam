@@ -1,24 +1,20 @@
 import { View, Text } from "react-native";
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-
-import Account from "./Account";
-import CompaniesFollowed from "../Company/CompanyFollowed";
-import JobSaved from "../Job/JobSaved";
-import CompanyFollowedStackNav from "../Company/CompanyFollowedStackNav";
-
-export default function AccountScreenStackNav() {
+import CompaniesDetail from "../Company/CompanyDetail";
+import CompaniesFollowed from "./CompanyFollowed";
+export default function CompanyFollowedStackNav() {
   const Stack = createStackNavigator();
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Account"
-        component={Account}
+        name="company-followed-2"
+        component={CompaniesFollowed}
         options={{
           headerShown: false,
         }}
       />
-      {/* <Stack.Screen
+      <Stack.Screen
         name="company-detail"
         options={{
           headerStyle: {
@@ -31,7 +27,7 @@ export default function AccountScreenStackNav() {
       >
         {(props) => <CompaniesDetail {...props} checkNav={true} />}
       </Stack.Screen>
-      <Stack.Screen
+      {/* <Stack.Screen
         name="job-detail"
         options={{
           headerStyle: {
@@ -43,11 +39,11 @@ export default function AccountScreenStackNav() {
         }}
       >
         {(props) => <JobDetail {...props} checkNav={true} />}
-      </Stack.Screen> */}
+      </Stack.Screen>
 
       <Stack.Screen
-        name="company-followed"
-        component={CompanyFollowedStackNav}
+        name="search-detail"
+        component={Search}
         options={{
           headerStyle: {
             backgroundColor: "#2c67f2",
@@ -56,19 +52,7 @@ export default function AccountScreenStackNav() {
           headerTitle: "Search",
           headerShown: false,
         }}
-      />
-      <Stack.Screen
-        name="job-saved"
-        component={JobSaved}
-        options={{
-          headerStyle: {
-            backgroundColor: "#2c67f2",
-          },
-          headerTintColor: "#fff",
-          headerTitle: "Search",
-          headerShown: false,
-        }}
-      />
+      /> */}
     </Stack.Navigator>
   );
 }
