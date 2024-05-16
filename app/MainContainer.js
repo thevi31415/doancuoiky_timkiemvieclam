@@ -22,6 +22,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Searchbar } from "react-native-paper";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import JobAndCompany from "./pages/JobAndCompany";
+import AccountScreenStackNav from "./pages/Account/AccountScreenStackNav";
 const Tab = createBottomTabNavigator();
 const storeData = async (value) => {
   try {
@@ -141,7 +142,7 @@ export default function MainComponent() {
         />
         <Tab.Screen
           name="Tài Khoản"
-          component={Account}
+          component={AccountScreenStackNav}
           options={{
             tabBarIcon: ({ color, size }) => (
               <Ionicons name="person" size={size} color={color} />

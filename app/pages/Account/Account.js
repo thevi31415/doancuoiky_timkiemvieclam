@@ -31,6 +31,8 @@ import { getFirestore } from "firebase/firestore";
 import LoadingOverlay from "../../components/LoadingOverlay";
 import Entypo from "@expo/vector-icons/Entypo";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { useNavigation } from "@react-navigation/native";
+
 removeValue = async () => {
   try {
     await AsyncStorage.removeItem("userAccount");
@@ -38,6 +40,8 @@ removeValue = async () => {
 };
 export default function Account() {
   const { isLoaded, signOut } = useAuth();
+  const navigation = useNavigation();
+
   const db = getFirestore(app);
   const [userAccount, setUserAccount] = useState(null);
   const [countBookMarkJob, setCountBookMarkJob] = useState(0);
@@ -225,7 +229,7 @@ export default function Account() {
               <TouchableOpacity
                 style={{
                   height: 70,
-                  borderRadius: 17,
+                  borderRadius: 15,
                   backgroundColor: "#f1f2f4",
                   justifyContent: "center",
                   padding: 10,
@@ -321,7 +325,10 @@ export default function Account() {
               <Text style={styles.sectionTitle}>Quản lý tìm việc</Text>
               <View style={styles.container2}>
                 <View style={styles.row2}>
-                  <TouchableOpacity style={styles.rectangle2}>
+                  <TouchableOpacity
+                    style={styles.rectangle2}
+                    onPress={() => navigation.push("job-saved")}
+                  >
                     <FontAwesome
                       name="bookmark"
                       size={24}
@@ -356,7 +363,10 @@ export default function Account() {
                       </Text>
                     </View>
                   </TouchableOpacity>
-                  <TouchableOpacity style={styles.rectangle2}>
+                  <TouchableOpacity
+                    style={styles.rectangle2}
+                    onPress={() => navigation.push("company-followed")}
+                  >
                     <FontAwesome
                       name="bell"
                       size={24}
@@ -574,6 +584,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     padding: 5,
+    // backgroundColor: "blue",
   },
   profileAvatar: {
     width: 80,
@@ -676,7 +687,7 @@ const styles = StyleSheet.create({
   rectangle2: {
     width: 165,
     height: 100,
-    borderRadius: 17,
+    borderRadius: 15,
     backgroundColor: "#f1f2f4",
     marginHorizontal: 5,
     justifyContent: "center",
