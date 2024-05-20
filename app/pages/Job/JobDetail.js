@@ -58,6 +58,12 @@ export default function JobDetail({ checkNav }) {
       "Bạn đã ứng tuyển và công việc này không thể ứng tuyển nữa nữa"
     );
   };
+  const showAlertApplyStop = () => {
+    Alert.alert(
+      "Thông báo",
+      "Việc làm này đã dừng tuyển ! Vui lòng tìm công việc khác !"
+    );
+  };
   const fetchData = async () => {
     setLoading(true); // Bắt đầu quá trình load
 
@@ -498,25 +504,39 @@ export default function JobDetail({ checkNav }) {
             color={checkBookmark ? "#2c67f2" : "#2c67f2"} // Màu sắc phụ thuộc vào trạng thái checkApply
           />
         </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[styles.disabledBtn, checkApply && styles.applyBtn]} // Nếu checkApply là true, áp dụng kiểu disabledBtn
-          onPress={checkApply ? showAlertApply : applyJob} // Không cho phép người dùng click nếu checkApply là true
-          // disabled={checkApply} // Disable nút nếu checkApply là true
-        >
-          {isLoading ? (
-            <ActivityIndicator color="white" />
-          ) : (
-            <Text
-              style={[
-                styles.applyBtnTextFalse,
-                checkApply && styles.applyBtnText,
-              ]}
-            >
-              {checkApply ? "Bạn đã ứng tuyển" : "Ứng tuyển ngay"}
-            </Text> // Thay đổi nội dung của nút dựa trên trạng thái checkApply
-          )}
-        </TouchableOpacity>
+        {job?.Status ? (
+          <TouchableOpacity
+            style={[styles.disabledBtn, checkApply && styles.applyBtn]} // Nếu checkApply là true, áp dụng kiểu disabledBtn
+            onPress={checkApply ? showAlertApply : applyJob} // Không cho phép người dùng click nếu checkApply là true
+            // disabled={checkApply} // Disable nút nếu checkApply là true
+          >
+            {isLoading ? (
+              <ActivityIndicator color="white" />
+            ) : (
+              <Text
+                style={[
+                  styles.applyBtnTextFalse,
+                  checkApply && styles.applyBtnText,
+                ]}
+              >
+                {checkApply ? "Bạn đã ứng tuyển" : "Ứng tuyển ngay"}
+              </Text> // Thay đổi nội dung của nút dựa trên trạng thái checkApply
+            )}
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            style={[styles.disabledBtn]}
+            onPress={showAlertApplyStop}
+          >
+            {isLoading ? (
+              <ActivityIndicator color="white" />
+            ) : (
+              <Text style={[styles.applyBtnTextFalse]}>
+                Việc làm này đã dừng tuyển
+              </Text> // Thay đổi nội dung của nút dựa trên trạng thái checkApply
+            )}
+          </TouchableOpacity>
+        )}
       </View>
       <LoadingOverlay loading={loading} />
     </>

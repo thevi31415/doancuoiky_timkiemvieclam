@@ -24,6 +24,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import JobAndCompany from "./pages/JobAndCompany";
 import AccountScreenStackNav from "./pages/Account/AccountScreenStackNav";
 import { Badge } from "react-native-elements";
+import ManageJob from "./pages/ManageJob/ManageJob";
+import ManageCompany from "./pages/ManageCompany/ManageCompany";
 
 const Tab = createBottomTabNavigator();
 const storeData = async (value) => {
@@ -131,11 +133,11 @@ export default function MainComponent() {
 
         {role === "Admin" ? (
           <Tab.Screen
-            name="Quản lý"
-            component={JobAndCompany}
+            name="Tuyển dụng"
+            component={ManageJob}
             options={{
               tabBarIcon: ({ color, size }) => (
-                <Ionicons name="settings" size={size} color={color} />
+                <Ionicons name="people" size={size} color={color} />
               ),
             }}
           />
@@ -150,22 +152,39 @@ export default function MainComponent() {
             }}
           />
         )}
-        <Tab.Screen
-          name="Thông Báo"
-          component={Notification}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <View style={{ position: "relative" }}>
-                <Ionicons name="notifications" size={size} color={color} />
-                {/* Thêm badge ở đây */}
-                <Badge
-                  status="error"
-                  containerStyle={{ position: "absolute", top: -0, right: -0 }}
-                />
-              </View>
-            ),
-          }}
-        />
+        {role === "Admin" ? (
+          <Tab.Screen
+            name="Công ty"
+            component={ManageCompany}
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <Ionicons name="business" size={size} color={color} />
+              ),
+            }}
+          />
+        ) : (
+          <Tab.Screen
+            name="Thông Báo"
+            component={Notification}
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <View style={{ position: "relative" }}>
+                  <Ionicons name="notifications" size={size} color={color} />
+                  {/* Thêm badge ở đây */}
+                  <Badge
+                    status="error"
+                    containerStyle={{
+                      position: "absolute",
+                      top: -0,
+                      right: -0,
+                    }}
+                  />
+                </View>
+              ),
+            }}
+          />
+        )}
+
         <Tab.Screen
           name="Tài Khoản"
           component={AccountScreenStackNav}

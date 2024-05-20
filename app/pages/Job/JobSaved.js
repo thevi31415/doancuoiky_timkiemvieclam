@@ -79,6 +79,7 @@ export default function JobSaved() {
   useEffect(() => {
     fetchCompanyInfo();
   }, [listCompanyFollowed]);
+
   return (
     <>
       <View

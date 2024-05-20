@@ -114,7 +114,7 @@ export default function CompaniesFollowed() {
         }}
       >
         {listCompanyFollowed.length > 0 ? (
-          <View>
+          <View style={{ marginBottom: 200 }}>
             <View
               style={{ margin: 10, flexDirection: "row", alignItems: "center" }}
             >
@@ -141,7 +141,6 @@ export default function CompaniesFollowed() {
                   style={{
                     marginLeft: 5,
                     marginRight: 5,
-                    marginBottom: 10,
                     borderWidth: 1,
                     borderColor: "#6b9bf5",
                     borderBottomColor: "#F5F6F6",

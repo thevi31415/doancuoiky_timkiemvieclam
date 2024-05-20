@@ -51,6 +51,17 @@ export default function Account() {
   const [loading, setLoading] = useState(false);
   const { user } = useUser();
   const userId = user?.id?.substring(user?.id?.length - 7);
+  const fetchAccount = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem("userAccount");
+      if (jsonValue !== null) {
+        setUserAccount(JSON.parse(jsonValue));
+      }
+      console.log("Role header");
+    } catch (e) {
+      console.error("Error fetching user account data: ", e);
+    }
+  };
   const fetchDataBookmark = async () => {
     setLoading(true);
 
@@ -104,6 +115,9 @@ export default function Account() {
     setLoading(false);
     console.log("Viec da luu: " + countBookMarkJob);
   };
+  useEffect(() => {
+    fetchAccount();
+  }, []);
   useEffect(() => {
     fetchDataBookmark();
   }, [countBookMarkJob]);
@@ -203,7 +217,10 @@ export default function Account() {
                     color: "#666666",
                   }}
                 >
-                  Mã ứng viên:
+                  {userAccount?.role === "Admin"
+                    ? "Mã nhà tuyển dụng:"
+                    : "Mã ứng viên: "}
+
                   <Text style={{ fontWeight: "bold" }}> {userId}</Text>
                 </Text>
               </View>
