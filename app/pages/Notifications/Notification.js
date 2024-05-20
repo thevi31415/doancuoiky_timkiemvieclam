@@ -47,43 +47,142 @@ export default function Notification() {
       >
         <TouchableOpacity
           style={{
-            backgroundColor: "#E2F6FD",
-            margin: 5,
+            flexDirection: "row",
+            alignItems: "center",
             padding: 10,
-            borderRadius: 10,
+            backgroundColor: "#e9f3ff",
           }}
         >
-          <Text style={{ fontSize: 16, fontWeight: "bold", color: "#015aff" }}>
-            [Bạn đã được tuyển] Công ty FPT đã ứng tuyển bạn
-          </Text>
-          <Text style={{ color: "#333333", marginTop: 5, marginBottom: 5 }}>
-            Vui lòng đến địa chỉ:Tòa nhà FPT, số 10 Phố Phạm Văn Bạch, Phuờng
-            Dịch Vọng, Quận Cầu Giấy, Thành phố Hà Nội, để phỏng vấn nhé ! -
-            Trân trọng
-          </Text>
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <AntDesign name="clockcircle" size={15} color="#8f8f8f" />
-            <Text style={{ color: "#8f8f8f", marginLeft: 5 }}>12/2/2024 </Text>
+          <View
+            style={{
+              width: 10,
+              height: 10,
+              borderRadius: 10,
+              backgroundColor: "#0559f7",
+              marginRight: 10,
+            }}
+          />
+          <View style={{ marginRight: 10 }}>
+            <Image
+              source={require("../assets/Logo_HCMUTE.jpg")}
+              style={{ width: 55, height: 55, borderRadius: 100 }}
+            />
+          </View>
+          <View style={{ flex: 1 }}>
+            <Text style={{ fontSize: 16, fontWeight: "bold", marginBottom: 5 }}>
+              Công ty FPT đã ứng tuyển bạn
+            </Text>
+            <Text style={{ fontSize: 13, marginBottom: 5 }}>
+              Vui lòng đến địa chỉ:Tòa nhà FPT, số 10 Phố Phạm Văn Bạch, Phuờng
+              Dịch Vọng, Quận Cầu Giấy, Thành phố Hà Nội, để phỏng vấn nhé ! -
+              Trân trọng
+            </Text>
+            <Text style={{ fontSize: 14, color: "#888" }}>20/05/2024</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity
           style={{
-            backgroundColor: "#EEEFF5",
-            margin: 5,
+            flexDirection: "row",
+            alignItems: "center",
             padding: 10,
-            borderRadius: 10,
+            backgroundColor: "#ffffff",
           }}
         >
-          <Text style={{ fontSize: 16, fontWeight: "bold", color: "#015aff" }}>
-            [Bạn đã được tuyển] Công ty SamSung Việt Nam đã ứng tuyển bạn
-          </Text>
-          <Text style={{ color: "#333333", marginTop: 5, marginBottom: 5 }}>
-            Vui lòng đến tòa PVI Tower, số 1 Phan Văn Bạch, Cầu Giấy, Hà Nội để
-            phỏng vấn nhé. - Trân trọng !
-          </Text>
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <AntDesign name="clockcircle" size={15} color="#8f8f8f" />
-            <Text style={{ color: "#8f8f8f", marginLeft: 5 }}>12/2/2024 </Text>
+          <View
+            style={{
+              width: 10,
+              height: 10,
+              borderRadius: 10,
+              backgroundColor: "white",
+              marginRight: 10,
+            }}
+          />
+          <View style={{ marginRight: 10 }}>
+            <Image
+              source={require("../assets/Logo_HCMUTE.jpg")}
+              style={{ width: 55, height: 55, borderRadius: 100 }}
+            />
+          </View>
+          <View style={{ flex: 1 }}>
+            <Text style={{ fontSize: 16, fontWeight: "bold", marginBottom: 5 }}>
+              Công ty FPT đã ứng tuyển bạn
+            </Text>
+            <Text style={{ fontSize: 13, marginBottom: 5 }}>
+              Vui lòng đến địa chỉ:Tòa nhà FPT, số 10 Phố Phạm Văn Bạch, Phuờng
+              Dịch Vọng, Quận Cầu Giấy, Thành phố Hà Nội, để phỏng vấn nhé ! -
+              Trân trọng
+            </Text>
+            <Text style={{ fontSize: 14, color: "#888" }}>20/05/2024</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            padding: 10,
+            backgroundColor: "#e9f3ff",
+          }}
+        >
+          <View
+            style={{
+              width: 10,
+              height: 10,
+              borderRadius: 10,
+              backgroundColor: "#0559f7",
+              marginRight: 10,
+            }}
+          />
+          <View style={{ marginRight: 10 }}>
+            <Image
+              source={require("../assets/Logo_HCMUTE.jpg")}
+              style={{ width: 55, height: 55, borderRadius: 100 }}
+            />
+          </View>
+          <View style={{ flex: 1 }}>
+            <Text style={{ fontSize: 16, fontWeight: "bold", marginBottom: 5 }}>
+              Công ty FPT đã ứng tuyển bạn
+            </Text>
+            <Text style={{ fontSize: 13, marginBottom: 5 }}>
+              Vui lòng đến địa chỉ:Tòa nhà FPT, số 10 Phố Phạm Văn Bạch, Phuờng
+              Dịch Vọng, Quận Cầu Giấy, Thành phố Hà Nội, để phỏng vấn nhé ! -
+              Trân trọng
+            </Text>
+            <Text style={{ fontSize: 14, color: "#888" }}>20/05/2024</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            padding: 10,
+            backgroundColor: "#e9f3ff",
+          }}
+        >
+          <View
+            style={{
+              width: 10,
+              height: 10,
+              borderRadius: 10,
+              backgroundColor: "#0559f7",
+              marginRight: 10,
+            }}
+          />
+          <View style={{ marginRight: 10 }}>
+            <Image
+              source={require("../assets/Logo_HCMUTE.jpg")}
+              style={{ width: 55, height: 55, borderRadius: 100 }}
+            />
+          </View>
+          <View style={{ flex: 1 }}>
+            <Text style={{ fontSize: 16, fontWeight: "bold", marginBottom: 5 }}>
+              Công ty FPT đã ứng tuyển bạn
+            </Text>
+            <Text style={{ fontSize: 13, marginBottom: 5 }}>
+              Vui lòng đến địa chỉ:Tòa nhà FPT, số 10 Phố Phạm Văn Bạch, Phuờng
+              Dịch Vọng, Quận Cầu Giấy, Thành phố Hà Nội, để phỏng vấn nhé ! -
+              Trân trọng
+            </Text>
+            <Text style={{ fontSize: 14, color: "#888" }}>20/05/2024</Text>
           </View>
         </TouchableOpacity>
       </View>
