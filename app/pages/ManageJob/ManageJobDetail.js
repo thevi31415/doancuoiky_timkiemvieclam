@@ -13,6 +13,7 @@ export default function ManageJobDetail() {
   useEffect(() => {
     params && setJob(params.job);
   }, [params]);
+  console.log("ID: " + job.id);
   return (
     <>
       <View

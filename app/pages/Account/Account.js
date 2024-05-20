@@ -43,7 +43,7 @@ export default function Account() {
   const navigation = useNavigation();
 
   const db = getFirestore(app);
-  const [userAccount, setUserAccount] = useState(null);
+  const [userAccount, setUserAccount] = useState([]);
   const [countBookMarkJob, setCountBookMarkJob] = useState(0);
   const [countCompanyFollowed, setCountCompanyFollowed] = useState(0);
   const [countJobApply, setCountJobApply] = useState(0);
@@ -51,17 +51,17 @@ export default function Account() {
   const [loading, setLoading] = useState(false);
   const { user } = useUser();
   const userId = user?.id?.substring(user?.id?.length - 7);
-  const fetchAccount = async () => {
-    try {
-      const jsonValue = await AsyncStorage.getItem("userAccount");
-      if (jsonValue !== null) {
-        setUserAccount(JSON.parse(jsonValue));
-      }
-      console.log("Role header");
-    } catch (e) {
-      console.error("Error fetching user account data: ", e);
-    }
-  };
+  // const fetchAccount = async () => {
+  //   try {
+  //     const jsonValue = await AsyncStorage.getItem("userAccount");
+  //     if (jsonValue !== null) {
+  //       setUserAccount(JSON.parse(jsonValue));
+  //     }
+  //     console.log("Role header");
+  //   } catch (e) {
+  //     console.error("Error fetching user account data: ", e);
+  //   }
+  // };
   const fetchDataBookmark = async () => {
     setLoading(true);
 
@@ -112,12 +112,27 @@ export default function Account() {
     } catch (error) {
       console.error("Error fetching data bookmark:", error);
     }
+    console.log("XXX: " + user?.id);
+    try {
+      console.log(user.id);
+      const q = query(collection(db, "User"), where("ID", "==", user.id));
+
+      const userSnapshot = await getDocs(q);
+      const userAccount = userSnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+
+      setUserAccount(userAccount);
+      console.log(userAccount[0].name);
+    } catch (error) {
+      console.error("Error fetching data following:", error);
+    }
     setLoading(false);
-    console.log("Viec da luu: " + countBookMarkJob);
   };
-  useEffect(() => {
-    fetchAccount();
-  }, []);
+  // useEffect(() => {
+  //   fetchAccount();
+  // }, []);
   useEffect(() => {
     fetchDataBookmark();
   }, [countBookMarkJob]);
@@ -127,21 +142,21 @@ export default function Account() {
     }, [])
   );
 
-  const getData = async () => {
-    try {
-      const value = await AsyncStorage.getItem("userAccount");
-      if (value !== null) {
-        const parsedValue = JSON.parse(value);
-        setUserAccount(parsedValue);
-      }
-    } catch (e) {
-      console.error("Error retrieving data:", e);
-    }
-  };
+  // const getData = async () => {
+  //   try {
+  //     const value = await AsyncStorage.getItem("userAccount");
+  //     if (value !== null) {
+  //       const parsedValue = JSON.parse(value);
+  //       setUserAccount(parsedValue);
+  //     }
+  //   } catch (e) {
+  //     console.error("Error retrieving data:", e);
+  //   }
+  // };
 
-  useEffect(() => {
-    getData();
-  }, []);
+  // useEffect(() => {
+  //   getData();
+  // }, []);
 
   return (
     <SafeAreaView
@@ -201,7 +216,7 @@ export default function Account() {
                     color: "#333333",
                   }}
                 >
-                  {user?.fullName}
+                  {userAccount[0]?.name}
                 </Text>
                 <Text
                   style={{
@@ -217,7 +232,7 @@ export default function Account() {
                     color: "#666666",
                   }}
                 >
-                  {userAccount?.role === "Admin"
+                  {userAccount[0]?.role === "Admin"
                     ? "Mã nhà tuyển dụng:"
                     : "Mã ứng viên: "}
 

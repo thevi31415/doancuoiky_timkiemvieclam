@@ -120,6 +120,28 @@ export default function ManageJob() {
             {listJob.length}
           </Text>
           <Text style={{ fontSize: 17 }}> công việc</Text>
+          <View
+            style={{
+              backgroundColor: "#015aff",
+              padding: 10,
+              margin: 5,
+              borderRadius: 16,
+              marginLeft: 38,
+              alignSelf: "flex-start",
+            }}
+          >
+            <TouchableOpacity
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <Ionicons name="add-circle" size={24} color="white" />
+              <Text style={{ fontSize: 15, color: "#fcffff", marginLeft: 5 }}>
+                Tạo công việc
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
 
         <FlatList

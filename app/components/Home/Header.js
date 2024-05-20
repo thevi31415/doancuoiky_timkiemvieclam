@@ -12,7 +12,16 @@ import LinearGradient from "react-native-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import { useUser } from "@clerk/clerk-expo";
 import { useFocusEffect } from "@react-navigation/native";
-import { collection, getDocs, setDoc, addDoc } from "firebase/firestore";
+import {
+  setDoc,
+  collection,
+  addDoc,
+  query,
+  where,
+  getDocs,
+  doc,
+  deleteDoc,
+} from "firebase/firestore";
 import { app } from "../../../firebaseConfig";
 import { getFirestore } from "firebase/firestore";
 import { useNavigation } from "@react-navigation/native";
@@ -34,15 +43,30 @@ export default function Header({ linkAvatar, nameUser }) {
     } catch (e) {
       console.error("Error fetching user account data: ", e);
     }
+    try {
+      console.log(user.id);
+      const q = query(collection(db, "User"), where("ID", "==", user.id));
+
+      const userSnapshot = await getDocs(q);
+      const userAccount = userSnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+
+      setUserAccount(userAccount);
+      console.log(userAccount[0].name);
+    } catch (error) {
+      console.error("Error fetching data following:", error);
+    }
   };
   useEffect(() => {
     fetchData();
   }, []);
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     fetchData();
-  //   }, [])
-  // );
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchData();
+    }, [])
+  );
   return (
     <View>
       <ImageBackground
@@ -73,13 +97,13 @@ export default function Header({ linkAvatar, nameUser }) {
               <View>
                 <Text style={{ color: "white", fontSize: 16 }}>
                   Xin chào {""}
-                  {userAccount?.role === "Admin"
+                  {userAccount[0]?.role === "Admin"
                     ? "nhà tuyển dụng"
                     : "ứng viên"}
                   {""} ! 👋
                 </Text>
                 <Text className="text-[16px] font-bold color-white">
-                  {user?.fullName}
+                  {userAccount[0]?.name}
                 </Text>
               </View>
             </View>
