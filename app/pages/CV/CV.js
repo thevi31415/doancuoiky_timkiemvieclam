@@ -66,13 +66,13 @@ export default function CV() {
     }
   }, [listCV]);
   return (
-    // <>
-    //   {listCV.length > 0 ? (
-    //     <ManagementCV listCV={listCV} />
-    //   ) : (
-    //     <NotFoundCVStackNav />
-    //   )}
-    // </>
-    <>{listCV.length > 0 ? <CVDetail CV={CV} /> : <NotFoundCVStackNav />}</>
+    <>
+      {listCV.length > 0 ? (
+        <ManagementCV listCV={listCV} />
+      ) : (
+        <NotFoundCVStackNav />
+      )}
+    </>
+    // <>{listCV.length > 0 ? <CVDetail CV={CV} /> : <NotFoundCVStackNav />}</>
   );
 }

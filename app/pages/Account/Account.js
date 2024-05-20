@@ -9,6 +9,9 @@ import {
   Image,
   ImageBackground,
   ActivityIndicator,
+  Modal,
+  TextInput,
+  Button,
 } from "react-native";
 import {
   collection,
@@ -41,7 +44,7 @@ removeValue = async () => {
 export default function Account() {
   const { isLoaded, signOut } = useAuth();
   const navigation = useNavigation();
-
+  const [modalVisible, setModalVisible] = useState(false);
   const db = getFirestore(app);
   const [userAccount, setUserAccount] = useState([]);
   const [countBookMarkJob, setCountBookMarkJob] = useState(0);
@@ -62,6 +65,10 @@ export default function Account() {
   //     console.error("Error fetching user account data: ", e);
   //   }
   // };
+  const openModal = () => {
+    // setNewName(name);
+    setModalVisible(true);
+  };
   const fetchDataBookmark = async () => {
     setLoading(true);
 
@@ -165,7 +172,11 @@ export default function Account() {
     >
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={styles.profile}>
+          <TouchableOpacity
+            style={styles.profile}
+            // onPress={() => navigation.push("edit-name")}
+            onPress={openModal}
+          >
             <View
               style={{
                 flexDirection: "row",
@@ -240,7 +251,7 @@ export default function Account() {
                 </Text>
               </View>
             </View>
-          </View>
+          </TouchableOpacity>
 
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Quản lý hồ sơ</Text>
@@ -571,6 +582,39 @@ export default function Account() {
             </View>
           </View>
         </ScrollView>
+        <Modal
+          visible={modalVisible}
+          animationType="slide"
+          transparent={true}
+          onRequestClose={() => setModalVisible(false)}
+        >
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: "rgba(0, 0, 0, 0.5)",
+            }}
+          >
+            <View
+              style={{
+                backgroundColor: "white",
+                padding: 20,
+                borderRadius: 10,
+                width: "80%",
+              }}
+            >
+              <TextInput
+                // value={newName}
+                // onChangeText={(text) => setNewName(text)}
+                placeholder="Enter new name"
+                style={{ borderBottomWidth: 1, marginBottom: 10 }}
+              />
+              {/* <Button title="Save" onPress={handleSave} /> */}
+              <Button title="Cancel" onPress={() => setModalVisible(false)} />
+            </View>
+          </View>
+        </Modal>
       </View>
       <LoadingOverlay loading={loading} />
     </SafeAreaView>

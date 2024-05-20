@@ -1,18 +1,38 @@
-import { View, Text, TouchableOpacity, Image } from "react-native";
-import React, { useEffect, useState } from "react";
-import { useRoute } from "@react-navigation/native";
-import { useNavigation } from "@react-navigation/native";
-import AntDesign from "@expo/vector-icons/AntDesign";
-import { Ionicons } from "@expo/vector-icons";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-export default function ManageJobDetail() {
-  const [job, setJob] = useState([]);
-  const { params } = useRoute();
-  const navigation = useNavigation();
+export default function ManagementCV() {
+  const db = getFirestore(app);
+
+  const [listCV, setListCV] = useState([]);
+  const [CV, setCV] = useState([]);
+  const { user } = useUser();
+
+  const fetchDataCV = async () => {
+    try {
+      const q = query(collection(db, "CV"), where("IDUser", "==", user?.id));
+
+      const cvSnapshot = await getDocs(q);
+      const cvData = cvSnapshot.docs.map((doc) => doc.data());
+      setListCV(cvData);
+      console.log("List cv: " + cvData.length);
+    } catch (error) {
+      console.error("Error fetching data following:", error);
+    }
+    setLoading(false);
+  };
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchDataCV();
+    }, [])
+  );
+  useEffect(() => {
+    fetchDataCV();
+  }, []);
 
   useEffect(() => {
-    params && setJob(params.job);
-  }, [params]);
+    if (listCV.length > 0) {
+      setCV(listCV[0]);
+      console.log("Name CV2: " + listCV[0].IDUser);
+    }
+  }, [listCV]);
   return (
     <>
       <View
@@ -27,86 +47,131 @@ export default function ManageJobDetail() {
           borderBottomWidth: 2,
         }}
       >
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={{ position: "absolute", left: 20 }}
-        >
-          <Ionicons name="arrow-back-outline" size={30} color="#2c67f2" />
-        </TouchableOpacity>
-        <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-          Mã công việc: {job.ID}
-        </Text>
+        <Text style={{ fontSize: 20, fontWeight: "bold" }}> Quản lý CV</Text>
       </View>
+      {/* <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <Text>Quản lý cv {listCV.length}</Text>
+      </View> */}
       <View
         style={{
-          borderBottomWidth: 1,
-          borderBottomColor: "#cacdd4",
           backgroundColor: "white",
-          alignItems: "center",
+          width: "100%",
+          height: "100%",
         }}
       >
-        <Text style={{ margin: 10, fontSize: 17, fontWeight: "bold" }}>
-          Thông tin công việc
-        </Text>
-        <Image
-          source={{ uri: job.Logo }}
-          style={{
-            width: 80,
-            height: 80,
-            marginRight: 15,
-            borderRadius: 100,
-          }}
+        <View style={{ flexDirection: "row", alignItems: "center", margin: 5 }}>
+          <Text style={{ fontSize: 17 }}>Bạn đã tạo </Text>
+          <Text style={{ fontSize: 17, color: "#0255f0", fontWeight: "bold" }}>
+            {listCV.length}
+          </Text>
+          <Text style={{ fontSize: 17 }}> CV</Text>
+          <View
+            style={{
+              backgroundColor: "#015aff",
+              padding: 10,
+              margin: 5,
+              borderRadius: 16,
+              marginLeft: 100,
+              alignSelf: "flex-start",
+            }}
+          >
+            <TouchableOpacity
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <Ionicons name="add-circle" size={24} color="white" />
+              <Text style={{ fontSize: 15, color: "#fcffff", marginLeft: 5 }}>
+                Tạo CV mới
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          data={listCV}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              style={{
+                backgroundColor: "white",
+                margin: 0,
+                padding: 10,
+                borderRadius: 0,
+                borderBottomColor: "#ebebec",
+                borderBottomWidth: 1,
+              }}
+              onPress={() =>
+                navigation.push("manege-job-detail", {
+                  job: item,
+                })
+              }
+            >
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                  <Image
+                    source={{ uri: item.Avatar }}
+                    style={{
+                      width: 70,
+                      height: 70,
+                      marginRight: 15,
+                      borderRadius: 100,
+                      borderWidth: 2,
+                      borderColor: "blue",
+                    }}
+                  />
+                  <View>
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        fontWeight: "bold",
+                        color: "#015aff",
+                      }}
+                    >
+                      {item?.Name}
+                    </Text>
+                    <Text
+                      style={{
+                        color: "#3b3b3b",
+                        marginTop: 5,
+                        fontWeight: "bold",
+                      }}
+                    >
+                      {item?.DateBirth}
+                    </Text>
+                    <View
+                      style={{
+                        backgroundColor: "#d6e4ff",
+                        borderRadius: 5,
+                        alignSelf: "flex-start",
+                        padding: 5,
+                        marginTop: 5,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          color: "#0056b3",
+                          fontSize: 12,
+                          fontWeight: "bold",
+                        }}
+                      >
+                        #{item?.ID}
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </TouchableOpacity>
+          )}
+          keyExtractor={(item) => item.ID}
         />
-        <TouchableOpacity
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-            padding: 10,
-          }}
-        >
-          <Text
-            style={{
-              flex: 1,
-              fontSize: 16,
-              fontWeight: "bold",
-              color: "#125fe8",
-            }}
-          >
-            Tên công việc
-          </Text>
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Text style={{ marginLeft: 5, fontSize: 16, fontWeight: "bold" }}>
-              {job?.NameJob}
-            </Text>
-            <MaterialIcons name="arrow-forward-ios" size={20} color="#a6a6a6" />
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-            padding: 10,
-          }}
-        >
-          <Text
-            style={{
-              flex: 1,
-              fontSize: 16,
-              fontWeight: "bold",
-              color: "#125fe8",
-            }}
-          >
-            Vị trí
-          </Text>
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Text style={{ marginLeft: 5, fontSize: 16, fontWeight: "normal" }}>
-              {job?.LocationJob}
-            </Text>
-            <MaterialIcons name="arrow-forward-ios" size={20} color="#a6a6a6" />
-          </View>
-        </TouchableOpacity>
       </View>
     </>
   );
