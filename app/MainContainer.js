@@ -26,6 +26,7 @@ import AccountScreenStackNav from "./pages/Account/AccountScreenStackNav";
 import { Badge } from "react-native-elements";
 import ManageJob from "./pages/ManageJob/ManageJob";
 import ManageCompany from "./pages/ManageCompany/ManageCompany";
+import ManageJobStackNav from "./pages/ManageJob/ManageJobStackNav";
 
 const Tab = createBottomTabNavigator();
 const storeData = async (value) => {
@@ -134,7 +135,7 @@ export default function MainComponent() {
         {role === "Admin" ? (
           <Tab.Screen
             name="Tuyển dụng"
-            component={ManageJob}
+            component={ManageJobStackNav}
             options={{
               tabBarIcon: ({ color, size }) => (
                 <Ionicons name="people" size={size} color={color} />

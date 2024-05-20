@@ -27,8 +27,11 @@ import {
 } from "firebase/firestore";
 import { useUser } from "@clerk/clerk-expo";
 import LoadingOverlay from "../../components/LoadingOverlay";
+import { useNavigation } from "@react-navigation/native";
 
 export default function ManageJob() {
+  const navigation = useNavigation();
+
   const db = getFirestore(app);
 
   const [checked, setChecked] = React.useState(false);
@@ -48,7 +51,6 @@ export default function ManageJob() {
         ...doc.data(),
       }));
       setListJob(job);
-      console.log("listJobxx: " + listJob[0].id);
     } catch (error) {
       console.error("Error fetching data following:", error);
     }
@@ -133,6 +135,11 @@ export default function ManageJob() {
                 borderBottomColor: "#ebebec",
                 borderBottomWidth: 1,
               }}
+              onPress={() =>
+                navigation.push("manege-job-detail", {
+                  job: item,
+                })
+              }
             >
               <View
                 style={{
