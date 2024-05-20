@@ -7,11 +7,13 @@ import LastJob from "../../components/Home/LastJob";
 import { app } from "../../../firebaseConfig";
 import { getFirestore } from "firebase/firestore";
 import { collection, getDocs, setDoc, addDoc } from "firebase/firestore";
+import { FontAwesome } from "@expo/vector-icons";
 import { useFocusEffect } from "@react-navigation/native";
 import TypeJob from "../../components/Home/TypeJob";
 import { useUser } from "@clerk/clerk-expo";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import HintSearch from "../../components/Home/HintSearch";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function Home() {
   const db = getFirestore(app);
@@ -44,7 +46,33 @@ export default function Home() {
       <ScrollView showsVerticalScrollIndicator={false}>
         <Header />
         <HintSearch />
-
+        <View
+          style={{
+            backgroundColor: "#f2f6ff",
+            margin: 10,
+            padding: 10,
+            borderRadius: 10,
+            paddingHorizontal: 20,
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <View style={{ alignItems: "center" }}>
+            <FontAwesome name="building" size={30} color="#015aff" />
+            <Text style={{ color: "#48494d", fontWeight: "normal" }}>
+              100 công ty
+            </Text>
+          </View>
+          <View style={{ alignItems: "center" }}>
+            <FontAwesome name="search" size={30} color="#015aff" />
+            <Text>100 công việc</Text>
+          </View>
+          <View style={{ alignItems: "center" }}>
+            <FontAwesome name="group" size={30} color="#015aff" />
+            <Text>100 người dùng</Text>
+          </View>
+        </View>
         {/* <TypeJob /> */}
         <Slider />
         <TopCompany topCompanyList={topCompanyList} />

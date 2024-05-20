@@ -24,9 +24,10 @@ import {
   doc,
   deleteDoc,
 } from "firebase/firestore";
-
+import NotFoundCVStackNav from "./NotFoundCVStackNav";
 export default function ManagementCV() {
   const db = getFirestore(app);
+  const navigation = useNavigation();
 
   const [listCV, setListCV] = useState([]);
   const [CV, setCV] = useState([]);
@@ -62,144 +63,156 @@ export default function ManagementCV() {
   }, [listCV]);
   return (
     <>
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "center",
-          marginTop: 40,
-          padding: 13,
-          backgroundColor: "white",
-          borderBottomColor: "#e6e7e8",
-          borderBottomWidth: 2,
-        }}
-      >
-        <Text style={{ fontSize: 20, fontWeight: "bold" }}> Quản lý CV</Text>
-      </View>
-      {/* <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <Text>Quản lý cv {listCV.length}</Text>
-      </View> */}
-      <View
-        style={{
-          backgroundColor: "white",
-          width: "100%",
-          height: "100%",
-        }}
-      >
-        <View style={{ flexDirection: "row", alignItems: "center", margin: 5 }}>
-          <Text style={{ fontSize: 17 }}>Bạn đã tạo </Text>
-          <Text style={{ fontSize: 17, color: "#0255f0", fontWeight: "bold" }}>
-            {listCV.length}
-          </Text>
-          <Text style={{ fontSize: 17 }}> CV</Text>
+      {listCV.length > 0 ? (
+        <View>
           <View
             style={{
-              backgroundColor: "#015aff",
-              padding: 10,
-              margin: 5,
-              borderRadius: 16,
-              marginLeft: 100,
-              alignSelf: "flex-start",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+              marginTop: 40,
+              padding: 13,
+              backgroundColor: "white",
+              borderBottomColor: "#e6e7e8",
+              borderBottomWidth: 2,
             }}
           >
-            <TouchableOpacity
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-              }}
-            >
-              <Ionicons name="add-circle" size={24} color="white" />
-              <Text style={{ fontSize: 15, color: "#fcffff", marginLeft: 5 }}>
-                Tạo CV mới
-              </Text>
-            </TouchableOpacity>
+            <Text style={{ fontSize: 20, fontWeight: "bold" }}>Quản lý CV</Text>
           </View>
-        </View>
-
-        <FlatList
-          showsVerticalScrollIndicator={false}
-          data={listCV}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              style={{
-                backgroundColor: "white",
-                margin: 0,
-                padding: 10,
-                borderRadius: 0,
-                borderBottomColor: "#ebebec",
-                borderBottomWidth: 1,
-              }}
-              onPress={() =>
-                navigation.push("manege-job-detail", {
-                  job: item,
-                })
-              }
+          <View
+            style={{
+              backgroundColor: "white",
+              width: "100%",
+              height: "100%",
+            }}
+          >
+            <View
+              style={{ flexDirection: "row", alignItems: "center", margin: 5 }}
             >
+              <Text style={{ fontSize: 17 }}>Bạn đã tạo </Text>
+              <Text
+                style={{ fontSize: 17, color: "#0255f0", fontWeight: "bold" }}
+              >
+                {listCV.length}
+              </Text>
+              <Text style={{ fontSize: 17 }}> CV</Text>
               <View
                 style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  alignItems: "center",
+                  backgroundColor: "#015aff",
+                  padding: 10,
+                  margin: 5,
+                  borderRadius: 16,
+                  marginLeft: 100,
+                  alignSelf: "flex-start",
                 }}
               >
-                <View style={{ flexDirection: "row", alignItems: "center" }}>
-                  <Image
-                    source={{ uri: item.Avatar }}
+                <TouchableOpacity
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                  }}
+                  onPress={() => navigation.push("add-cv")}
+                >
+                  <Ionicons name="add-circle" size={24} color="white" />
+                  <Text
+                    style={{ fontSize: 15, color: "#fcffff", marginLeft: 5 }}
+                  >
+                    Tạo CV mới
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+
+            <FlatList
+              showsVerticalScrollIndicator={false}
+              data={listCV}
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: "white",
+                    margin: 0,
+                    padding: 10,
+                    borderRadius: 0,
+                    borderBottomColor: "#ebebec",
+                    borderBottomWidth: 1,
+                  }}
+                  onPress={() =>
+                    navigation.push("manege-job-detail", {
+                      job: item,
+                    })
+                  }
+                >
+                  <View
                     style={{
-                      width: 70,
-                      height: 70,
-                      marginRight: 15,
-                      borderRadius: 100,
-                      borderWidth: 2,
-                      borderColor: "blue",
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      alignItems: "center",
                     }}
-                  />
-                  <View>
-                    <Text
-                      style={{
-                        fontSize: 18,
-                        fontWeight: "bold",
-                        color: "#015aff",
-                      }}
-                    >
-                      {item?.Name}
-                    </Text>
-                    <Text
-                      style={{
-                        color: "#3b3b3b",
-                        marginTop: 5,
-                        fontWeight: "bold",
-                      }}
-                    >
-                      {item?.DateBirth}
-                    </Text>
+                  >
                     <View
-                      style={{
-                        backgroundColor: "#d6e4ff",
-                        borderRadius: 5,
-                        alignSelf: "flex-start",
-                        padding: 5,
-                        marginTop: 5,
-                      }}
+                      style={{ flexDirection: "row", alignItems: "center" }}
                     >
-                      <Text
+                      <Image
+                        source={{ uri: item.Avatar }}
                         style={{
-                          color: "#0056b3",
-                          fontSize: 12,
-                          fontWeight: "bold",
+                          width: 70,
+                          height: 70,
+                          marginRight: 15,
+                          borderRadius: 100,
+                          borderWidth: 2,
+                          borderColor: "blue",
                         }}
-                      >
-                        #{item?.ID}
-                      </Text>
+                      />
+                      <View>
+                        <Text
+                          style={{
+                            fontSize: 18,
+                            fontWeight: "bold",
+                            color: "#015aff",
+                          }}
+                        >
+                          {item?.Name}
+                        </Text>
+                        <Text
+                          style={{
+                            color: "#3b3b3b",
+                            marginTop: 5,
+                            fontWeight: "bold",
+                          }}
+                        >
+                          {item?.DateBirth}
+                        </Text>
+                        <View
+                          style={{
+                            backgroundColor: "#d6e4ff",
+                            borderRadius: 5,
+                            alignSelf: "flex-start",
+                            padding: 5,
+                            marginTop: 5,
+                          }}
+                        >
+                          <Text
+                            style={{
+                              color: "#0056b3",
+                              fontSize: 12,
+                              fontWeight: "bold",
+                            }}
+                          >
+                            #{item?.ID}
+                          </Text>
+                        </View>
+                      </View>
                     </View>
                   </View>
-                </View>
-              </View>
-            </TouchableOpacity>
-          )}
-          keyExtractor={(item) => item.ID}
-        />
-      </View>
+                </TouchableOpacity>
+              )}
+              keyExtractor={(item) => item.ID}
+            />
+          </View>
+        </View>
+      ) : (
+        <NotFoundCVStackNav />
+      )}
     </>
   );
 }

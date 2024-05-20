@@ -27,6 +27,7 @@ import { Badge } from "react-native-elements";
 import ManageJob from "./pages/ManageJob/ManageJob";
 import ManageCompany from "./pages/ManageCompany/ManageCompany";
 import ManageJobStackNav from "./pages/ManageJob/ManageJobStackNav";
+import ManagementCVStackNav from "./pages/CV/ManagementCVStackNav";
 
 const Tab = createBottomTabNavigator();
 const storeData = async (value) => {
@@ -145,7 +146,7 @@ export default function MainComponent() {
         ) : (
           <Tab.Screen
             name="Hồ sơ"
-            component={CV}
+            component={ManagementCVStackNav}
             options={{
               tabBarIcon: ({ color, size }) => (
                 <Ionicons name="clipboard" size={size} color={color} />

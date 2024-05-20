@@ -30,6 +30,7 @@ import CVDetail from "./CVDetail";
 import NotFoundCV from "./NotFoundCV";
 import NotFoundCVStackNav from "./NotFoundCVStackNav";
 import ManagementCV from "./ManagementCV";
+import ManagementCVStackNav from "./ManagementCVStackNav";
 export default function CV() {
   const db = getFirestore(app);
 
@@ -66,13 +67,14 @@ export default function CV() {
     }
   }, [listCV]);
   return (
-    <>
+    <View>
       {listCV.length > 0 ? (
         <ManagementCV listCV={listCV} />
       ) : (
         <NotFoundCVStackNav />
       )}
-    </>
+    </View>
+
     // <>{listCV.length > 0 ? <CVDetail CV={CV} /> : <NotFoundCVStackNav />}</>
   );
 }

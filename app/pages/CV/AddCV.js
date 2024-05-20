@@ -116,8 +116,7 @@ export default function AddCV() {
     console.log("ShowPicker: " + showPicker);
   }, [dateOfBirth, showPicker]);
   const generateRandomId = (length) => {
-    const characters =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const characters = "0123456789";
     let randomId = "";
 
     for (let i = 0; i < length; i++) {
