@@ -42,41 +42,48 @@ export default function Home() {
   );
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#fff" }}>
+    <View style={{ flex: 1 }}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <Header />
-        <HintSearch />
-        <View
-          style={{
-            backgroundColor: "#f2f6ff",
-            margin: 10,
-            padding: 10,
-            borderRadius: 10,
-            paddingHorizontal: 20,
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <View style={{ alignItems: "center" }}>
-            <FontAwesome name="building" size={30} color="#015aff" />
-            <Text style={{ color: "#48494d", fontWeight: "normal" }}>
-              100 công ty
-            </Text>
+        <View style={{ backgroundColor: "white", marginBottom: 15 }}>
+          <Header />
+          <HintSearch />
+          <View
+            style={{
+              backgroundColor: "#f2f6ff",
+              margin: 10,
+              padding: 10,
+              borderRadius: 10,
+              paddingHorizontal: 20,
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <View style={{ alignItems: "center" }}>
+              <FontAwesome name="building" size={30} color="#015aff" />
+              <Text style={{ color: "#48494d", fontWeight: "normal" }}>
+                100 công ty
+              </Text>
+            </View>
+            <View style={{ alignItems: "center" }}>
+              <FontAwesome name="search" size={30} color="#015aff" />
+              <Text>100 công việc</Text>
+            </View>
+            <View style={{ alignItems: "center" }}>
+              <FontAwesome name="group" size={30} color="#015aff" />
+              <Text>100 người dùng</Text>
+            </View>
           </View>
-          <View style={{ alignItems: "center" }}>
-            <FontAwesome name="search" size={30} color="#015aff" />
-            <Text>100 công việc</Text>
-          </View>
-          <View style={{ alignItems: "center" }}>
-            <FontAwesome name="group" size={30} color="#015aff" />
-            <Text>100 người dùng</Text>
-          </View>
+
+          <Slider />
         </View>
-        {/* <TypeJob /> */}
-        <Slider />
-        <TopCompany topCompanyList={topCompanyList} />
-        <LastJob lastJobsList={lastJobList} />
+
+        <View style={{ backgroundColor: "white", marginBottom: 15 }}>
+          <TopCompany topCompanyList={topCompanyList} />
+        </View>
+        <View style={{ backgroundColor: "white" }}>
+          <LastJob lastJobsList={lastJobList} />
+        </View>
       </ScrollView>
     </View>
   );

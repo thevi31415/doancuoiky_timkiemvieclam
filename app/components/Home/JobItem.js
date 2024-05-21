@@ -19,7 +19,7 @@ export default function JobItem({ item }) {
       style={{
         backgroundColor: "#fafbff",
         padding: 16,
-        borderRadius: 16,
+        borderRadius: 10,
         marginBottom: 16,
         borderWidth: 1,
         borderLeftWidth: 1,

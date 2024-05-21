@@ -26,7 +26,7 @@ export default function TopCompany({ topCompanyList }) {
             flex: 1,
           }}
         >
-          Top công ty hàng đầu
+          Nhà tuyển dụng hàng đầu
         </Text>
         <Text style={{ marginLeft: "auto", color: "#2c67f2" }}>View More</Text>
       </View>

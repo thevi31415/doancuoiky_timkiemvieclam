@@ -254,21 +254,9 @@ export default function Account() {
           </TouchableOpacity>
 
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Quản lý hồ sơ</Text>
+            <Text style={styles.sectionTitle}>Thông tin cá nhân</Text>
 
             <View style={styles.sectionBody}>
-              {/* <View style={[styles.rowWrapper, styles.rowFirst]}>
-                <TouchableOpacity style={styles.row}>
-                  <View
-                    style={[styles.rowIcon, { backgroundColor: "#2B66EF" }]}
-                  >
-                    <FeatherIcon color="#fff" name="clipboard" size={20} />
-                  </View>
-
-                  <Text style={styles.rowLabel}>Hồ sơ cá nhân</Text>
-                </TouchableOpacity>
-              </View> */}
-
               <TouchableOpacity
                 style={{
                   height: 70,

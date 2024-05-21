@@ -115,7 +115,7 @@ export default function Header({ linkAvatar, nameUser }) {
             style={{
               backgroundColor: "#FFF",
               padding: 12,
-              borderRadius: 16,
+              borderRadius: 13,
               flexDirection: "row",
               alignItems: "center",
               position: "relative",

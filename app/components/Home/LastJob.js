@@ -27,7 +27,7 @@ export default function LastJob({ lastJobsList }) {
             flex: 1,
           }}
         >
-          Công việc mới nhất
+          Việc làm nổi bật
         </Text>
         <Text style={{ marginLeft: "auto", color: "#2c67f2" }}>View More</Text>
       </View>
