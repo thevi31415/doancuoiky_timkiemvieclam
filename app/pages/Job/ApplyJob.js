@@ -6,6 +6,7 @@ import {
   ScrollView,
   FlatList,
   Image,
+  TextInput,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useRoute } from "@react-navigation/native";
@@ -245,7 +246,7 @@ export default function ApplyJob() {
             <FlatList
               showsVerticalScrollIndicator={false}
               data={listCV}
-              style={{ marginBottom: 70 }}
+              style={{ marginBottom: 0 }}
               renderItem={({ item }) => (
                 <View
                   style={{
@@ -350,6 +351,31 @@ export default function ApplyJob() {
               </Text>
             </View>
           )}
+        </View>
+        <View
+          style={{
+            marginTop: 20,
+            backgroundColor: "white",
+            padding: 10,
+            marginBottom: 70,
+            paddingHorizontal: 20,
+          }}
+        >
+          <Text style={{ fontSize: 17, fontWeight: "bold" }}> Thông tin</Text>
+          <View>
+            <Text>Họ tên</Text>
+            <TextInput
+              style={{
+                fontSize: 17,
+                borderWidth: 2,
+                borderColor: "#b8b8b8",
+                borderRadius: 10,
+                color: "#454545",
+                paddingHorizontal: 15,
+                padding: 5,
+              }}
+            />
+          </View>
         </View>
       </ScrollView>
       <View style={styles.container}>
