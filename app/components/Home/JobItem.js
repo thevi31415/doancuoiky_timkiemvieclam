@@ -27,7 +27,7 @@ export default function JobItem({ item }) {
         borderColor: "#a4c1f7",
       }}
       onPress={() =>
-        navigation.push("job-detail", {
+        navigation.push("job-detail-stack", {
           job: item,
         })
       }

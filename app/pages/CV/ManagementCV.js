@@ -155,8 +155,8 @@ export default function ManagementCV() {
                       <Image
                         source={{ uri: item.Avatar }}
                         style={{
-                          width: 70,
-                          height: 70,
+                          width: 60,
+                          height: 60,
                           marginRight: 15,
                           borderRadius: 100,
                           borderWidth: 2,
@@ -166,7 +166,7 @@ export default function ManagementCV() {
                       <View>
                         <Text
                           style={{
-                            fontSize: 18,
+                            fontSize: 16,
                             fontWeight: "bold",
                             color: "#015aff",
                           }}
@@ -176,6 +176,7 @@ export default function ManagementCV() {
                         <Text
                           style={{
                             color: "#3b3b3b",
+                            fontSize: 15,
                             marginTop: 5,
                             fontWeight: "bold",
                           }}
@@ -187,8 +188,8 @@ export default function ManagementCV() {
                             backgroundColor: "#d6e4ff",
                             borderRadius: 5,
                             alignSelf: "flex-start",
-                            padding: 5,
-                            marginTop: 5,
+                            padding: 4,
+                            marginTop: 3,
                           }}
                         >
                           <Text

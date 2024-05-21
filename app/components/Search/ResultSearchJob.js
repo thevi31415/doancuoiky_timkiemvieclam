@@ -66,7 +66,7 @@ export default function ResultSearchJob({ itemList, filterLocation }) {
             renderItem={({ item }) => (
               <TouchableOpacity
                 onPress={() =>
-                  navigation.push("job-detail", {
+                  navigation.push("job-detail-stack", {
                     job: item,
                   })
                 }

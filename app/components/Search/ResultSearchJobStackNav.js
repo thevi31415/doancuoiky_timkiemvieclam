@@ -5,6 +5,7 @@ import ResultSearchCompanies from "./ResultSearchCompanies";
 import CompaniesDetail from "../../pages/Company/CompanyDetail";
 import ResultSearchJob from "./ResultSearchJob";
 import JobDetail from "../../pages/Job/JobDetail";
+import JobDetailStackNav from "../../pages/Job/JobDetailStackNav";
 
 export default function ResultSearchJobStackNav({ itemList, filterLocation }) {
   const Stack = createStackNavigator();
@@ -24,8 +25,8 @@ export default function ResultSearchJobStackNav({ itemList, filterLocation }) {
         )}
       </Stack.Screen>
       <Stack.Screen
-        name="job-detail"
-        component={JobDetail}
+        name="job-detail-stack"
+        component={JobDetailStackNav}
         options={{
           animationEnabled: true,
           cardStyle: { backgroundColor: "transparent" },

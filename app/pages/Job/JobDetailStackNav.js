@@ -1,38 +1,32 @@
 import { View, Text } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import HomeScreen from "./Home";
-import Search from "../Search/Search";
-import CompaniesDetail from "../Company/CompanyDetail";
-import JobDetail from "../Job/JobDetail";
-import JobDetailStackNav from "../Job/JobDetailStackNav";
+import { useRoute } from "@react-navigation/native";
 
-export default function HomeScreenStackNav() {
+import JobDetail from "../Job/JobDetail";
+import ApplyJob from "./ApplyJob";
+
+export default function JobDetailStackNav({ checkNav }) {
   const Stack = createStackNavigator();
+  const [job, setJob] = useState(null);
+  const { params } = useRoute();
+
+  useEffect(() => {
+    params && setJob(params.job);
+    console.log("DetailJob: " + checkNav);
+    console.log(params.job);
+  }, [params]);
   return (
     <Stack.Navigator>
-      <Stack.Screen
-        name="home"
-        component={HomeScreen}
+      {/* <Stack.Screen
+        name="job-detail"
+        component={JobDetail}
         options={{
           headerShown: false,
         }}
-      />
+      /> */}
       <Stack.Screen
-        name="company-detail"
-        options={{
-          headerStyle: {
-            backgroundColor: "#2c67f2",
-          },
-          headerTintColor: "#fff",
-          headerTitle: "Search",
-          headerShown: false,
-        }}
-      >
-        {(props) => <CompaniesDetail {...props} checkNav={true} />}
-      </Stack.Screen>
-      <Stack.Screen
-        name="job-detail-stack"
+        name="job-detail"
         options={{
           headerStyle: {
             backgroundColor: "#2c67f2",
@@ -42,12 +36,27 @@ export default function HomeScreenStackNav() {
           headerShown: false,
         }}
       >
-        {(props) => <JobDetailStackNav {...props} checkNav={true} />}
+        {(props) => (
+          <JobDetail {...props} checkNav={checkNav} jobs={params.job} />
+        )}
       </Stack.Screen>
+      {/* <Stack.Screen
+        name="job-detail"
+        options={{
+          headerStyle: {
+            backgroundColor: "#2c67f2",
+          },
+          headerTintColor: "#fff",
+          headerTitle: "Search",
+          headerShown: false,
+        }}
+      >
+        {(props) => <JobDetail {...props} checkNav={true} />}
+      </Stack.Screen> */}
 
       <Stack.Screen
-        name="search-detail"
-        component={Search}
+        name="apply-job"
+        component={ApplyJob}
         options={{
           headerStyle: {
             backgroundColor: "#2c67f2",
