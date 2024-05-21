@@ -12,7 +12,7 @@ import {
   Alert,
   ToastAndroid,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
 import { useRoute } from "@react-navigation/native";
@@ -119,7 +119,15 @@ export default function JobDetail({ checkNav, jobs }) {
       console.error("Error fetching data bookmark:", error);
     }
   };
-
+  useFocusEffect(
+    useCallback(() => {
+      fetchData();
+      fetchDataBookmark();
+      return () => {
+        // Cleanup if necessary
+      };
+    }, [])
+  );
   useEffect(() => {
     fetchData();
     fetchDataBookmark();
