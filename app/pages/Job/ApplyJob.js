@@ -30,7 +30,7 @@ import { useUser } from "@clerk/clerk-expo";
 import { useNavigation } from "@react-navigation/native";
 import LoadingOverlay from "../../components/LoadingOverlay";
 
-export default function ApplyJob() {
+export default function ApplyJob({ checkNav }) {
   const navigation = useNavigation();
 
   const db = getFirestore(app);
@@ -118,26 +118,28 @@ export default function ApplyJob() {
   return (
     <>
       <ScrollView>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "center",
-            marginTop: 40,
-            padding: 13,
-            backgroundColor: "white",
-            borderBottomColor: "#e6e7e8",
-            borderBottomWidth: 2,
-          }}
-        >
-          <TouchableOpacity
-            onPress={() => navigation.goBack()}
-            style={{ position: "absolute", left: 20 }}
+        {checkNav && (
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+              marginTop: 40,
+              padding: 13,
+              backgroundColor: "white",
+              borderBottomColor: "#e6e7e8",
+              borderBottomWidth: 2,
+            }}
           >
-            <Ionicons name="arrow-back-outline" size={30} color="#2c67f2" />
-          </TouchableOpacity>
-          <Text style={{ fontSize: 20, fontWeight: "bold" }}>Apply to</Text>
-        </View>
+            <TouchableOpacity
+              onPress={() => navigation.goBack()}
+              style={{ position: "absolute", left: 20 }}
+            >
+              <Ionicons name="arrow-back-outline" size={30} color="#2c67f2" />
+            </TouchableOpacity>
+            <Text style={{ fontSize: 20, fontWeight: "bold" }}>Apply to</Text>
+          </View>
+        )}
         <View
           style={{
             marginTop: 20,
@@ -352,7 +354,7 @@ export default function ApplyJob() {
             </View>
           )}
         </View>
-        <View
+        {/* <View
           style={{
             marginTop: 20,
             backgroundColor: "white",
@@ -376,7 +378,7 @@ export default function ApplyJob() {
               }}
             />
           </View>
-        </View>
+        </View> */}
       </ScrollView>
       <View style={styles.container}>
         {/* <TouchableOpacity

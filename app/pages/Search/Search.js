@@ -36,6 +36,7 @@ import ResultSearchAll from "../../components/Search/ResultSearchAll";
 import ResultSearchJob from "../../components/Search/ResultSearchJob";
 import ResultSearchJobStackNav from "../../components/Search/ResultSearchJobStackNav";
 import LoadingOverlay from "../../components/LoadingOverlay";
+import ResultSearchAllStackNav from "../../components/Search/ResultSearchAllStackNav";
 const LocationData = [
   { label: "All locations", value: "" },
   { label: "Hồ Chí Minh", value: "Hồ Chí Minh" },
@@ -319,9 +320,19 @@ export default function Search() {
               tabBarActiveTintColor: "#2c67f2",
             }}
           >
-            <Tab.Screen name="All" component={ResultSearchAll} />
+            {/* <Tab.Screen name="All" component={ResultSearchAll} /> */}
 
             {/* <Tab.Screen name="Job" component={ResultSearchJob} /> */}
+            <Tab.Screen name="All">
+              {() => (
+                <ResultSearchAllStackNav
+                  itemListJob={searchResultJob}
+                  itemListCompany={searchResultCompany}
+                  filterLocation={valueLocation}
+                  textLocation={textLocation}
+                />
+              )}
+            </Tab.Screen>
             <Tab.Screen name="Job">
               {() => (
                 <ResultSearchJobStackNav

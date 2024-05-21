@@ -53,8 +53,20 @@ export default function JobDetailStackNav({ checkNav }) {
       >
         {(props) => <JobDetail {...props} checkNav={true} />}
       </Stack.Screen> */}
-
       <Stack.Screen
+        name="apply-job"
+        options={{
+          headerStyle: {
+            backgroundColor: "#2c67f2",
+          },
+          headerTintColor: "#fff",
+          headerTitle: "Search",
+          headerShown: false,
+        }}
+      >
+        {(props) => <ApplyJob {...props} checkNav={checkNav} />}
+      </Stack.Screen>
+      {/* <Stack.Screen
         name="apply-job"
         component={ApplyJob}
         options={{
@@ -65,7 +77,7 @@ export default function JobDetailStackNav({ checkNav }) {
           headerTitle: "Search",
           headerShown: false,
         }}
-      />
+      /> */}
     </Stack.Navigator>
   );
 }
