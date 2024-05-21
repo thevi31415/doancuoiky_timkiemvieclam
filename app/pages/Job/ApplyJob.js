@@ -342,11 +342,11 @@ export default function ApplyJob() {
               }}
             >
               <Image
-                style={{ width: 120, height: 120 }}
+                style={{ width: 100, height: 100 }}
                 source={require("../assets/not_found_cv_2.jpg")}
               />
 
-              <Text style={{ marginTop: 15, fontSize: 17, color: "#666666" }}>
+              <Text style={{ marginTop: 15, fontSize: 15, color: "#666666" }}>
                 Không có CV nào. Vui lòng tạo một CV !
               </Text>
             </View>

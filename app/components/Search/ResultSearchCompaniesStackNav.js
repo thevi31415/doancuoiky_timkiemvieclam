@@ -7,11 +7,12 @@ import CompaniesDetail from "../../pages/Company/CompanyDetail";
 export default function ResultSearchCompaniesStackNav({
   itemList,
   filterLocation,
+  textLocation,
 }) {
   const Stack = createStackNavigator();
   useEffect(() => {
     console.log("Stact", itemList);
-    console.log("Searchxx: ", filterLocation);
+    console.log("Searchxx: ", textLocation);
   }, [itemList]);
   return (
     <Stack.Navigator mode="modal" headerMode="none">
@@ -21,6 +22,7 @@ export default function ResultSearchCompaniesStackNav({
             {...props}
             itemList={itemList}
             filterLocation={filterLocation}
+            textLocation={textLocation}
           />
         )}
       </Stack.Screen>
