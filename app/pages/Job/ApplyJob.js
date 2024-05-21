@@ -83,30 +83,34 @@ export default function ApplyJob() {
     // console.log(params.job);
   }, [params]);
   const applyJob = async () => {
-    setLoading(true); // Start loading process
-    console.log("Apply");
+    if (selectedId == null) {
+      alert("Vui lòng chọn một CV để ứng tuyển !");
+    } else {
+      setLoading(true); // Start loading process
+      console.log("Apply");
 
-    try {
-      const docRef = await addDoc(collection(db, "ApplyJob"), {
-        ID: generateRandomId(8),
-        IDJob: params.job?.ID,
-        IDUser: user?.id,
-        IDCv: selectedId,
-      });
+      try {
+        const docRef = await addDoc(collection(db, "ApplyJob"), {
+          ID: generateRandomId(8),
+          IDJob: params.job?.ID,
+          IDUser: user?.id,
+          IDCv: selectedId,
+        });
 
-      setLoading(false); // End loading process
+        setLoading(false); // End loading process
 
-      alert(
-        "Bạn đã ứng tuyển thành công !. Nhà tuyển dụng sẽ xem được hồ sơ của bạn !"
-      );
-      navigation.goBack();
-      // Uncomment this line if you want to navigate after applying
-      // navigation.push("apply-job", { job: jobs });
-    } catch (error) {
-      console.error("Error applying for job: ", error);
-      setIsLoading(false);
-      setLoading(false); // End loading process
-      alert("Đã xảy ra lỗi khi ứng tuyển. Vui lòng thử lại sau.");
+        alert(
+          "Bạn đã ứng tuyển thành công !. Nhà tuyển dụng sẽ xem được hồ sơ của bạn !"
+        );
+        navigation.goBack();
+        // Uncomment this line if you want to navigate after applying
+        // navigation.push("apply-job", { job: jobs });
+      } catch (error) {
+        console.error("Error applying for job: ", error);
+        setIsLoading(false);
+        setLoading(false); // End loading process
+        alert("Đã xảy ra lỗi khi ứng tuyển. Vui lòng thử lại sau.");
+      }
     }
   };
 
@@ -281,7 +285,7 @@ export default function ApplyJob() {
                             color: "#015aff",
                           }}
                         >
-                          {item?.Name}
+                          {item?.NameCV}
                         </Text>
                         <Text
                           style={{

@@ -162,6 +162,7 @@ export default function AddCV() {
         >
           <Formik
             initialValues={{
+              NameCV: "",
               Avatar: "",
               DateBirth: "",
               Email: "",
@@ -232,6 +233,20 @@ export default function AddCV() {
                   </TouchableOpacity>
                 </View>
                 <View style={{ marginLeft: 10, marginRight: 10 }}>
+                  <TitleInput text={"Tên CV"} />
+                  <TextInput
+                    style={[
+                      styles.input,
+                      selectedInput === "NameCV" && styles.selectedInput,
+                    ]}
+                    placeholder="Nhập tên CV"
+                    value={values?.NameCV}
+                    onChangeText={handleChange("NameCV")}
+                    placeholderTextColor="#c9cdd6"
+                    onFocus={() => setSelectedInput("NameCV")}
+                    onBlur={() => setSelectedInput(null)}
+                    caretColor="blue"
+                  />
                   <TitleInput text={"Họ tên"} />
                   <TextInput
                     style={[
@@ -318,7 +333,7 @@ export default function AddCV() {
                   <TextInput
                     style={styles.input}
                     placeholder="Nhập địa chỉ"
-                    value={values?.Website}
+                    value={values?.Location}
                     onChangeText={handleChange("Location")}
                   />
                   <TitleInput text={"Kinh nghiệm"} />

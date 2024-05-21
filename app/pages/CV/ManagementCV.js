@@ -171,7 +171,7 @@ export default function ManagementCV() {
                             color: "#015aff",
                           }}
                         >
-                          {item?.Name}
+                          {item?.NameCV}
                         </Text>
                         <Text
                           style={{
