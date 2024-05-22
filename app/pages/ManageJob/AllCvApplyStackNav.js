@@ -50,9 +50,7 @@ export default function AllCvApplyStackNav({ job }) {
           headerShown: false,
         }}
       >
-        {(props) => (
-          <DetailCVApply {...props} checkNav={true} job={params.job} />
-        )}
+        {(props) => <DetailCVApply {...props} />}
       </Stack.Screen>
       {/* <Stack.Screen
         name="job-detail"
