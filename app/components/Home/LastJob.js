@@ -13,6 +13,7 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import JobItem from "./JobItem";
 
 export default function LastJob({ lastJobsList }) {
+  console.log("LastJob: " + lastJobsList.length);
   return (
     <View style={{ flex: 0.82, padding: 16 }}>
       <View
@@ -27,7 +28,7 @@ export default function LastJob({ lastJobsList }) {
             flex: 1,
           }}
         >
-          Công việc mới nhất
+          Việc làm nổi bật
         </Text>
         <Text style={{ marginLeft: "auto", color: "#2c67f2" }}>View More</Text>
       </View>
@@ -35,7 +36,7 @@ export default function LastJob({ lastJobsList }) {
       <ScrollView showsVerticalScrollIndicator={false}>
         <FlatList
           data={lastJobsList}
-          numColumns={10}
+          // numColumns={10}
           renderItem={({ item, index }) => <JobItem item={item} />}
         />
       </ScrollView>

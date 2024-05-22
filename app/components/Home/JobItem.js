@@ -19,7 +19,7 @@ export default function JobItem({ item }) {
       style={{
         backgroundColor: "#fafbff",
         padding: 16,
-        borderRadius: 16,
+        borderRadius: 10,
         marginBottom: 16,
         borderWidth: 1,
         borderLeftWidth: 1,
@@ -27,7 +27,7 @@ export default function JobItem({ item }) {
         borderColor: "#a4c1f7",
       }}
       onPress={() =>
-        navigation.push("job-detail", {
+        navigation.push("job-detail-stack", {
           job: item,
         })
       }
@@ -85,7 +85,8 @@ export default function JobItem({ item }) {
               marginLeft: 8,
             }}
           >
-            {item?.LocationJob}
+            {/* {item?.LocationJob} */}
+            {item?.LocationJob?.slice(0, 30)}...
           </Text>
         </View>
         <View

@@ -12,7 +12,7 @@ import {
   Alert,
   ToastAndroid,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
 import { useRoute } from "@react-navigation/native";
@@ -39,7 +39,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import CompaniesItem from "../../components/Home/CompanyItem";
 import LoadingOverlay from "../../components/LoadingOverlay";
 
-export default function JobDetail({ checkNav }) {
+export default function JobDetail({ checkNav, jobs }) {
   const db = getFirestore(app);
   const navigation = useNavigation();
   const { user } = useUser();
@@ -71,7 +71,7 @@ export default function JobDetail({ checkNav }) {
       const applySnapshot = await getDocs(collection(db, "ApplyJob"));
       const filteredApply = applySnapshot.docs.filter((doc) => {
         const data = doc.data();
-        return data.IDJob == job?.ID && data.IDUser == user?.id;
+        return data.IDJob == jobs?.ID && data.IDUser == user?.id;
       });
       const applyData = filteredApply.map((doc) => doc.data());
       if (applyData.length > 0) {
@@ -89,7 +89,7 @@ export default function JobDetail({ checkNav }) {
       const companySnapshot = await getDocs(collection(db, "Company"));
       const filteredCompany = companySnapshot.docs.filter((doc) => {
         const data = doc.data();
-        return data.ID == job?.IDCompany;
+        return data.ID == jobs?.IDCompany;
       });
       const companiesData = filteredCompany.map((doc) => doc.data());
       setCompanies(companiesData[0]);
@@ -104,7 +104,7 @@ export default function JobDetail({ checkNav }) {
       const bookMarkSnapshot = await getDocs(collection(db, "BookmarkJob"));
       const bookMark = bookMarkSnapshot.docs.filter((doc) => {
         const data = doc.data();
-        return data.IDJob == job?.ID && data.IDUser == user?.id;
+        return data.IDJob == jobs?.ID && data.IDUser == user?.id;
       });
       const IDBookmarkArray = bookMark.map((doc) => doc.id); // Lưu ID của các tài liệu vào mảng
       if (IDBookmarkArray.length > 0) {
@@ -119,7 +119,15 @@ export default function JobDetail({ checkNav }) {
       console.error("Error fetching data bookmark:", error);
     }
   };
-
+  useFocusEffect(
+    useCallback(() => {
+      fetchData();
+      fetchDataBookmark();
+      return () => {
+        // Cleanup if necessary
+      };
+    }, [])
+  );
   useEffect(() => {
     fetchData();
     fetchDataBookmark();
@@ -129,6 +137,8 @@ export default function JobDetail({ checkNav }) {
   }, [checkApply, checkBookmark]);
   useEffect(() => {
     params && setJob(params.job);
+    console.log("DetailJob" + checkNav);
+    console.log(jobs);
   }, [params]);
   const generateRandomId = (length) => {
     const characters =
@@ -144,21 +154,24 @@ export default function JobDetail({ checkNav }) {
     return randomId;
   };
   const applyJob = async () => {
-    setLoading(true); // Bắt đầu quá trình load
+    // setLoading(true); // Bắt đầu quá trình load
 
-    setIsLoading(true);
-    const docRef = await addDoc(collection(db, "ApplyJob"), {
-      ID: generateRandomId(8),
-      IDJob: job?.ID,
-      IDUser: user?.id,
+    // setIsLoading(true);
+    // const docRef = await addDoc(collection(db, "ApplyJob"), {
+    //   ID: generateRandomId(8),
+    //   IDJob: job?.ID,
+    //   IDUser: user?.id,
+    // });
+    // setIsLoading(false);
+    // setCheckApply(true);
+    // setLoading(false); // Bắt đầu quá trình load
+
+    // alert(
+    //   "Bạn đã ứng tuyển thành công !. Nhà tuyển dụng sẽ xem được hồ sơ của bạn !"
+    // );
+    navigation.push("apply-job", {
+      job: jobs,
     });
-    setIsLoading(false);
-    setCheckApply(true);
-    setLoading(false); // Bắt đầu quá trình load
-
-    alert(
-      "Bạn đã ứng tuyển thành công !. Nhà tuyển dụng sẽ xem được hồ sơ của bạn !"
-    );
   };
 
   const bookMarkJob = async () => {
@@ -183,7 +196,7 @@ export default function JobDetail({ checkNav }) {
     } else {
       const docRef = await addDoc(collection(db, "BookmarkJob"), {
         ID: generateRandomId(8),
-        IDJob: job?.ID,
+        IDJob: jobs?.ID,
         IDUser: user?.id,
       });
       setCheckBookmark(true);
@@ -237,7 +250,7 @@ export default function JobDetail({ checkNav }) {
           >
             <View>
               <Image
-                source={{ uri: job.Background }}
+                source={{ uri: jobs.Background }}
                 className="h-[200px] w-full"
                 style={{
                   width: 420,
@@ -246,7 +259,7 @@ export default function JobDetail({ checkNav }) {
               />
               <View style={{ padding: 10, elevation: 5 }}>
                 <Image
-                  source={{ uri: job.Logo }}
+                  source={{ uri: jobs.Logo }}
                   className="h-[100px] w-[100px] "
                   style={{
                     elevation: 5,
@@ -273,7 +286,7 @@ export default function JobDetail({ checkNav }) {
                   color: "#2c67f2",
                 }}
               >
-                {job?.NameJob}
+                {jobs?.NameJob}
               </Text>
 
               <Text
@@ -285,14 +298,14 @@ export default function JobDetail({ checkNav }) {
                   fontSize: 20,
                 }}
               >
-                {job?.NameCompany}
+                {jobs?.NameCompany}
               </Text>
 
               <View
                 style={{ margin: 10, padding: 5, marginBottom: 20 }}
                 className="bg-blue-100  text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400"
               >
-                <Text> {job?.TypeJob} </Text>
+                <Text> {jobs?.TypeJob} </Text>
               </View>
             </View>
           </Card>
@@ -334,7 +347,7 @@ export default function JobDetail({ checkNav }) {
                       marginLeft: 8,
                     }}
                   >
-                    {job?.Experience} năm
+                    {jobs?.Experience} năm
                   </Text>
                 </View>
                 <View
@@ -353,7 +366,7 @@ export default function JobDetail({ checkNav }) {
                       marginLeft: 8,
                     }}
                   >
-                    {job?.TypeJob}
+                    {jobs?.TypeJob}
                   </Text>
                 </View>
                 <View
@@ -372,7 +385,7 @@ export default function JobDetail({ checkNav }) {
                       marginLeft: 8,
                     }}
                   >
-                    {job?.LocationJob}
+                    {jobs?.LocationJob}
                   </Text>
                 </View>
                 <View
@@ -395,7 +408,7 @@ export default function JobDetail({ checkNav }) {
                       marginLeft: 8,
                     }}
                   >
-                    {job?.Salary} VND
+                    {jobs?.Salary} VND
                   </Text>
                 </View>
               </View>
@@ -430,7 +443,7 @@ export default function JobDetail({ checkNav }) {
                       textAlign: "justify",
                     }}
                   >
-                    {job.DescriptionJob}
+                    {jobs.DescriptionJob}
                   </Text>
                 </View>
               </View>
@@ -467,7 +480,7 @@ export default function JobDetail({ checkNav }) {
                       textAlign: "justify",
                     }}
                   >
-                    {job.BenefitJob}
+                    {jobs.BenefitJob}
                   </Text>
                 </View>
               </View>
@@ -504,7 +517,7 @@ export default function JobDetail({ checkNav }) {
             color={checkBookmark ? "#2c67f2" : "#2c67f2"} // Màu sắc phụ thuộc vào trạng thái checkApply
           />
         </TouchableOpacity>
-        {job?.Status ? (
+        {jobs?.Status ? (
           <TouchableOpacity
             style={[styles.disabledBtn, checkApply && styles.applyBtn]} // Nếu checkApply là true, áp dụng kiểu disabledBtn
             onPress={checkApply ? showAlertApply : applyJob} // Không cho phép người dùng click nếu checkApply là true

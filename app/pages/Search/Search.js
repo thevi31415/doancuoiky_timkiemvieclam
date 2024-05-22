@@ -36,6 +36,7 @@ import ResultSearchAll from "../../components/Search/ResultSearchAll";
 import ResultSearchJob from "../../components/Search/ResultSearchJob";
 import ResultSearchJobStackNav from "../../components/Search/ResultSearchJobStackNav";
 import LoadingOverlay from "../../components/LoadingOverlay";
+import ResultSearchAllStackNav from "../../components/Search/ResultSearchAllStackNav";
 const LocationData = [
   { label: "All locations", value: "" },
   { label: "Hồ Chí Minh", value: "Hồ Chí Minh" },
@@ -50,6 +51,8 @@ const SalaryData = [
 ];
 export default function Search() {
   //Ket noi voi firebase
+  const [textLocation, setTextLocation] = useState("All locations");
+
   const db = getFirestore(app);
   //Tab khi hiển thị kết quả tìm kiểm theo All/Job/Company
   const Tab = createMaterialTopTabNavigator();
@@ -232,10 +235,15 @@ export default function Search() {
     // fetchSearchCompanyResultByFilter(searchText, valueLocation);
     fetchSearchCompanyResult(searchText, valueLocation);
     fetchSearchJobResult(searchText, valueLocation);
-
+    if (valueLocation == "") {
+      setTextLocation("All locations");
+    } else {
+      setTextLocation(valueLocation);
+    }
     closeModal();
   };
   const handleResetFilter = () => {
+    setTextLocation("All locations");
     setValueLocation("");
     setValueSalary("");
   };
@@ -287,7 +295,7 @@ export default function Search() {
             className="m-3 mt-5"
             style={{ color: "#2c67f2", fontWeight: "bold", fontSize: 15 }}
           >
-            Gợi ý tìm kiếmx
+            Gợi ý tìm kiếm
           </Text>
           <FlatList
             data={filteredCompanies}
@@ -313,14 +321,25 @@ export default function Search() {
               tabBarActiveTintColor: "#2c67f2",
             }}
           >
-            <Tab.Screen name="All" component={ResultSearchAll} />
+            {/* <Tab.Screen name="All" component={ResultSearchAll} /> */}
 
             {/* <Tab.Screen name="Job" component={ResultSearchJob} /> */}
+            <Tab.Screen name="All">
+              {() => (
+                <ResultSearchAllStackNav
+                  itemListJob={searchResultJob}
+                  itemListCompany={searchResultCompany}
+                  filterLocation={valueLocation}
+                  textLocation={textLocation}
+                />
+              )}
+            </Tab.Screen>
             <Tab.Screen name="Job">
               {() => (
                 <ResultSearchJobStackNav
                   itemList={searchResultJob}
                   filterLocation={valueLocation}
+                  textLocation={textLocation}
                 />
               )}
             </Tab.Screen>
@@ -329,6 +348,7 @@ export default function Search() {
                 <ResultSearchCompaniesStackNav
                   itemList={searchResultCompany}
                   filterLocation={valueLocation}
+                  textLocation={textLocation}
                 />
               )}
             </Tab.Screen>

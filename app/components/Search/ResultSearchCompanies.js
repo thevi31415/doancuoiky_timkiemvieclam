@@ -5,9 +5,13 @@ import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 
-export default function ResultSearchCompanies({ itemList, filterLocation }) {
+export default function ResultSearchCompanies({
+  itemList,
+  filterLocation,
+  textLocation,
+}) {
   const navigation = useNavigation();
-  console.log("Search companies: " + filterLocation);
+  console.log("Search companies: " + textLocation);
 
   return (
     <View style={{ flex: 1 }}>
@@ -36,7 +40,7 @@ export default function ResultSearchCompanies({ itemList, filterLocation }) {
               color: "#4e4e4e",
             }}
           >
-            Tìm thấy {itemList.length} công ty tại {filterLocation}
+            Tìm thấy {itemList.length} công ty tại {textLocation}
           </Text>
         ) : (
           <View style={{ justifyContent: "center", alignItems: "center" }}>

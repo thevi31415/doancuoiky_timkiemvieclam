@@ -1,12 +1,19 @@
 import { View, Text } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useRoute } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import ManageCompany from "../ManageCompany/ManageCompany";
 import ManageJobDetail from "./ManageJobDetail";
 import ManageJob from "./ManageJob";
+import ManageJobDetailStackNav from "./ManageJobDetailStackNav";
 
 export default function ManageJobStackNav() {
   const Stack = createStackNavigator();
+  const { params } = useRoute();
+
+  // useEffect(() => {
+  //   console.log(params.job);
+  // }, [params]);
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -27,7 +34,13 @@ export default function ManageJobStackNav() {
           headerShown: false,
         }}
       >
-        {(props) => <ManageJobDetail {...props} checkNav={true} />}
+        {(props) => (
+          <ManageJobDetailStackNav
+            {...props}
+            checkNav={true}
+            // job={params.job}
+          />
+        )}
       </Stack.Screen>
       {/* <Stack.Screen
         name="job-detail"

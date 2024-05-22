@@ -6,7 +6,11 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useNavigation } from "@react-navigation/native";
 
-export default function ResultSearchJob({ itemList, filterLocation }) {
+export default function ResultSearchJob({
+  itemList,
+  filterLocation,
+  textLocation,
+}) {
   const navigation = useNavigation();
 
   return (
@@ -36,7 +40,7 @@ export default function ResultSearchJob({ itemList, filterLocation }) {
               color: "#4e4e4e",
             }}
           >
-            Tìm thấy {itemList.length} công việc tại
+            Tìm thấy {itemList.length} công việc tại {textLocation}
           </Text>
         ) : (
           <View style={{ justifyContent: "center", alignItems: "center" }}>
@@ -66,7 +70,7 @@ export default function ResultSearchJob({ itemList, filterLocation }) {
             renderItem={({ item }) => (
               <TouchableOpacity
                 onPress={() =>
-                  navigation.push("job-detail", {
+                  navigation.push("job-detail-stack", {
                     job: item,
                   })
                 }
@@ -165,7 +169,8 @@ export default function ResultSearchJob({ itemList, filterLocation }) {
                           marginLeft: 4,
                         }}
                       >
-                        {item?.LocationJob}
+                        {/* {item?.LocationJob} */}
+                        {item?.LocationJob?.slice(0, 30)}...
                       </Text>
                     </View>
                     <View

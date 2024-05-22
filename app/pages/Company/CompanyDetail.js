@@ -175,7 +175,7 @@ export default function CompaniesDetail({ checkNav }) {
         </View>
       )}
 
-      <ScrollView>
+      <ScrollView nestedScrollEnabled={true}>
         <View
           style={{
             flex: 1,
@@ -432,6 +432,7 @@ export default function CompaniesDetail({ checkNav }) {
                   showsVerticalScrollIndicator={false}
                   data={listJob}
                   style={{ margin: 8 }}
+                  scrollEnabled={false}
                   renderItem={({ item }) => (
                     <TouchableOpacity
                       onPress={() =>

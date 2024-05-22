@@ -7,6 +7,7 @@ import {
   Image,
   ImageBackground,
 } from "react-native";
+
 import React, { useEffect, useState } from "react";
 import LinearGradient from "react-native-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
@@ -70,7 +71,7 @@ export default function Header({ linkAvatar, nameUser }) {
   return (
     <View>
       <ImageBackground
-        source={require("../../pages/assets/BG_header.jpg")}
+        source={require("../../pages/assets/bg_4.jpg")}
         style={{ flex: 1 }}
       >
         <View
@@ -115,7 +116,7 @@ export default function Header({ linkAvatar, nameUser }) {
             style={{
               backgroundColor: "#FFF",
               padding: 12,
-              borderRadius: 16,
+              borderRadius: 13,
               flexDirection: "row",
               alignItems: "center",
               position: "relative",
@@ -134,11 +135,12 @@ export default function Header({ linkAvatar, nameUser }) {
             </TouchableOpacity>
             <TextInput
               placeholder="Search job, company, etc.."
-              placeholderTextColor={"#171716"}
+              placeholderTextColor={"#8b8b8b"}
               onFocus={() => navigation.push("search-detail", {})}
               style={{
                 marginLeft: 8,
                 flex: 1,
+                fontSize: 16,
               }}
             />
             <TouchableOpacity>

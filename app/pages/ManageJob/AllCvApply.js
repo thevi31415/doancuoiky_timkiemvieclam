@@ -1,20 +1,8 @@
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Image,
-  FlatList,
-  ToastAndroid,
-} from "react-native";
-
-import { Ionicons } from "@expo/vector-icons";
-import AntDesign from "@expo/vector-icons/AntDesign";
-import { Checkbox } from "react-native-paper";
+import { View, Text, TouchableOpacity, FlatList, Image } from "react-native";
 import React, { useEffect, useState } from "react";
-import { app } from "../../../firebaseConfig";
-import { getFirestore } from "firebase/firestore";
-import { useFocusEffect } from "@react-navigation/native";
-
+import { useRoute } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { Ionicons } from "@expo/vector-icons";
 import {
   collection,
   addDoc,
@@ -23,73 +11,40 @@ import {
   getDocs,
   doc,
   deleteDoc,
-  updateDoc,
 } from "firebase/firestore";
 import { useUser } from "@clerk/clerk-expo";
-import LoadingOverlay from "../../components/LoadingOverlay";
+import { Checkbox } from "react-native-paper";
+
 import { useNavigation } from "@react-navigation/native";
-
-export default function ManageJob() {
-  const navigation = useNavigation();
-
+import { app } from "../../../firebaseConfig";
+import { getFirestore } from "firebase/firestore";
+export default function AllCVApply({ job }) {
+  const Stack = createStackNavigator();
+  const { params } = useRoute();
   const db = getFirestore(app);
-
-  const [checked, setChecked] = React.useState(false);
-  const [listJob, setListJob] = useState([]);
   const { user } = useUser();
-  const [loading, setLoading] = useState(false);
-
-  const fetchDataListJob = async () => {
-    console.log("IDuser: " + user?.id);
-    setLoading(true);
+  const [listAllCV, setListAllCV] = useState([]);
+  const navigation = useNavigation();
+  const getAllCV = async () => {
     try {
-      const q = query(collection(db, "Jobs"), where("IDUser", "==", user?.id));
-
-      const jobSnapshot = await getDocs(q);
-      const job = jobSnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setListJob(job);
+      console.log("IDJob: " + job.ID);
+      const q = query(collection(db, "ApplyJob"), where("IDJob", "==", job.ID));
+      const getAllCVSnapshot = await getDocs(q);
+      const allCV = getAllCVSnapshot.docs.map((doc) => doc.data());
+      setListAllCV(allCV);
+      console.log(listAllCV.length);
     } catch (error) {
       console.error("Error fetching data following:", error);
     }
+    console.log("Công ty đang theo dõi: " + listCompanyFollowed.length);
     setLoading(false);
   };
   useEffect(() => {
-    fetchDataListJob();
-  }, [user]);
-  useFocusEffect(
-    React.useCallback(() => {
-      fetchDataListJob();
-    }, [user])
-  );
-  const handleCheckboxPress = async (id, status) => {
-    try {
-      await updateDoc(doc(db, "Jobs", id), {
-        Status: !status, // Toggle status
-      });
-      fetchDataListJob(); // Update the job list after updating the status
-      // Hiển thị Toast tương ứng
-      if (status) {
-        ToastAndroid.show(
-          "Đã dừng tuyển công việc này !",
-          ToastAndroid.SHORT,
-          ToastAndroid.BOTTOM
-        );
-      } else {
-        ToastAndroid.show(
-          "Đã bắt đầu tuyển công việc này !",
-          ToastAndroid.SHORT,
-          ToastAndroid.BOTTOM
-        );
-      }
-    } catch (error) {
-      console.error("Error updating status:", error);
-    }
-  };
+    getAllCV();
+  }, []);
+
   return (
-    <>
+    <View>
       <View
         style={{
           flexDirection: "row",
@@ -102,51 +57,21 @@ export default function ManageJob() {
           borderBottomWidth: 2,
         }}
       >
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={{ position: "absolute", left: 20 }} // Icon ở bên trái
+        >
+          <Ionicons name="arrow-back-outline" size={30} color="#2c67f2" />
+        </TouchableOpacity>
         <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-          Quản lý tuyển dụng
+          Tất cả hồ sơ ứng tuyển: {job.CV}
         </Text>
       </View>
-
-      <View
-        style={{
-          backgroundColor: "white",
-          width: "100%",
-          height: "100%",
-        }}
-      >
-        <View style={{ flexDirection: "row", alignItems: "center", margin: 5 }}>
-          <Text style={{ fontSize: 17 }}>Bạn đã tạo </Text>
-          <Text style={{ fontSize: 17, color: "#0255f0", fontWeight: "bold" }}>
-            {listJob.length}
-          </Text>
-          <Text style={{ fontSize: 17 }}> công việc</Text>
-          <View
-            style={{
-              backgroundColor: "#015aff",
-              padding: 10,
-              margin: 5,
-              borderRadius: 16,
-              marginLeft: 38,
-              alignSelf: "flex-start",
-            }}
-          >
-            <TouchableOpacity
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-              }}
-            >
-              <Ionicons name="add-circle" size={24} color="white" />
-              <Text style={{ fontSize: 15, color: "#fcffff", marginLeft: 5 }}>
-                Tạo công việc
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-
+      <View style={{ backgroundColor: "white" }}>
+        <Text>{listAllCV.length}</Text>
         <FlatList
           showsVerticalScrollIndicator={false}
-          data={listJob}
+          data={listAllCV}
           renderItem={({ item }) => (
             <TouchableOpacity
               style={{
@@ -157,8 +82,13 @@ export default function ManageJob() {
                 borderBottomColor: "#ebebec",
                 borderBottomWidth: 1,
               }}
+              // onPress={() =>
+              //   navigation.push("manege-job-detail", {
+              //     job: item,
+              //   })
+              // }
               onPress={() =>
-                navigation.push("manege-job-detail", {
+                navigation.push("detail-cv-apply", {
                   job: item,
                 })
               }
@@ -172,12 +102,12 @@ export default function ManageJob() {
               >
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
                   <Image
-                    source={{ uri: item.Logo }}
+                    source={{ uri: item.Avatar }}
                     style={{
                       width: 55,
                       height: 55,
                       marginRight: 15,
-                      borderRadius: 16,
+                      borderRadius: 100,
                     }}
                   />
                   <View>
@@ -188,7 +118,7 @@ export default function ManageJob() {
                         color: "#015aff",
                       }}
                     >
-                      {item?.NameJob}
+                      {item?.Name}
                     </Text>
                     <Text
                       style={{
@@ -197,7 +127,7 @@ export default function ManageJob() {
                         fontWeight: "bold",
                       }}
                     >
-                      {item?.NameCompany}
+                      {item?.DateApply}
                     </Text>
                     <View
                       style={{
@@ -218,13 +148,10 @@ export default function ManageJob() {
                         #{item?.ID}
                       </Text>
                     </View>
-                    <Text style={{ color: "#8f8f8f", marginTop: 2 }}>
-                      {item?.CV} cv ứng tuyển
-                    </Text>
                   </View>
                 </View>
                 <View style={{ alignItems: "center" }}>
-                  <Checkbox
+                  {/* <Checkbox
                     status={item.Status ? "checked" : "unchecked"} // Set status based on item.Status
                     color={item.Status ? "#025afe" : "#333333"} // Change color based on item.Status
                     onPress={() => handleCheckboxPress(item?.id, item.Status)} // Handle checkbox press
@@ -236,15 +163,28 @@ export default function ManageJob() {
                     }}
                   >
                     {item.Status ? "Đang tuyển" : "Dừng tuyển"}
-                  </Text>
+                  </Text> */}
+                  <View
+                    style={{
+                      backgroundColor: item.Status ? "#4BD964" : "gray",
+                      padding: 5,
+                      borderRadius: 5,
+                      width: 80,
+                      justifyContent: "center",
+                      alignSelf: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Text style={{ color: "#FFFFFF", fontSize: 15 }}>
+                      {item.Status ? "Đã duyệt" : "Chờ duyệt"}
+                    </Text>
+                  </View>
                 </View>
               </View>
             </TouchableOpacity>
           )}
-          keyExtractor={(item) => item.ID}
         />
       </View>
-      <LoadingOverlay loading={loading} />
-    </>
+    </View>
   );
 }

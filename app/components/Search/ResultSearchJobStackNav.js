@@ -5,12 +5,17 @@ import ResultSearchCompanies from "./ResultSearchCompanies";
 import CompaniesDetail from "../../pages/Company/CompanyDetail";
 import ResultSearchJob from "./ResultSearchJob";
 import JobDetail from "../../pages/Job/JobDetail";
+import JobDetailStackNav from "../../pages/Job/JobDetailStackNav";
 
-export default function ResultSearchJobStackNav({ itemList, filterLocation }) {
+export default function ResultSearchJobStackNav({
+  itemList,
+  filterLocation,
+  textLocation,
+}) {
   const Stack = createStackNavigator();
   useEffect(() => {
     console.log("Stact", itemList);
-    console.log("Searchxx: ", filterLocation);
+    console.log("SearchJob: ", textLocation);
   }, [itemList]);
   return (
     <Stack.Navigator mode="modal" headerMode="none">
@@ -20,12 +25,13 @@ export default function ResultSearchJobStackNav({ itemList, filterLocation }) {
             {...props}
             itemList={itemList}
             filterLocation={filterLocation}
+            textLocation={textLocation}
           />
         )}
       </Stack.Screen>
       <Stack.Screen
-        name="job-detail"
-        component={JobDetail}
+        name="job-detail-stack"
+        component={JobDetailStackNav}
         options={{
           animationEnabled: true,
           cardStyle: { backgroundColor: "transparent" },

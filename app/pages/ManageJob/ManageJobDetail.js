@@ -1,19 +1,33 @@
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  useWindowDimensions,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { useRoute } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { Ionicons } from "@expo/vector-icons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-export default function ManageJobDetail() {
-  const [job, setJob] = useState([]);
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { FontAwesome5 } from "@expo/vector-icons";
+
+export default function ManageJobDetail({ job }) {
   const { params } = useRoute();
   const navigation = useNavigation();
+  const layout = useWindowDimensions();
 
-  useEffect(() => {
-    params && setJob(params.job);
-  }, [params]);
-  console.log("ID: " + job.id);
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState([
+    { key: "first", title: "First" },
+    { key: "second", title: "Second" },
+  ]);
+  // useEffect(() => {
+  //   params && setJob(params.job);
+  // }, [params]);
+  // console.log("ID: " + job.id);
   return (
     <>
       <View
@@ -235,6 +249,48 @@ export default function ManageJobDetail() {
             </Text>
             <MaterialIcons name="arrow-forward-ios" size={20} color="#a6a6a6" />
           </View>
+        </TouchableOpacity>
+      </View>
+      <View style={{ backgroundColor: "white", padding: 10 }}>
+        <TouchableOpacity
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            padding: 15,
+            paddingHorizontal: 25,
+            backgroundColor: "#f2f6ff",
+            borderRadius: 10,
+            margin: 5,
+          }}
+          // onPress={() => navigation.push("all-cv-apply"),  {
+          // company: item,
+          // }}
+          onPress={() =>
+            navigation.push("all-cv-apply", {
+              job: job,
+            })
+          }
+        >
+          <FontAwesome name="users" size={30} color="#015aff" />
+          <Text style={{ fontSize: 18, fontWeight: "500", marginLeft: 10 }}>
+            {job.CV} hồ sơ ứng tuyển
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            padding: 15,
+            paddingHorizontal: 25,
+            backgroundColor: "#f2f6ff",
+            borderRadius: 10,
+            margin: 5,
+          }}
+        >
+          <FontAwesome5 name="user-check" size={28} color="#015aff" />
+          <Text style={{ fontSize: 18, fontWeight: "500", marginLeft: 10 }}>
+            {job.CVApprove} hồ sơ đã duyệt
+          </Text>
         </TouchableOpacity>
       </View>
     </>

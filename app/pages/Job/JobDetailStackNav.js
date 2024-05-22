@@ -1,52 +1,32 @@
 import { View, Text } from "react-native";
 import React, { useEffect, useState } from "react";
-import { useRoute } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import ManageCompany from "../ManageCompany/ManageCompany";
-import ManageJobDetail from "./ManageJobDetail";
-import ManageJob from "./ManageJob";
-import UpdateNameJob from "../../components/ManageJob/UpdateNameJob";
-import AllCVApply from "./AllCvApply";
-import AllCvApplyStackNav from "./AllCvApplyStackNav";
+import { useRoute } from "@react-navigation/native";
 
-export default function ManageJobDetailStackNav() {
+import JobDetail from "../Job/JobDetail";
+import ApplyJob from "./ApplyJob";
+
+export default function JobDetailStackNav({ checkNav }) {
   const Stack = createStackNavigator();
+  const [job, setJob] = useState(null);
   const { params } = useRoute();
 
   useEffect(() => {
-    console.log("JobDa=eatail");
+    params && setJob(params.job);
+    console.log("DetailJob: " + checkNav);
     console.log(params.job);
   }, [params]);
   return (
     <Stack.Navigator>
-      <Stack.Screen
-        name="manage-job-detail"
+      {/* <Stack.Screen
+        name="job-detail"
+        component={JobDetail}
         options={{
-          headerStyle: {
-            backgroundColor: "#2c67f2",
-          },
-          headerTintColor: "#fff",
-          headerTitle: "Search",
           headerShown: false,
         }}
-      >
-        {(props) => <ManageJobDetail {...props} job={params.job} />}
-      </Stack.Screen>
+      /> */}
       <Stack.Screen
-        name="update-name-job"
-        options={{
-          headerStyle: {
-            backgroundColor: "#2c67f2",
-          },
-          headerTintColor: "#fff",
-          headerTitle: "Search",
-          headerShown: false,
-        }}
-      >
-        {(props) => <UpdateNameJob {...props} checkNav={true} />}
-      </Stack.Screen>
-      <Stack.Screen
-        name="all-cv-apply"
+        name="job-detail"
         options={{
           headerStyle: {
             backgroundColor: "#2c67f2",
@@ -57,7 +37,7 @@ export default function ManageJobDetailStackNav() {
         }}
       >
         {(props) => (
-          <AllCvApplyStackNav {...props} checkNav={true} job={params.job} />
+          <JobDetail {...props} checkNav={checkNav} jobs={params.job} />
         )}
       </Stack.Screen>
       {/* <Stack.Screen
@@ -73,6 +53,31 @@ export default function ManageJobDetailStackNav() {
       >
         {(props) => <JobDetail {...props} checkNav={true} />}
       </Stack.Screen> */}
+      <Stack.Screen
+        name="apply-job"
+        options={{
+          headerStyle: {
+            backgroundColor: "#2c67f2",
+          },
+          headerTintColor: "#fff",
+          headerTitle: "Search",
+          headerShown: false,
+        }}
+      >
+        {(props) => <ApplyJob {...props} checkNav={checkNav} />}
+      </Stack.Screen>
+      {/* <Stack.Screen
+        name="apply-job"
+        component={ApplyJob}
+        options={{
+          headerStyle: {
+            backgroundColor: "#2c67f2",
+          },
+          headerTintColor: "#fff",
+          headerTitle: "Search",
+          headerShown: false,
+        }}
+      /> */}
     </Stack.Navigator>
   );
 }

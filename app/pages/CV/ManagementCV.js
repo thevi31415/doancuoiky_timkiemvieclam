@@ -5,7 +5,9 @@ import {
   Image,
   FlatList,
   ToastAndroid,
+  Alert,
 } from "react-native";
+import { FontAwesome } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -38,7 +40,14 @@ export default function ManagementCV() {
       const q = query(collection(db, "CV"), where("IDUser", "==", user?.id));
 
       const cvSnapshot = await getDocs(q);
-      const cvData = cvSnapshot.docs.map((doc) => doc.data());
+      const cvData = cvSnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      // const job = jobSnapshot.docs.map((doc) => ({
+      //   id: doc.id,
+      //   ...doc.data(),
+      // }));
       setListCV(cvData);
       console.log("List cv: " + cvData.length);
     } catch (error) {
@@ -61,6 +70,38 @@ export default function ManagementCV() {
       console.log("Name CV2: " + listCV[0].IDUser);
     }
   }, [listCV]);
+  const handleDelete = async (id) => {
+    console.log(id);
+
+    Alert.alert(
+      "Xác nhận",
+      "Bạn có chắc chắn muốn xóa CV này không?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "OK",
+          onPress: async () => {
+            try {
+              const reference = doc(db, "CV", id);
+              await deleteDoc(reference);
+              ToastAndroid.show(
+                "Xóa CV thành công !",
+                ToastAndroid.SHORT,
+                ToastAndroid.BOTTOM
+              );
+              fetchDataCV();
+            } catch (error) {
+              alert("Error deleting CV:", error);
+            }
+          },
+        },
+      ],
+      { cancelable: true }
+    );
+  };
   return (
     <>
       {listCV.length > 0 ? (
@@ -155,8 +196,8 @@ export default function ManagementCV() {
                       <Image
                         source={{ uri: item.Avatar }}
                         style={{
-                          width: 70,
-                          height: 70,
+                          width: 60,
+                          height: 60,
                           marginRight: 15,
                           borderRadius: 100,
                           borderWidth: 2,
@@ -166,7 +207,7 @@ export default function ManagementCV() {
                       <View>
                         <Text
                           style={{
-                            fontSize: 18,
+                            fontSize: 16,
                             fontWeight: "bold",
                             color: "#015aff",
                           }}
@@ -176,6 +217,7 @@ export default function ManagementCV() {
                         <Text
                           style={{
                             color: "#3b3b3b",
+                            fontSize: 15,
                             marginTop: 5,
                             fontWeight: "bold",
                           }}
@@ -187,8 +229,8 @@ export default function ManagementCV() {
                             backgroundColor: "#d6e4ff",
                             borderRadius: 5,
                             alignSelf: "flex-start",
-                            padding: 5,
-                            marginTop: 5,
+                            padding: 4,
+                            marginTop: 3,
                           }}
                         >
                           <Text
@@ -203,6 +245,9 @@ export default function ManagementCV() {
                         </View>
                       </View>
                     </View>
+                    <TouchableOpacity onPress={() => handleDelete(item.id)}>
+                      <Ionicons name="trash-sharp" size={27} color="red" />
+                    </TouchableOpacity>
                   </View>
                 </TouchableOpacity>
               )}

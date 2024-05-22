@@ -8,7 +8,7 @@ export default function CompaniesItem({ item }) {
     <TouchableOpacity
       style={{
         backgroundColor: "#fafbff",
-        borderRadius: 16,
+        borderRadius: 10,
         borderWidth: 1,
         borderLeftWidth: 1,
         borderColor: "#a4c1f7",

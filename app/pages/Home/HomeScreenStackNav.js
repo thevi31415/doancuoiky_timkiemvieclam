@@ -5,6 +5,7 @@ import HomeScreen from "./Home";
 import Search from "../Search/Search";
 import CompaniesDetail from "../Company/CompanyDetail";
 import JobDetail from "../Job/JobDetail";
+import JobDetailStackNav from "../Job/JobDetailStackNav";
 
 export default function HomeScreenStackNav() {
   const Stack = createStackNavigator();
@@ -31,7 +32,7 @@ export default function HomeScreenStackNav() {
         {(props) => <CompaniesDetail {...props} checkNav={true} />}
       </Stack.Screen>
       <Stack.Screen
-        name="job-detail"
+        name="job-detail-stack"
         options={{
           headerStyle: {
             backgroundColor: "#2c67f2",
@@ -41,7 +42,7 @@ export default function HomeScreenStackNav() {
           headerShown: false,
         }}
       >
-        {(props) => <JobDetail {...props} checkNav={true} />}
+        {(props) => <JobDetailStackNav {...props} checkNav={true} />}
       </Stack.Screen>
 
       <Stack.Screen
