@@ -134,11 +134,12 @@ export default function Header({ linkAvatar, nameUser }) {
             </TouchableOpacity>
             <TextInput
               placeholder="Search job, company, etc.."
-              placeholderTextColor={"#171716"}
+              placeholderTextColor={"#8b8b8b"}
               onFocus={() => navigation.push("search-detail", {})}
               style={{
                 marginLeft: 8,
                 flex: 1,
+                fontSize: 16,
               }}
             />
             <TouchableOpacity>

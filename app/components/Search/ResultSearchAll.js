@@ -176,7 +176,8 @@ export default function ResultSearchAll({
                           marginLeft: 4,
                         }}
                       >
-                        {item?.LocationJob}
+                        {/* {item?.LocationJob} */}
+                        {item?.LocationJob?.slice(0, 30)}...
                       </Text>
                     </View>
                     <View

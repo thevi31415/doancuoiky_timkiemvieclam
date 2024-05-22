@@ -247,7 +247,9 @@ export default function Account() {
                     ? "Mã nhà tuyển dụng:"
                     : "Mã ứng viên: "}
 
-                  <Text style={{ fontWeight: "bold" }}> {userId}</Text>
+                  <Text style={{ fontWeight: "bold" }}>
+                    {userAccount[0]?.IDCa}
+                  </Text>
                 </Text>
               </View>
             </View>

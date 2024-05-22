@@ -5,22 +5,29 @@ import { createStackNavigator } from "@react-navigation/stack";
 import ManageCompany from "../ManageCompany/ManageCompany";
 import ManageJobDetail from "./ManageJobDetail";
 import ManageJob from "./ManageJob";
-import UpdateNameJob from "../../components/ManageJob/UpdateNameJob";
+import ManageJobDetailStackNav from "./ManageJobDetailStackNav";
 import AllCVApply from "./AllCvApply";
-import AllCvApplyStackNav from "./AllCvApplyStackNav";
+import DetailCVApply from "./DetailCVApply";
 
-export default function ManageJobDetailStackNav() {
+export default function AllCvApplyStackNav({ job }) {
   const Stack = createStackNavigator();
   const { params } = useRoute();
 
   useEffect(() => {
-    console.log("JobDa=eatail");
+    console.log("AllCVApply");
     console.log(params.job);
   }, [params]);
   return (
     <Stack.Navigator>
+      {/* <Stack.Screen
+        name="all-cv"
+        component={AllCVApply}
+        options={{
+          headerShown: false,
+        }}
+      /> */}
       <Stack.Screen
-        name="manage-job-detail"
+        name="all-cv"
         options={{
           headerStyle: {
             backgroundColor: "#2c67f2",
@@ -30,23 +37,10 @@ export default function ManageJobDetailStackNav() {
           headerShown: false,
         }}
       >
-        {(props) => <ManageJobDetail {...props} job={params.job} />}
+        {(props) => <AllCVApply {...props} checkNav={true} job={params.job} />}
       </Stack.Screen>
       <Stack.Screen
-        name="update-name-job"
-        options={{
-          headerStyle: {
-            backgroundColor: "#2c67f2",
-          },
-          headerTintColor: "#fff",
-          headerTitle: "Search",
-          headerShown: false,
-        }}
-      >
-        {(props) => <UpdateNameJob {...props} checkNav={true} />}
-      </Stack.Screen>
-      <Stack.Screen
-        name="all-cv-apply"
+        name="detail-cv-apply"
         options={{
           headerStyle: {
             backgroundColor: "#2c67f2",
@@ -57,7 +51,7 @@ export default function ManageJobDetailStackNav() {
         }}
       >
         {(props) => (
-          <AllCvApplyStackNav {...props} checkNav={true} job={params.job} />
+          <DetailCVApply {...props} checkNav={true} job={params.job} />
         )}
       </Stack.Screen>
       {/* <Stack.Screen

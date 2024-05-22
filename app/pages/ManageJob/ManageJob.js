@@ -177,7 +177,7 @@ export default function ManageJob() {
                       width: 55,
                       height: 55,
                       marginRight: 15,
-                      borderRadius: 100,
+                      borderRadius: 16,
                     }}
                   />
                   <View>
@@ -219,7 +219,7 @@ export default function ManageJob() {
                       </Text>
                     </View>
                     <Text style={{ color: "#8f8f8f", marginTop: 2 }}>
-                      3 cv ứng tuyển
+                      {item?.CV} cv ứng tuyển
                     </Text>
                   </View>
                 </View>

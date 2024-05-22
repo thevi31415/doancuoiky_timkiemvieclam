@@ -6,7 +6,13 @@ import TopCompany from "../../components/Home/TopCompany";
 import LastJob from "../../components/Home/LastJob";
 import { app } from "../../../firebaseConfig";
 import { getFirestore } from "firebase/firestore";
-import { collection, getDocs, setDoc, addDoc } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  setDoc,
+  addDoc,
+  updateDoc,
+} from "firebase/firestore";
 import { FontAwesome } from "@expo/vector-icons";
 import { useFocusEffect } from "@react-navigation/native";
 import TypeJob from "../../components/Home/TypeJob";
@@ -29,7 +35,11 @@ export default function Home() {
     setTopCompanyList(companies);
 
     const lastJobSnapshot = await getDocs(collection(db, "Jobs"));
-    const job = lastJobSnapshot.docs.map((doc) => doc.data());
+    const job = lastJobSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    // const job = jobSnapshot.
     setLastJobList(job);
   };
 

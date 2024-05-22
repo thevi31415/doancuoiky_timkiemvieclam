@@ -25,6 +25,8 @@ import {
   getDocs,
   doc,
   deleteDoc,
+  updateDoc,
+  increment,
 } from "firebase/firestore";
 import { useUser } from "@clerk/clerk-expo";
 import { useNavigation } from "@react-navigation/native";
@@ -89,16 +91,23 @@ export default function ApplyJob({ checkNav }) {
     } else {
       setLoading(true); // Start loading process
       console.log("Apply");
-
       try {
         const docRef = await addDoc(collection(db, "ApplyJob"), {
           ID: generateRandomId(8),
           IDJob: params.job?.ID,
           IDUser: user?.id,
           IDCv: selectedId,
+          Name: user?.fullName,
+          Avatar: user?.imageUrl,
+          DateApply: formatDate(),
         });
+        console.log("id job: " + params.job.id);
+        const docRef2 = doc(db, "Jobs", params.job.id);
 
-        setLoading(false); // End loading process
+        await updateDoc(docRef2, {
+          CV: increment(1),
+        });
+        setLoading(false);
 
         alert(
           "Bạn đã ứng tuyển thành công !. Nhà tuyển dụng sẽ xem được hồ sơ của bạn !"
@@ -114,7 +123,13 @@ export default function ApplyJob({ checkNav }) {
       }
     }
   };
-
+  const formatDate = () => {
+    const today = new Date();
+    const day = today.getDate();
+    const month = today.getMonth() + 1;
+    const year = today.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
   return (
     <>
       <ScrollView>

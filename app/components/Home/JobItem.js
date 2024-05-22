@@ -85,7 +85,8 @@ export default function JobItem({ item }) {
               marginLeft: 8,
             }}
           >
-            {item?.LocationJob}
+            {/* {item?.LocationJob} */}
+            {item?.LocationJob?.slice(0, 30)}...
           </Text>
         </View>
         <View
