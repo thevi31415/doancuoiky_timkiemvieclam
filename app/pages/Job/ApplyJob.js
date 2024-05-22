@@ -100,6 +100,7 @@ export default function ApplyJob({ checkNav }) {
           Name: user?.fullName,
           Avatar: user?.imageUrl,
           DateApply: formatDate(),
+          Status: 0,
         });
         console.log("id job: " + params.job.id);
         const docRef2 = doc(db, "Jobs", params.job.id);
