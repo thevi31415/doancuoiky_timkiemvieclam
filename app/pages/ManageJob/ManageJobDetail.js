@@ -13,18 +13,6 @@ import { Ionicons } from "@expo/vector-icons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { FontAwesome5 } from "@expo/vector-icons";
-import { TabView, SceneMap } from "react-native-tab-view";
-const FirstRoute = () => (
-  <View style={{ flex: 1, backgroundColor: "#ff4081" }} />
-);
-
-const SecondRoute = () => (
-  <View style={{ flex: 1, backgroundColor: "#673ab7" }} />
-);
-const renderScene = SceneMap({
-  first: FirstRoute,
-  second: SecondRoute,
-});
 
 export default function ManageJobDetail({ job }) {
   const { params } = useRoute();
@@ -301,7 +289,7 @@ export default function ManageJobDetail({ job }) {
         >
           <FontAwesome5 name="user-check" size={28} color="#015aff" />
           <Text style={{ fontSize: 18, fontWeight: "500", marginLeft: 10 }}>
-            {job.CVApprove} đã duyệt
+            {job.CVApprove} hồ sơ đã duyệt
           </Text>
         </TouchableOpacity>
       </View>

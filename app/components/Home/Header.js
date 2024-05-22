@@ -7,6 +7,7 @@ import {
   Image,
   ImageBackground,
 } from "react-native";
+
 import React, { useEffect, useState } from "react";
 import LinearGradient from "react-native-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
@@ -70,7 +71,7 @@ export default function Header({ linkAvatar, nameUser }) {
   return (
     <View>
       <ImageBackground
-        source={require("../../pages/assets/BG_header.jpg")}
+        source={require("../../pages/assets/bg_4.jpg")}
         style={{ flex: 1 }}
       >
         <View

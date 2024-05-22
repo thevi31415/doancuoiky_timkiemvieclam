@@ -87,7 +87,11 @@ export default function AllCVApply({ job }) {
               //     job: item,
               //   })
               // }
-              onPress={() => navigation.push("detail-cv-apply")}
+              onPress={() =>
+                navigation.push("detail-cv-apply", {
+                  job: item,
+                })
+              }
             >
               <View
                 style={{

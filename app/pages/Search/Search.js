@@ -243,6 +243,7 @@ export default function Search() {
     closeModal();
   };
   const handleResetFilter = () => {
+    setTextLocation("All locations");
     setValueLocation("");
     setValueSalary("");
   };
