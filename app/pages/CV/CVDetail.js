@@ -182,7 +182,7 @@ export default function CVDetail() {
               >
                 {params.cv?.Name}
               </Text>
-              <Text>Mã ứng viên: {params.job?.ID}</Text>
+              <Text>Mã ứng viên: {params.job?.IDCa}</Text>
 
               <View style={{ marginTop: 15 }}>
                 <Text

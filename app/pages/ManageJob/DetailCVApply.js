@@ -37,14 +37,6 @@ import {
 } from "react-native-paper";
 import Entypo from "@expo/vector-icons/Entypo";
 import LoadingOverlay from "../../components/LoadingOverlay";
-const candidate = {
-  name: "Nguyễn Văn A",
-  phone: "0123456789",
-  email: "nguyenvana@example.com",
-  address: "123 Đường ABC, Quận 1, TP. HCM",
-  avatar: "https://via.placeholder.com/150",
-  bio: "Một chuyên gia phần mềm với hơn 5 năm kinh nghiệm trong phát triển ứng dụng di động.",
-};
 const { height } = Dimensions.get("window"); // Lấy chiều cao của màn hình
 export default function DetailCVApply() {
   const db = getFirestore(app);

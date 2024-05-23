@@ -49,7 +49,7 @@ export default function CompaniesDetail({ checkNav }) {
 
   useEffect(() => {
     console.log(params);
-    params && setCompany(params.company);
+    params && setCompany(params?.company);
   }, [params]);
   useEffect(() => {
     fetchDataFollow();
@@ -58,6 +58,10 @@ export default function CompaniesDetail({ checkNav }) {
 
   const fetchDataListJob = async () => {
     try {
+      if (!company?.ID) {
+        return;
+      }
+
       const q = query(
         collection(db, "Jobs"),
         where("IDCompany", "==", company.ID)
@@ -68,9 +72,10 @@ export default function CompaniesDetail({ checkNav }) {
       setListJob(jobData);
       console.log("List job: " + jobData.length);
     } catch (error) {
-      console.error("Error fetching data following:", error);
+      console.error("Error fetching data job:", error);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
   const fetchDataFollow = async () => {
     setLoading(true);
