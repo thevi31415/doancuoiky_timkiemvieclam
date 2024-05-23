@@ -67,7 +67,11 @@ export default function ApplyJob({ checkNav }) {
 
   const fetchDataCV = async () => {
     try {
-      const q = query(collection(db, "CV"), where("IDUser", "==", user?.id));
+      const q = query(
+        collection(db, "CV"),
+        where("IDUser", "==", user?.id),
+        where("Status", "==", 1)
+      );
 
       const cvSnapshot = await getDocs(q);
       const cvData = cvSnapshot.docs.map((doc) => doc.data());
