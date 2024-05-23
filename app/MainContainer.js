@@ -28,6 +28,7 @@ import ManageJob from "./pages/ManageJob/ManageJob";
 import ManageCompany from "./pages/ManageCompany/ManageCompany";
 import ManageJobStackNav from "./pages/ManageJob/ManageJobStackNav";
 import ManagementCVStackNav from "./pages/CV/ManagementCVStackNav";
+import NotificationStackNav from "./pages/Notifications/NotificationStackNav";
 
 const Tab = createBottomTabNavigator();
 const storeData = async (value) => {
@@ -166,7 +167,7 @@ export default function MainComponent() {
         ) : (
           <Tab.Screen
             name="Thông Báo"
-            component={Notification}
+            component={NotificationStackNav}
             options={{
               tabBarIcon: ({ color, size }) => (
                 <View style={{ position: "relative" }}>

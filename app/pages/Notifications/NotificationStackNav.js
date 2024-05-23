@@ -2,32 +2,28 @@ import { View, Text } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useRoute } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import ManageCompany from "../ManageCompany/ManageCompany";
-import ManageJobDetail from "./ManageJobDetail";
-import ManageJob from "./ManageJob";
-import ManageJobDetailStackNav from "./ManageJobDetailStackNav";
-import AllCVApply from "./AllCvApply";
-import DetailCVApply from "./DetailCVApply";
+import Notification from "./Notification";
+import JobDetail from "../Job/JobDetail";
+import DetailNotification from "./DetailNotification";
 
-export default function AllCvApplyStackNav({ job }) {
+export default function NotificationStackNav() {
   const Stack = createStackNavigator();
   const { params } = useRoute();
 
-  useEffect(() => {
-    console.log("AllCVApply");
-    console.log(params.job);
-  }, [params]);
+  // useEffect(() => {
+  //   console.log(params.job);
+  // }, [params]);
   return (
     <Stack.Navigator>
-      {/* <Stack.Screen
-        name="all-cv"
-        component={AllCVApply}
+      <Stack.Screen
+        name="notification"
+        component={Notification}
         options={{
           headerShown: false,
         }}
-      /> */}
+      />
       <Stack.Screen
-        name="all-cv"
+        name="detail-notification"
         options={{
           headerStyle: {
             backgroundColor: "#2c67f2",
@@ -37,20 +33,13 @@ export default function AllCvApplyStackNav({ job }) {
           headerShown: false,
         }}
       >
-        {(props) => <AllCVApply {...props} checkNav={true} job={params.job} />}
-      </Stack.Screen>
-      <Stack.Screen
-        name="detail-cv-apply"
-        options={{
-          headerStyle: {
-            backgroundColor: "#2c67f2",
-          },
-          headerTintColor: "#fff",
-          headerTitle: "Search",
-          headerShown: false,
-        }}
-      >
-        {(props) => <DetailCVApply {...props} job={params.job} />}
+        {(props) => (
+          <DetailNotification
+            {...props}
+            checkNav={true}
+            // job={params.job}
+          />
+        )}
       </Stack.Screen>
       {/* <Stack.Screen
         name="job-detail"

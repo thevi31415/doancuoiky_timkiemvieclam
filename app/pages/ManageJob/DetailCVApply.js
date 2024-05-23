@@ -38,16 +38,15 @@ import {
 import Entypo from "@expo/vector-icons/Entypo";
 import LoadingOverlay from "../../components/LoadingOverlay";
 const { height } = Dimensions.get("window");
-export default function DetailCVApply() {
+export default function DetailCVApply({ job }) {
   const db = getFirestore(app);
 
   const { params } = useRoute();
   const navigation = useNavigation();
   const [cv, setCV] = useState([]);
   const [loading, setLoading] = useState(false);
-
   useEffect(() => {
-    console.log("CVD");
+    console.log("Job1: ");
     console.log(params.job);
     console.log(params.job?.id);
     getCV();
@@ -72,8 +71,36 @@ export default function DetailCVApply() {
       await updateDoc(doc(db, "ApplyJob", id), {
         Status: 1, // Toggle status
       });
+
+      const notification = {
+        ID: generateRandomId(8),
+        IDJob: params.job.IDJob,
+        IDUser: params.job.IDUser,
+        Status: 1,
+        Viewed: 0,
+        Title: "Công ty " + params.job2.NameCompany + " đã duyệt hồ sơ của bạn",
+        Content:
+          "Công ty " +
+          params.job2.NameCompany +
+          " thông báo: Hồ sơ của bạn đã được duyệt  cho công việc " +
+          params.job2.NameJob +
+          "." +
+          " Vui lòng đến địa chỉ: " +
+          params.job2.LocationJob +
+          ", vào ngày " +
+          params.job2.Deadline +
+          " để phỏng vấn. Trân trọng !",
+        SentDate: formatDate(),
+        Logo: params.job2.Logo,
+      };
+
+      const docRef = await addDoc(collection(db, "Notification"), notification);
+
+      if (docRef.id) {
+      }
+
       ToastAndroid.show(
-        "Duyệt CV thành công !",
+        "Duyệt CV thành công !. Thông báo đã được gửi đến ứng viên !",
         ToastAndroid.SHORT,
         ToastAndroid.BOTTOM
       );
@@ -89,11 +116,31 @@ export default function DetailCVApply() {
   }, [cv]);
   useEffect(() => {
     getCV();
+    console.log("Job 2: ");
+    console.log(params.job2);
   }, []);
   const handleRecruit = () => {
     alert("Ứng viên đã được tuyển!");
   };
+  const generateRandomId = (length) => {
+    const characters = "0123456789";
+    let randomId = "";
 
+    for (let i = 0; i < length; i++) {
+      randomId += characters.charAt(
+        Math.floor(Math.random() * characters.length)
+      );
+    }
+
+    return randomId;
+  };
+  const formatDate = () => {
+    const today = new Date();
+    const day = today.getDate();
+    const month = today.getMonth() + 1;
+    const year = today.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
   return (
     <>
       <View style={{ flex: 1 }}>
