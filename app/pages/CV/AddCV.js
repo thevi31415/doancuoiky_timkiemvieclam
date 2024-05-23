@@ -66,7 +66,7 @@ export default function AddCV() {
       value.DateBirth = dateOfBirth;
       value.IDUser = user?.id;
       value.ID = generateRandomId(8);
-
+      value.Status = 1;
       const docRef = await addDoc(collection(db, "CV"), value);
 
       if (docRef.id) {

@@ -30,7 +30,11 @@ export default function AllCVApply({ job }) {
       console.log("IDJob: " + job.ID);
       const q = query(collection(db, "ApplyJob"), where("IDJob", "==", job.ID));
       const getAllCVSnapshot = await getDocs(q);
-      const allCV = getAllCVSnapshot.docs.map((doc) => doc.data());
+      const allCV = getAllCVSnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+
       setListAllCV(allCV);
       console.log(listAllCV.length);
     } catch (error) {

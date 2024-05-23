@@ -25,6 +25,7 @@ import {
   getDocs,
   doc,
   deleteDoc,
+  updateDoc,
 } from "firebase/firestore";
 import NotFoundCVStackNav from "./NotFoundCVStackNav";
 export default function ManagementCV() {
@@ -35,26 +36,6 @@ export default function ManagementCV() {
   const [CV, setCV] = useState([]);
   const { user } = useUser();
 
-  const fetchDataCV = async () => {
-    try {
-      const q = query(collection(db, "CV"), where("IDUser", "==", user?.id));
-
-      const cvSnapshot = await getDocs(q);
-      const cvData = cvSnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      // const job = jobSnapshot.docs.map((doc) => ({
-      //   id: doc.id,
-      //   ...doc.data(),
-      // }));
-      setListCV(cvData);
-      console.log("List cv: " + cvData.length);
-    } catch (error) {
-      console.error("Error fetching data following:", error);
-    }
-    setLoading(false);
-  };
   useFocusEffect(
     React.useCallback(() => {
       fetchDataCV();
@@ -86,7 +67,9 @@ export default function ManagementCV() {
           onPress: async () => {
             try {
               const reference = doc(db, "CV", id);
-              await deleteDoc(reference);
+              await updateDoc(reference, {
+                Status: 0,
+              });
               ToastAndroid.show(
                 "Xóa CV thành công !",
                 ToastAndroid.SHORT,
@@ -94,13 +77,34 @@ export default function ManagementCV() {
               );
               fetchDataCV();
             } catch (error) {
-              alert("Error deleting CV:", error);
+              console.warn("Error deleting CV:", error);
             }
           },
         },
       ],
       { cancelable: true }
     );
+  };
+  const fetchDataCV = async () => {
+    try {
+      const q = query(
+        collection(db, "CV"),
+        where("IDUser", "==", user?.id),
+        where("Status", "==", 1)
+      );
+
+      const cvSnapshot = await getDocs(q);
+      const cvData = cvSnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+
+      setListCV(cvData);
+      console.log("List cv: " + cvData.length);
+    } catch (error) {
+      console.error("Error fetching data following:", error);
+    }
+    setLoading(false);
   };
   return (
     <>
@@ -178,8 +182,8 @@ export default function ManagementCV() {
                     borderBottomWidth: 1,
                   }}
                   onPress={() =>
-                    navigation.push("manege-job-detail", {
-                      job: item,
+                    navigation.push("detail-cv", {
+                      cv: item,
                     })
                   }
                 >

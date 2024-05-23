@@ -10,13 +10,57 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
+import {
+  collection,
+  addDoc,
+  query,
+  where,
+  getDocs,
+  doc,
+  deleteDoc,
+  updateDoc,
+} from "firebase/firestore";
 import BottomSheet from "../BottomSheet";
 import { Ionicons } from "@expo/vector-icons";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import { app } from "../../../firebaseConfig";
+import { getFirestore } from "firebase/firestore";
+import { useFocusEffect } from "@react-navigation/native";
+import { useUser } from "@clerk/clerk-expo";
+
 export default function Notification() {
+  const db = getFirestore(app);
+  const { user } = useUser();
+
   const [status, setStatus] = React.useState(false);
   const [listNotifications, setListNotifications] = useState([]);
+  const fetchDataListNotifications = async () => {
+    console.log("Lay thong báo");
+    console.log("IDuser: " + user?.id);
 
+    try {
+      const q = query(
+        collection(db, "Notification"),
+        where("IDUser", "==", user?.id)
+      );
+      const notificationSnapshot = await getDocs(q);
+      const notification = notificationSnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      console.log("List thong bao");
+      console.log(notification);
+      setListNotifications(notification);
+    } catch (error) {
+      console.error("Error fetching data notification:", error);
+    }
+    console.log(listNotifications.length);
+  };
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchDataListNotifications();
+    }, [])
+  );
   return (
     <>
       <View
@@ -39,152 +83,124 @@ export default function Notification() {
         </TouchableOpacity> */}
         <Text style={{ fontSize: 20, fontWeight: "bold" }}>Thông báo</Text>
       </View>
+
       <View
         style={{
           backgroundColor: "white",
           height: "100%",
         }}
       >
-        <TouchableOpacity
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            padding: 10,
-            backgroundColor: "#e9f3ff",
-          }}
-        >
+        {listNotifications.length <= 0 ? (
           <View
             style={{
-              width: 10,
-              height: 10,
-              borderRadius: 10,
-              backgroundColor: "#0559f7",
-              marginRight: 10,
-            }}
-          />
-          <View style={{ marginRight: 10 }}>
-            <Image
-              source={require("../assets/Logo_HCMUTE.jpg")}
-              style={{ width: 55, height: 55, borderRadius: 100 }}
-            />
-          </View>
-          <View style={{ flex: 1 }}>
-            <Text style={{ fontSize: 16, fontWeight: "bold", marginBottom: 5 }}>
-              Công ty FPT đã ứng tuyển bạn
-            </Text>
-            <Text style={{ fontSize: 13, marginBottom: 5 }}>
-              Vui lòng đến địa chỉ:Tòa nhà FPT, số 10 Phố Phạm Văn Bạch, Phuờng
-              Dịch Vọng, Quận Cầu Giấy, Thành phố Hà Nội, để phỏng vấn nhé ! -
-              Trân trọng
-            </Text>
-            <Text style={{ fontSize: 14, color: "#888" }}>20/05/2024</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            padding: 10,
-            backgroundColor: "#ffffff",
-          }}
-        >
-          <View
-            style={{
-              width: 10,
-              height: 10,
-              borderRadius: 10,
               backgroundColor: "white",
-              marginRight: 10,
+              justifyContent: "center",
+              alignItems: "center",
             }}
-          />
-          <View style={{ marginRight: 10 }}>
+          >
             <Image
-              source={require("../assets/Logo_HCMUTE.jpg")}
-              style={{ width: 55, height: 55, borderRadius: 100 }}
+              source={require("../assets/not_found_notification.jpg")}
+              style={{ width: 340, height: 340 }}
             />
-          </View>
-          <View style={{ flex: 1 }}>
-            <Text style={{ fontSize: 16, fontWeight: "bold", marginBottom: 5 }}>
-              Công ty FPT đã ứng tuyển bạn
+            <Text style={{ fontSize: 17, fontWeight: "bold" }}>
+              Bạn chưa có thông báo nào !
             </Text>
-            <Text style={{ fontSize: 13, marginBottom: 5 }}>
-              Vui lòng đến địa chỉ:Tòa nhà FPT, số 10 Phố Phạm Văn Bạch, Phuờng
-              Dịch Vọng, Quận Cầu Giấy, Thành phố Hà Nội, để phỏng vấn nhé ! -
-              Trân trọng
-            </Text>
-            <Text style={{ fontSize: 14, color: "#888" }}>20/05/2024</Text>
           </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            padding: 10,
-            backgroundColor: "#e9f3ff",
-          }}
-        >
-          <View
-            style={{
-              width: 10,
-              height: 10,
-              borderRadius: 10,
-              backgroundColor: "#0559f7",
-              marginRight: 10,
-            }}
+        ) : (
+          <FlatList
+            showsVerticalScrollIndicator={false}
+            data={listNotifications}
+            renderItem={({ item }) => (
+              <View>
+                {item?.Viewed === 0 ? (
+                  <TouchableOpacity
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      padding: 10,
+                      backgroundColor: "#e9f3ff",
+                    }}
+                  >
+                    <View
+                      style={{
+                        width: 10,
+                        height: 10,
+                        borderRadius: 10,
+                        backgroundColor: "#0559f7",
+                        marginRight: 10,
+                      }}
+                    />
+                    <View style={{ marginRight: 10 }}>
+                      <Image
+                        source={{ uri: item?.Logo }}
+                        style={{ width: 55, height: 55, borderRadius: 100 }}
+                      />
+                    </View>
+                    <View style={{ flex: 1 }}>
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          fontWeight: "bold",
+                          marginBottom: 5,
+                        }}
+                      >
+                        {item?.Title}
+                      </Text>
+                      <Text style={{ fontSize: 13, marginBottom: 5 }}>
+                        {item?.Content}
+                      </Text>
+                      <Text style={{ fontSize: 14, color: "#888" }}>
+                        {item?.SentDate}
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                ) : (
+                  <TouchableOpacity
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      padding: 10,
+                      backgroundColor: "#ffffff",
+                    }}
+                  >
+                    <View
+                      style={{
+                        width: 10,
+                        height: 10,
+                        borderRadius: 10,
+                        backgroundColor: "white",
+                        marginRight: 10,
+                      }}
+                    />
+                    <View style={{ marginRight: 10 }}>
+                      <Image
+                        source={{ uri: item?.Logo }}
+                        style={{ width: 55, height: 55, borderRadius: 100 }}
+                      />
+                    </View>
+                    <View style={{ flex: 1 }}>
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          fontWeight: "bold",
+                          marginBottom: 5,
+                        }}
+                      >
+                        {item?.Title}
+                      </Text>
+                      <Text style={{ fontSize: 13, marginBottom: 5 }}>
+                        {item?.Content}
+                      </Text>
+                      <Text style={{ fontSize: 14, color: "#888" }}>
+                        {item?.SentDate}
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                )}
+              </View>
+            )}
           />
-          <View style={{ marginRight: 10 }}>
-            <Image
-              source={require("../assets/Logo_HCMUTE.jpg")}
-              style={{ width: 55, height: 55, borderRadius: 100 }}
-            />
-          </View>
-          <View style={{ flex: 1 }}>
-            <Text style={{ fontSize: 16, fontWeight: "bold", marginBottom: 5 }}>
-              Công ty FPT đã ứng tuyển bạn
-            </Text>
-            <Text style={{ fontSize: 13, marginBottom: 5 }}>
-              Vui lòng đến địa chỉ:Tòa nhà FPT, số 10 Phố Phạm Văn Bạch, Phuờng
-              Dịch Vọng, Quận Cầu Giấy, Thành phố Hà Nội, để phỏng vấn nhé ! -
-              Trân trọng
-            </Text>
-            <Text style={{ fontSize: 14, color: "#888" }}>20/05/2024</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            padding: 10,
-            backgroundColor: "#e9f3ff",
-          }}
-        >
-          <View
-            style={{
-              width: 10,
-              height: 10,
-              borderRadius: 10,
-              backgroundColor: "#0559f7",
-              marginRight: 10,
-            }}
-          />
-          <View style={{ marginRight: 10 }}>
-            <Image
-              source={require("../assets/Logo_HCMUTE.jpg")}
-              style={{ width: 55, height: 55, borderRadius: 100 }}
-            />
-          </View>
-          <View style={{ flex: 1 }}>
-            <Text style={{ fontSize: 16, fontWeight: "bold", marginBottom: 5 }}>
-              Công ty FPT đã ứng tuyển bạn
-            </Text>
-            <Text style={{ fontSize: 13, marginBottom: 5 }}>
-              Vui lòng đến địa chỉ:Tòa nhà FPT, số 10 Phố Phạm Văn Bạch, Phuờng
-              Dịch Vọng, Quận Cầu Giấy, Thành phố Hà Nội, để phỏng vấn nhé ! -
-              Trân trọng
-            </Text>
-            <Text style={{ fontSize: 14, color: "#888" }}>20/05/2024</Text>
-          </View>
-        </TouchableOpacity>
+        )}
       </View>
     </>
   );
