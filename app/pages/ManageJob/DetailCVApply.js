@@ -37,7 +37,7 @@ import {
 } from "react-native-paper";
 import Entypo from "@expo/vector-icons/Entypo";
 import LoadingOverlay from "../../components/LoadingOverlay";
-const { height } = Dimensions.get("window"); // Lấy chiều cao của màn hình
+const { height } = Dimensions.get("window");
 export default function DetailCVApply() {
   const db = getFirestore(app);
 
