@@ -10,6 +10,7 @@ import {
   where,
   getDocs,
   doc,
+  updateDoc,
   deleteDoc,
 } from "firebase/firestore";
 import JobDetail from "../Job/JobDetail";
@@ -29,6 +30,13 @@ export default function DetailNotification() {
       setListJob(jobData);
     } catch (error) {
       console.error("Error fetching data following:", error);
+    }
+    if (params.notification.Viewed === 0) {
+      console.log("ID");
+      console.log(params.notification.id);
+      await updateDoc(doc(db, "Notification", params.notification.id), {
+        Viewed: 1,
+      });
     }
     setLoading(false);
   };

@@ -1,6 +1,6 @@
 // import { View, Text } from "react-native";
 // import React from "react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import {
   View,
   Text,
@@ -62,6 +62,14 @@ export default function Notification() {
   useFocusEffect(
     React.useCallback(() => {
       fetchDataListNotifications();
+    }, [])
+  );
+  useFocusEffect(
+    useCallback(() => {
+      fetchDataListNotifications();
+      return () => {
+        // Cleanup if necessary
+      };
     }, [])
   );
   return (
@@ -170,6 +178,11 @@ export default function Notification() {
                       padding: 10,
                       backgroundColor: "#ffffff",
                     }}
+                    onPress={() =>
+                      navigation.push("detail-notification", {
+                        notification: item,
+                      })
+                    }
                   >
                     <View
                       style={{
