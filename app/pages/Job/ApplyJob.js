@@ -43,6 +43,7 @@ export default function ApplyJob({ checkNav }) {
   const [checked, setChecked] = React.useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const [loading, setLoading] = useState(false);
+
   const generateRandomId = (length) => {
     const characters = "0123456789";
     let randomId = "";
@@ -112,6 +113,7 @@ export default function ApplyJob({ checkNav }) {
         await updateDoc(docRef2, {
           CV: increment(1),
         });
+
         setLoading(false);
 
         alert(

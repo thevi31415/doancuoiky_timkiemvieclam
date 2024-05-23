@@ -45,6 +45,8 @@ export default function AllCVApply({ job }) {
   };
   useEffect(() => {
     getAllCV();
+    console.log("Job All CV");
+    console.log(job);
   }, []);
 
   return (
@@ -94,6 +96,7 @@ export default function AllCVApply({ job }) {
               onPress={() =>
                 navigation.push("detail-cv-apply", {
                   job: item,
+                  job2: job,
                 })
               }
             >
