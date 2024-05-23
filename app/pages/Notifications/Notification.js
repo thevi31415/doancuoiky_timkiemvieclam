@@ -51,6 +51,13 @@ export default function Notification() {
         id: doc.id,
         ...doc.data(),
       }));
+      // Sắp xếp danh sách theo SentDate
+      notification.sort((a, b) => {
+        const dateA = parseDate(a.SentDate);
+        const dateB = parseDate(b.SentDate);
+        return dateB - dateA; // Sắp xếp giảm dần
+      });
+
       console.log("List thong bao");
       console.log(notification);
       setListNotifications(notification);
@@ -58,6 +65,12 @@ export default function Notification() {
       console.error("Error fetching data notification:", error);
     }
     console.log(listNotifications.length);
+  };
+  const parseDate = (dateString) => {
+    const [datePart, timePart] = dateString.split(" ");
+    const [day, month, year] = datePart.split("/").map(Number);
+    const [hours, minutes, seconds] = timePart.split(":").map(Number);
+    return new Date(year, month - 1, day, hours, minutes, seconds);
   };
   useFocusEffect(
     React.useCallback(() => {
@@ -99,6 +112,7 @@ export default function Notification() {
         style={{
           backgroundColor: "white",
           height: "100%",
+          flex: 1,
         }}
       >
         {listNotifications.length <= 0 ? (
