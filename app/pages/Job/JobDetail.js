@@ -131,7 +131,7 @@ export default function JobDetail({ checkNav, jobs }) {
   useEffect(() => {
     fetchData();
     fetchDataBookmark();
-  }, [job, checkApply, checkBookmark]);
+  }, [job, checkApply, checkBookmark, jobs]);
   useEffect(() => {
     console.log("Check Apply: " + checkApply);
   }, [checkApply, checkBookmark]);
@@ -250,7 +250,7 @@ export default function JobDetail({ checkNav, jobs }) {
           >
             <View>
               <Image
-                source={{ uri: jobs.Background }}
+                source={{ uri: jobs?.Background }}
                 className="h-[200px] w-full"
                 style={{
                   width: 420,
@@ -259,7 +259,7 @@ export default function JobDetail({ checkNav, jobs }) {
               />
               <View style={{ padding: 10, elevation: 5 }}>
                 <Image
-                  source={{ uri: jobs.Logo }}
+                  source={{ uri: jobs?.Logo }}
                   className="h-[100px] w-[100px] "
                   style={{
                     elevation: 5,
@@ -443,7 +443,7 @@ export default function JobDetail({ checkNav, jobs }) {
                       textAlign: "justify",
                     }}
                   >
-                    {jobs.DescriptionJob}
+                    {jobs?.DescriptionJob}
                   </Text>
                 </View>
               </View>
@@ -480,7 +480,7 @@ export default function JobDetail({ checkNav, jobs }) {
                       textAlign: "justify",
                     }}
                   >
-                    {jobs.BenefitJob}
+                    {jobs?.BenefitJob}
                   </Text>
                 </View>
               </View>

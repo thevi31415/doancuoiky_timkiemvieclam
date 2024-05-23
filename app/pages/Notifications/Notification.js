@@ -27,8 +27,11 @@ import { app } from "../../../firebaseConfig";
 import { getFirestore } from "firebase/firestore";
 import { useFocusEffect } from "@react-navigation/native";
 import { useUser } from "@clerk/clerk-expo";
+import { useNavigation } from "@react-navigation/native";
 
 export default function Notification() {
+  const navigation = useNavigation();
+
   const db = getFirestore(app);
   const { user } = useUser();
 
@@ -120,6 +123,11 @@ export default function Notification() {
                       padding: 10,
                       backgroundColor: "#e9f3ff",
                     }}
+                    onPress={() =>
+                      navigation.push("detail-notification", {
+                        notification: item,
+                      })
+                    }
                   >
                     <View
                       style={{
