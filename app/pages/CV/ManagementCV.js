@@ -178,8 +178,8 @@ export default function ManagementCV() {
                     borderBottomWidth: 1,
                   }}
                   onPress={() =>
-                    navigation.push("manege-job-detail", {
-                      job: item,
+                    navigation.push("detail-cv", {
+                      cv: item,
                     })
                   }
                 >
