@@ -441,7 +441,7 @@ export default function CompaniesDetail({ checkNav }) {
                   renderItem={({ item }) => (
                     <TouchableOpacity
                       onPress={() =>
-                        navigation.push("job-detail", {
+                        navigation.push("job-detail-stack", {
                           job: item,
                         })
                       }
