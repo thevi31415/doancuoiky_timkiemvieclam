@@ -104,6 +104,9 @@ export default function DetailCVApply({ job }) {
         ToastAndroid.SHORT,
         ToastAndroid.BOTTOM
       );
+
+      // sendEmail(applicantEmail, notification.Title, notification.Content);
+
     } catch (error) {
       console.error("Error updating status:", error);
     }
