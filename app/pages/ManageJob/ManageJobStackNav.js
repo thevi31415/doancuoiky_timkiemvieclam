@@ -6,6 +6,7 @@ import ManageCompany from "../ManageCompany/ManageCompany";
 import ManageJobDetail from "./ManageJobDetail";
 import ManageJob from "./ManageJob";
 import ManageJobDetailStackNav from "./ManageJobDetailStackNav";
+import AddJob from "./AddJob";
 
 export default function ManageJobStackNav() {
   const Stack = createStackNavigator();
@@ -36,6 +37,25 @@ export default function ManageJobStackNav() {
       >
         {(props) => (
           <ManageJobDetailStackNav
+            {...props}
+            checkNav={true}
+            // job={params.job}
+          />
+        )}
+      </Stack.Screen>
+      <Stack.Screen
+        name="add-job"
+        options={{
+          headerStyle: {
+            backgroundColor: "#2c67f2",
+          },
+          headerTintColor: "#fff",
+          headerTitle: "Search",
+          headerShown: false,
+        }}
+      >
+        {(props) => (
+          <AddJob
             {...props}
             checkNav={true}
             // job={params.job}

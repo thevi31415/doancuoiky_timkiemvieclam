@@ -135,6 +135,12 @@ export default function ManageJob() {
                 flexDirection: "row",
                 alignItems: "center",
               }}
+              // onPress={() =>
+              //   navigation.push("add-job", {
+              //     job: item,
+              //   })
+              // }
+              onPress={() => navigation.push("add-job")}
             >
               <Ionicons name="add-circle" size={24} color="white" />
               <Text style={{ fontSize: 15, color: "#fcffff", marginLeft: 5 }}>
