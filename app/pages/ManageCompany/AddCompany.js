@@ -113,7 +113,7 @@ export default function AddCompany() {
     "Vận tải và Logistics",
     "Bán lẻ",
     "Dịch vụ tư vấn",
-    "Dịch vụ khách hàng",
+    "Dịch vụ khách hàng"
   ];
   const onSubmitMethod = async (value) => {
     console.log("Submit");
