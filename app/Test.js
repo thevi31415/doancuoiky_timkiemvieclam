@@ -1,21 +1,10 @@
-const [textName, setTextName] = useState("");
-const [isFocusedName, setIsFocusedName] = useState(false);
-const clearText = () => {
-  setTextName("");
-};
-const [textPhone, setTextPhone] = useState("");
-const [isFocusedPhone, setIsFocusedPhone] = useState(false);
-const clearPhone = () => {
-  setTextPhone("");
+const [textSlogan, setTextSlogan] = useState("");
+const [isFocusedSlogan, setIsFocusedSlogan] = useState(false);
+const clearSlogan = () => {
+  setTextSlogan("");
 };
 
-const [textEmail, setTextEmail] = useState("");
-const [isFocusedEmail, setIsFocusedEmail] = useState(false);
-const clearEmail = () => {
-  setTextEmail("");
-};
-
-<View style={{ margin: 10 }}>
+<View style={{ margin: 5 }}>
   <Text
     style={{
       color: "#333333",
@@ -24,13 +13,13 @@ const clearEmail = () => {
       marginHorizontal: 10,
     }}
   >
-    Họ và tên
+    Slogan
   </Text>
   <View
     style={{
       flexDirection: "row",
       alignItems: "center",
-      borderColor: isFocusedName ? "blue" : "#ccc",
+      borderColor: isFocusedSlogan ? "blue" : "#ccc",
       borderWidth: 1,
       borderRadius: 10,
       margin: 10,
@@ -48,16 +37,16 @@ const clearEmail = () => {
         color: "#000",
         fontSize: 16,
       }}
-      value={textName}
-      onChangeText={setTextName}
-      placeholder="Enter text"
+      value={textSlogan}
+      onChangeText={setTextSlogan}
+      placeholder="Nhập Slogan"
       placeholderTextColor="#999"
-      cursorColor="blue"
-      onFocus={() => setIsFocusedName(true)}
-      onBlur={() => setIsFocusedName(false)}
+      selectionColor="blue"
+      onFocus={() => setIsFocusedSlogan(true)}
+      onBlur={() => setIsFocusedSlogan(false)}
     />
-    {textName.length > 0 && (
-      <TouchableOpacity onPress={clearText} style={{ marginLeft: 10 }}>
+    {textSlogan?.length > 0 && (
+      <TouchableOpacity onPress={clearSlogan} style={{ marginLeft: 10 }}>
         <Icon name="close-circle" size={20} color="#999" />
       </TouchableOpacity>
     )}
