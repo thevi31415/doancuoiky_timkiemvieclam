@@ -19,7 +19,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
 import { app } from "../../../firebaseConfig";
 import { getFirestore } from "firebase/firestore";
-export default function AllCVApply({ job }) {
+export default function AcceptCvApply({ job }) {
   const Stack = createStackNavigator();
   const { params } = useRoute();
   const db = getFirestore(app);
@@ -29,7 +29,11 @@ export default function AllCVApply({ job }) {
   const getAllCV = async () => {
     try {
       console.log("IDJob: " + job.ID);
-      const q = query(collection(db, "ApplyJob"), where("IDJob", "==", job.ID));
+      const q = query(
+        collection(db, "ApplyJob"),
+        where("IDJob", "==", job.ID),
+        where("Status", "==", 1)
+      );
       const getAllCVSnapshot = await getDocs(q);
       const allCV = getAllCVSnapshot.docs.map((doc) => ({
         id: doc.id,
@@ -75,7 +79,7 @@ export default function AllCVApply({ job }) {
           <Ionicons name="arrow-back-outline" size={30} color="#2c67f2" />
         </TouchableOpacity>
         <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-          Tất cả hồ sơ ứng tuyển: {job.CV}
+          Hồ sơ đã duyệt: {job.CV}
         </Text>
       </View>
       <View style={{ backgroundColor: "white" }}>

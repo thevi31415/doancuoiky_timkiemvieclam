@@ -30,17 +30,51 @@ export default function Home() {
   const [lastJobList, setLastJobList] = useState([]);
 
   const fetchData = async () => {
+    // const companySnapshot = await getDocs(collection(db, "Company"));
+    // const companies = companySnapshot.docs.map((doc) => doc.data());
+    // setTopCompanyList(companies);
     const companySnapshot = await getDocs(collection(db, "Company"));
     const companies = companySnapshot.docs.map((doc) => doc.data());
-    setTopCompanyList(companies);
 
+    // Sắp xếp theo thuộc tính "Job"
+    companies.sort((a, b) => b.Job - a.Job);
+
+    // Lấy 5 phần tử đầu tiên
+    const top5Companies = companies.slice(0, 5);
+
+    setTopCompanyList(top5Companies);
+    // const lastJobSnapshot = await getDocs(collection(db, "Jobs"));
+    // const job = lastJobSnapshot.docs.map((doc) => ({
+    //   id: doc.id,
+    //   ...doc.data(),
+    // }));
+    // // const job = jobSnapshot.
+    // setLastJobList(job);
     const lastJobSnapshot = await getDocs(collection(db, "Jobs"));
     const job = lastJobSnapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
     }));
-    // const job = jobSnapshot.
-    setLastJobList(job);
+    // job.sort((a, b) => {
+    //   const dateA = new Date(formatDate(a.DateCreated));
+    //   const dateB = new Date(formatDate(b.DateCreated));
+    //   // Sắp xếp từ mới nhất đến cũ nhất
+    //   return dateB - dateA;
+    // });
+    const limitedJobs = job.slice(0, 5);
+
+    setLastJobList(limitedJobs);
+  };
+  const formatDate = (date) => {
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+    const formattedDay = String(day).padStart(2, "0");
+    const formattedMonth = String(month).padStart(2, "0");
+
+    const formattedDate = `${year}${formattedMonth}${formattedDay}`;
+    console.log("Formatted Date:", formattedDate); // Kiểm tra giá trị đã được định dạng đúng chưa
+    return formattedDate;
   };
 
   useEffect(() => {

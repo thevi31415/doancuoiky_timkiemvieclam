@@ -10,8 +10,11 @@ import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import CompaniesItem from "./CompanyItem";
 import { Card } from "react-native-shadow-cards";
+import { useNavigation } from "@react-navigation/native";
 
 export default function TopCompany({ topCompanyList }) {
+  const navigation = useNavigation();
+
   return (
     <View style={{ flex: 0.82, padding: 16, justifyContent: "center" }}>
       <View
@@ -28,7 +31,11 @@ export default function TopCompany({ topCompanyList }) {
         >
           Nhà tuyển dụng hàng đầu
         </Text>
-        <Text style={{ marginLeft: "auto", color: "#2c67f2" }}>View More</Text>
+        <TouchableOpacity onPress={() => navigation.push("all-company")}>
+          <Text style={{ marginLeft: "auto", color: "#2c67f2" }}>
+            View More
+          </Text>
+        </TouchableOpacity>
       </View>
 
       <View

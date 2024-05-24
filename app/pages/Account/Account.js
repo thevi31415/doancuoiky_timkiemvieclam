@@ -54,21 +54,7 @@ export default function Account() {
   const [loading, setLoading] = useState(false);
   const { user } = useUser();
   const userId = user?.id?.substring(user?.id?.length - 7);
-  // const fetchAccount = async () => {
-  //   try {
-  //     const jsonValue = await AsyncStorage.getItem("userAccount");
-  //     if (jsonValue !== null) {
-  //       setUserAccount(JSON.parse(jsonValue));
-  //     }
-  //     console.log("Role header");
-  //   } catch (e) {
-  //     console.error("Error fetching user account data: ", e);
-  //   }
-  // };
-  const openModal = () => {
-    // setNewName(name);
-    setModalVisible(true);
-  };
+
   const fetchDataBookmark = async () => {
     setLoading(true);
 
@@ -172,11 +158,7 @@ export default function Account() {
     >
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <TouchableOpacity
-            style={styles.profile}
-            // onPress={() => navigation.push("edit-name")}
-            onPress={openModal}
-          >
+          <View style={styles.profile}>
             <View
               style={{
                 flexDirection: "row",
@@ -253,7 +235,7 @@ export default function Account() {
                 </Text>
               </View>
             </View>
-          </TouchableOpacity>
+          </View>
 
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Thông tin cá nhân</Text>
@@ -442,7 +424,10 @@ export default function Account() {
                   </TouchableOpacity>
                 </View>
                 <View style={styles.row2}>
-                  <TouchableOpacity style={styles.rectangle2}>
+                  <TouchableOpacity
+                    style={styles.rectangle2}
+                    onPress={() => navigation.push("job-apply")}
+                  >
                     <FontAwesome
                       name="shopping-bag"
                       size={24}
@@ -477,7 +462,7 @@ export default function Account() {
                       </Text>
                     </View>
                   </TouchableOpacity>
-                  <TouchableOpacity style={styles.rectangle2}>
+                  {/* <TouchableOpacity style={styles.rectangle2}>
                     <FontAwesome
                       name="check-circle"
                       size={24}
@@ -511,7 +496,7 @@ export default function Account() {
                         0
                       </Text>
                     </View>
-                  </TouchableOpacity>
+                  </TouchableOpacity> */}
                 </View>
               </View>
             </View>
@@ -571,7 +556,7 @@ export default function Account() {
                       color: "#cecece",
                     }}
                   >
-                    Version 1.0.0
+                    Version Final_1
                   </Text>
                 </View>
               </View>

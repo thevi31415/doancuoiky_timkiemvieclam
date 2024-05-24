@@ -18,6 +18,7 @@ import {
   doc,
   deleteDoc,
   updateDoc,
+  increment,
 } from "firebase/firestore";
 import { Ionicons } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
@@ -94,6 +95,10 @@ export default function DetailCVApply({ job }) {
         Logo: params.job2.Logo,
       };
 
+      await updateDoc(doc(db, "Jobs", params.job2.id), {
+        CVApprove: increment(1), // Toggle status
+      });
+
       const docRef = await addDoc(collection(db, "Notification"), notification);
 
       if (docRef.id) {
@@ -104,9 +109,7 @@ export default function DetailCVApply({ job }) {
         ToastAndroid.SHORT,
         ToastAndroid.BOTTOM
       );
-
-      // sendEmail(applicantEmail, notification.Title, notification.Content);
-
+      navigation.goBack();
     } catch (error) {
       console.error("Error updating status:", error);
     }
@@ -371,18 +374,21 @@ export default function DetailCVApply({ job }) {
       <View style={styles.container}>
         <TouchableOpacity
           style={{
-            backgroundColor: "#015aff", // Change background color based on condition
+            backgroundColor: params?.job?.Status === 1 ? "#888" : "#015aff",
             padding: 10,
             width: "100%",
             paddingHorizontal: 20,
             justifyContent: "center",
             alignItems: "center",
             borderRadius: 10,
-            opacity: 1, // Disable button by reducing opacity
+            opacity: params?.job?.Status === 1 ? 0.5 : 1,
           }}
-          onPress={() => acceptCV(params.job?.id)}
-          // onPress={listCV.length <= 0 ? null : applyJob} // Disable onPress event when listCv.length <= 0
-          // disabled={listCV.length <= 0} // Alternative way to disable button
+          onPress={() => {
+            if (params?.job?.Status !== 1) {
+              acceptCV(params?.job?.id);
+            }
+          }}
+          disabled={params?.job?.Status === 1}
         >
           <Text
             style={{
@@ -391,7 +397,7 @@ export default function DetailCVApply({ job }) {
               fontWeight: "normal",
             }}
           >
-            ACCEPT CV
+            {params?.job?.Status === 1 ? "CV đã chấp nhận" : "ACCEPT CV"}
           </Text>
         </TouchableOpacity>
       </View>

@@ -286,6 +286,11 @@ export default function ManageJobDetail({ job }) {
             borderRadius: 10,
             margin: 5,
           }}
+          onPress={() =>
+            navigation.push("accept-cv-apply", {
+              job: job,
+            })
+          }
         >
           <FontAwesome5 name="user-check" size={28} color="#015aff" />
           <Text style={{ fontSize: 18, fontWeight: "500", marginLeft: 10 }}>

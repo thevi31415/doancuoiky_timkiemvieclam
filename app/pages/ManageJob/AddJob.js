@@ -23,6 +23,7 @@ import {
   doc,
   deleteDoc,
   updateDoc,
+  increment,
 } from "firebase/firestore";
 
 import AntDesign from "@expo/vector-icons/AntDesign";
@@ -151,26 +152,29 @@ export default function AddJob() {
   const typeJob = ["Fulltime", "Freelance", "Part-time"];
   const onSubmitMethod = async (value) => {
     console.log("Submit");
-    // if (
-    //   !imageAvatar ||
-    //   !imageBackground ||
-    //   !textName ||
-    //   !textSlogan ||
-    //   !textWebsite ||
-    //   !textLocation ||
-    //   !selectedField ||
-    //   !textEmail ||
-    //   !user?.id ||
-    //   !textEmployee ||
-    //   !textIntroduction
-    // ) {
-    //   ToastAndroid.show(
-    //     "Vui lòng nhập đầy đủ thông tin",
-    //     ToastAndroid.SHORT,
-    //     ToastAndroid.BOTTOM
-    //   );
-    //   return;
-    // }
+
+    // Kiểm tra thông tin nhập liệu
+    if (
+      !textName ||
+      !textIntroduction ||
+      !textExperience ||
+      !textLocation ||
+      !textSalary ||
+      !textBenefit ||
+      !textSkill ||
+      !textDeadline ||
+      !textTypeJob ||
+      !selectedField
+    ) {
+      // Hiển thị thông báo nếu thiếu thông tin
+      ToastAndroid.show(
+        "Vui lòng nhập đầy đủ thông tin",
+        ToastAndroid.SHORT,
+        ToastAndroid.BOTTOM
+      );
+      return; // Dừng hàm nếu thiếu thông tin
+    }
+
     setLoading(true);
     const q = query(
       collection(db, "Company"),
@@ -206,6 +210,11 @@ export default function AddJob() {
         TypeJob: textTypeJob,
       };
       const docRef = await addDoc(collection(db, "Jobs"), job);
+      const docRef2 = doc(db, "Company", company[0].id);
+
+      await updateDoc(docRef2, {
+        Job: increment(1),
+      });
       navigation.goBack();
       ToastAndroid.show(
         "Thêm công việc thành công!",

@@ -5,15 +5,19 @@ import {
   Image,
   TouchableOpacity,
   FlatList,
+  TouchableOpacityBase,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import JobItem from "./JobItem";
+import { useNavigation } from "@react-navigation/native";
 
 export default function LastJob({ lastJobsList }) {
   console.log("LastJob: " + lastJobsList.length);
+  const navigation = useNavigation();
+
   return (
     <View style={{ flex: 0.82, padding: 16 }}>
       <View
@@ -30,7 +34,11 @@ export default function LastJob({ lastJobsList }) {
         >
           Việc làm nổi bật
         </Text>
-        <Text style={{ marginLeft: "auto", color: "#2c67f2" }}>View More</Text>
+        <TouchableOpacity onPress={() => navigation.push("all-job")}>
+          <Text style={{ marginLeft: "auto", color: "#2c67f2" }}>
+            View More
+          </Text>
+        </TouchableOpacity>
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false}>

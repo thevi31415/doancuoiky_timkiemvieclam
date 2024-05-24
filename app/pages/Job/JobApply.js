@@ -17,70 +17,66 @@ import {
 import { useUser } from "@clerk/clerk-expo";
 import { useNavigation } from "@react-navigation/native";
 import LoadingOverlay from "../../components/LoadingOverlay";
-
-export default function CompaniesFollowed() {
+export default function JobApply() {
   const navigation = useNavigation();
   const { user } = useUser();
-  const [listCompanyFollowed, setListCompanyFollowed] = useState([]);
-  const [listInfoCompany, setListInfoCompany] = useState([]);
+  const [listJob, setListJob] = useState([]);
+  const [listApply, setListApply] = useState([]);
   const [loading, setLoading] = useState(false);
   const db = getFirestore(app);
 
-  const fetchDataListCompanyFollowed = async () => {
+  const fetchDataListApply = async () => {
     setLoading(true);
     console.log("IDuser: " + user?.id);
     try {
       const q = query(
-        collection(db, "FollowCompany"),
+        collection(db, "ApplyJob"),
         where("IDUser", "==", user?.id)
       );
 
-      const companyFollowedSnapshot = await getDocs(q);
-      const companyFollowed = companyFollowedSnapshot.docs.map((doc) =>
-        doc.data()
-      );
-      setListCompanyFollowed(companyFollowed);
+      const applySnapshot = await getDocs(q);
+      const apply = applySnapshot.docs.map((doc) => doc.data());
+      console.log(apply);
+      setListApply(apply);
     } catch (error) {
-      console.error("Error fetching data following:", error);
+      console.error("Error fetching data apply:", error);
     }
-    console.log("Công ty đang theo dõi: " + listCompanyFollowed.length);
+
     setLoading(false);
   };
   useEffect(() => {
-    fetchDataListCompanyFollowed();
+    fetchDataListApply();
   }, []);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
-      fetchDataListCompanyFollowed();
+      fetchDataListApply();
     });
     return unsubscribe;
   }, [navigation]);
 
-  const fetchCompanyInfo = async () => {
+  const fetchDataListJob = async () => {
     try {
-      const companyIDs = listCompanyFollowed.map(
-        (company) => company.IDCompany
-      );
+      const jobIDs = listApply.map((apply) => apply.IDJob);
 
-      if (companyIDs.length === 0) {
-        console.log("Không có công ty nào để lấy thông tin");
+      if (jobIDs.length === 0) {
+        console.log("Không có việc làm nào để lấy thông tin");
         return;
       }
-      const q = query(collection(db, "Company"), where("ID", "in", companyIDs));
+      const q = query(collection(db, "Jobs"), where("ID", "in", jobIDs));
 
-      const companySnapshot = await getDocs(q);
-      const companyData = companySnapshot.docs.map((doc) => doc.data());
-      setListInfoCompany(companyData);
-      console.log("Thông tin các công ty:", companyData);
+      const jobsSnapshot = await getDocs(q);
+      const jobData = jobsSnapshot.docs.map((doc) => doc.data());
+      setListJob(jobData);
+      console.log("Thông tin các công ty:", jobData);
     } catch (error) {
       console.error("Error fetching company info:", error);
     }
   };
-
   useEffect(() => {
-    fetchCompanyInfo();
-  }, [listCompanyFollowed]);
+    fetchDataListJob();
+  }, [listApply]);
+
   return (
     <>
       <View
@@ -102,7 +98,7 @@ export default function CompaniesFollowed() {
           <Ionicons name="arrow-back-outline" size={30} color="#2c67f2" />
         </TouchableOpacity>
         <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-          Công ty đang theo dõi
+          Việc làm ứng tuyển
         </Text>
       </View>
       <View
@@ -113,39 +109,39 @@ export default function CompaniesFollowed() {
           height: "100%",
         }}
       >
-        {listCompanyFollowed.length > 0 ? (
-          <View style={{ marginBottom: 200 }}>
+        {listJob.length > 0 ? (
+          <View>
             <View
               style={{ margin: 10, flexDirection: "row", alignItems: "center" }}
             >
               <Text
                 style={{ fontSize: 17, color: "#015aff", fontWeight: "bold" }}
               >
-                {listCompanyFollowed.length}
+                {listJob.length}
               </Text>
               <Text style={{ fontSize: 17, color: "#80888e", marginLeft: 5 }}>
-                công ty
+                việc làm
               </Text>
             </View>
-
             <FlatList
               showsVerticalScrollIndicator={false}
-              data={listInfoCompany}
+              data={listJob}
               renderItem={({ item }) => (
                 <TouchableOpacity
                   onPress={() =>
-                    navigation.push("company-detail", {
-                      company: item,
+                    navigation.push("job-detail", {
+                      job: item,
                     })
                   }
                   style={{
                     marginLeft: 5,
                     marginRight: 5,
                     borderWidth: 1,
+                    marginBottom: 10,
+
                     borderColor: "#6b9bf5",
                     borderBottomColor: "#F5F6F6",
                     borderRadius: 10,
-                    marginBottom: 14,
                     backgroundColor: "#fafbff",
                   }}
                 >
@@ -177,15 +173,45 @@ export default function CompaniesFollowed() {
                         numberOfLines={2}
                         ellipsizeMode="tail"
                       >
-                        {item?.Name}
+                        {item?.NameJob}
                       </Text>
+                      <TouchableOpacity onPress={() => {}}>
+                        <Text
+                          style={{
+                            fontSize: 16,
+                            color: "#333333",
+                            fontWeight: "bold",
+                            marginTop: 3,
+                          }}
+                        >
+                          {item?.NameCompany}
+                        </Text>
+                      </TouchableOpacity>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          alignItems: "center",
+                          marginTop: 7,
+                        }}
+                      >
+                        <AntDesign name="staro" size={20} color="#6b9bf5" />
 
+                        <Text
+                          style={{
+                            color: "gray",
+                            fontSize: 13,
+                            marginLeft: 4,
+                          }}
+                        >
+                          {item?.Experience} Kinh nghiệm
+                        </Text>
+                      </View>
                       <View
                         style={{
                           flexDirection: "row",
                           alignItems: "center",
 
-                          marginTop: 7,
+                          marginTop: 4,
                         }}
                       >
                         <Ionicons
@@ -202,7 +228,7 @@ export default function CompaniesFollowed() {
                             marginLeft: 4,
                           }}
                         >
-                          {item?.Location}
+                          {item?.LocationJob.slice(0, 25) + "..."}
                         </Text>
                       </View>
                       <View
@@ -213,27 +239,9 @@ export default function CompaniesFollowed() {
                           marginLeft: 3,
                         }}
                       >
-                        <AntDesign name="team" size={16} color="#6b9bf5" />
-                        <Text
-                          style={{
-                            color: "gray",
-                            fontSize: 13,
-                            marginLeft: 4,
-                          }}
-                        >
-                          {item?.Employee}
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          flexDirection: "row",
-                          alignItems: "center",
-                          marginTop: 4,
-                        }}
-                      >
-                        <Ionicons
-                          name="bag-outline"
-                          size={20}
+                        <AntDesign
+                          name="clockcircleo"
+                          size={16}
                           color="#6b9bf5"
                         />
                         <Text
@@ -243,14 +251,11 @@ export default function CompaniesFollowed() {
                             marginLeft: 4,
                           }}
                         >
-                          {item?.Job} jobs
+                          {item?.DateCreated}
                         </Text>
                       </View>
                     </View>
-                    <TouchableOpacity
-                      style={{ marginRight: 0 }}
-                      onPress={() => {}}
-                    >
+                    <TouchableOpacity onPress={() => {}}>
                       <Ionicons
                         name="bookmark-outline"
                         size={25}
@@ -280,13 +285,13 @@ export default function CompaniesFollowed() {
                 fontWeight: "bold",
               }}
             >
-              Bạn chưa theo dõi công ty nào
+              Bạn chưa lưu việc làm nào
             </Text>
           </View>
         )}
       </View>
 
-      <LoadingOverlay loading={loading} />
+      {/* <LoadingOverlay loading={loading} /> */}
     </>
   );
 }
