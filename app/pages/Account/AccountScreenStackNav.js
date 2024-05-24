@@ -8,6 +8,8 @@ import JobSaved from "../Job/JobSaved";
 import CompanyFollowedStackNav from "../Company/CompanyFollowedStackNav";
 import EditName from "./EditName";
 import Profile from "./Profile";
+import JobAppled from "../Job/JobApply";
+import JobAppledStackNav from "../Job/JobAppledStackNav";
 
 export default function AccountScreenStackNav() {
   const Stack = createStackNavigator();
@@ -74,6 +76,18 @@ export default function AccountScreenStackNav() {
       <Stack.Screen
         name="job-saved"
         component={JobSaved}
+        options={{
+          headerStyle: {
+            backgroundColor: "#2c67f2",
+          },
+          headerTintColor: "#fff",
+          headerTitle: "Search",
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="job-apply"
+        component={JobAppledStackNav}
         options={{
           headerStyle: {
             backgroundColor: "#2c67f2",

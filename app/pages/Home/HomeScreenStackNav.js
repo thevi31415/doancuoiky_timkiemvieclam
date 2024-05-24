@@ -6,6 +6,8 @@ import Search from "../Search/Search";
 import CompaniesDetail from "../Company/CompanyDetail";
 import JobDetail from "../Job/JobDetail";
 import JobDetailStackNav from "../Job/JobDetailStackNav";
+import AllJobStackNav from "../Job/AllJobStackNav";
+import AllCompany from "../Company/AllCompany";
 
 export default function HomeScreenStackNav() {
   const Stack = createStackNavigator();
@@ -48,6 +50,31 @@ export default function HomeScreenStackNav() {
       <Stack.Screen
         name="search-detail"
         component={Search}
+        options={{
+          headerStyle: {
+            backgroundColor: "#2c67f2",
+          },
+          headerTintColor: "#fff",
+          headerTitle: "Search",
+          headerShown: false,
+        }}
+      />
+
+      <Stack.Screen
+        name="all-job"
+        component={AllJobStackNav}
+        options={{
+          headerStyle: {
+            backgroundColor: "#2c67f2",
+          },
+          headerTintColor: "#fff",
+          headerTitle: "Search",
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="all-company"
+        component={AllCompany}
         options={{
           headerStyle: {
             backgroundColor: "#2c67f2",
