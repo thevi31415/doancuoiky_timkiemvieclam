@@ -23,6 +23,7 @@ import {
   doc,
   deleteDoc,
   updateDoc,
+  increment,
 } from "firebase/firestore";
 
 import AntDesign from "@expo/vector-icons/AntDesign";
@@ -206,6 +207,11 @@ export default function AddJob() {
         TypeJob: textTypeJob,
       };
       const docRef = await addDoc(collection(db, "Jobs"), job);
+      const docRef2 = doc(db, "Company", company[0].id);
+
+      await updateDoc(docRef2, {
+        Job: increment(1),
+      });
       navigation.goBack();
       ToastAndroid.show(
         "Thêm công việc thành công!",
