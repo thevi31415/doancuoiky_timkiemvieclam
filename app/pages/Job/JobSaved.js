@@ -231,7 +231,7 @@ export default function JobSaved() {
                             marginLeft: 4,
                           }}
                         >
-                          {item?.LocationJob}
+                          {item?.LocationJob.substring(0, 25) + "..."}
                         </Text>
                       </View>
                       <View

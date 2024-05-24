@@ -145,6 +145,7 @@ export default function CompaniesFollowed() {
                     borderColor: "#6b9bf5",
                     borderBottomColor: "#F5F6F6",
                     borderRadius: 10,
+                    marginBottom: 14,
                     backgroundColor: "#fafbff",
                   }}
                 >
