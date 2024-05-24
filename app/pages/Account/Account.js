@@ -267,6 +267,12 @@ export default function Account() {
                   justifyContent: "center",
                   padding: 10,
                 }}
+                // onPress={() => navigation.push("edit-profile")}
+                onPress={() =>
+                  navigation.push("edit-profile", {
+                    user: userAccount[0],
+                  })
+                }
               >
                 <View
                   style={{
@@ -274,7 +280,7 @@ export default function Account() {
                     alignItems: "center",
                   }}
                 >
-                  <Entypo name="clipboard" size={26} color="#015aff" />
+                  <Entypo name="pencil" size={26} color="#015aff" />
                   <Text
                     style={{
                       marginLeft: 10,
@@ -283,9 +289,9 @@ export default function Account() {
                       fontWeight: "bold",
                     }}
                   >
-                    Số lượng hồ sơ
+                    Chỉnh sửa thông tin cá nhân
                   </Text>
-                  <View
+                  {/* <View
                     style={{
                       flex: 1,
                       flexDirection: "row",
@@ -301,7 +307,7 @@ export default function Account() {
                     >
                       0
                     </Text>
-                  </View>
+                  </View> */}
                 </View>
               </TouchableOpacity>
             </View>

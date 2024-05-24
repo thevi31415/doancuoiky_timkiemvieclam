@@ -447,6 +447,41 @@ export default function JobDetail({ checkNav, jobs }) {
                   </Text>
                 </View>
               </View>
+              {/* <View
+                style={{
+                  marginTop: 10,
+                  marginBottom: 5,
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 17,
+                    fontWeight: "bold",
+                    color: "#333333",
+                  }}
+                >
+                  Kĩ năng
+                </Text>
+                <View
+                  style={{
+                    padding: 10,
+                    marginTop: 10,
+                    borderRadius: 10,
+                    width: "100",
+                    backgroundColor: "#f4f4f6",
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: "#333333",
+                      fontSize: 17,
+                      textAlign: "justify",
+                    }}
+                  >
+                    {jobs?.SkillJob}
+                  </Text>
+                </View>
+              </View> */}
               <View
                 style={{
                   marginTop: 5,

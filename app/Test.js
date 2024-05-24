@@ -1,178 +1,81 @@
-export default function ManagementCV() {
-  const db = getFirestore(app);
+import React, { useState } from "react";
+import { View, Text, TouchableOpacity } from "react-native";
+import Icon from "react-native-vector-icons/Ionicons";
+import { Picker } from "@react-native-picker/picker";
 
-  const [listCV, setListCV] = useState([]);
-  const [CV, setCV] = useState([]);
-  const { user } = useUser();
+const App = () => {
+  const [selectedField, setSelectedField] = useState("");
+  const [isFocused, setIsFocused] = useState(false);
 
-  const fetchDataCV = async () => {
-    try {
-      const q = query(collection(db, "CV"), where("IDUser", "==", user?.id));
-
-      const cvSnapshot = await getDocs(q);
-      const cvData = cvSnapshot.docs.map((doc) => doc.data());
-      setListCV(cvData);
-      console.log("List cv: " + cvData.length);
-    } catch (error) {
-      console.error("Error fetching data following:", error);
-    }
-    setLoading(false);
+  const clearSelection = () => {
+    setSelectedField("");
   };
-  useFocusEffect(
-    React.useCallback(() => {
-      fetchDataCV();
-    }, [])
-  );
-  useEffect(() => {
-    fetchDataCV();
-  }, []);
 
-  useEffect(() => {
-    if (listCV.length > 0) {
-      setCV(listCV[0]);
-      console.log("Name CV2: " + listCV[0].IDUser);
-    }
-  }, [listCV]);
+  const fields = [
+    "Công nghệ thông tin",
+    "Tài chính",
+    "Y tế và Dược phẩm",
+    "Giáo dục",
+    "Bất động sản",
+    "Thương mại điện tử",
+    "Sản xuất",
+    "Năng lượng",
+    "Du lịch và Khách sạn",
+    "Truyền thông và Giải trí",
+    "Nông nghiệp",
+    "Vận tải và Logistics",
+    "Bán lẻ",
+    "Dịch vụ tư vấn",
+    "Dịch vụ khách hàng",
+  ];
+
   return (
-    <>
+    <View style={{ margin: 5 }}>
+      <Text
+        style={{
+          color: "#333333",
+          fontSize: 20,
+          fontWeight: "500",
+          marginHorizontal: 10,
+        }}
+      >
+        Lĩnh vực
+      </Text>
       <View
         style={{
           flexDirection: "row",
           alignItems: "center",
-          justifyContent: "center",
-          marginTop: 40,
-          padding: 13,
-          backgroundColor: "white",
-          borderBottomColor: "#e6e7e8",
-          borderBottomWidth: 2,
+          borderColor: isFocused ? "blue" : "#ccc",
+          borderWidth: 1,
+          borderRadius: 10,
+          margin: 10,
+          paddingLeft: 10,
+          paddingRight: 10,
+          padding: 10,
+          paddingHorizontal: 20,
+          height: 45,
         }}
       >
-        <Text style={{ fontSize: 20, fontWeight: "bold" }}> Quản lý CV</Text>
+        <Picker
+          selectedValue={selectedField}
+          style={{ flex: 1, color: "#000" }}
+          onValueChange={(itemValue) => setSelectedField(itemValue)}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+        >
+          <Picker.Item label="Chọn lĩnh vực" value="" />
+          {fields.map((field, index) => (
+            <Picker.Item key={index} label={field} value={field} />
+          ))}
+        </Picker>
+        {selectedField?.length > 0 && (
+          <TouchableOpacity onPress={clearSelection} style={{ marginLeft: 10 }}>
+            <Icon name="close-circle" size={20} color="#999" />
+          </TouchableOpacity>
+        )}
       </View>
-      {/* <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <Text>Quản lý cv {listCV.length}</Text>
-      </View> */}
-      <View
-        style={{
-          backgroundColor: "white",
-          width: "100%",
-          height: "100%",
-        }}
-      >
-        <View style={{ flexDirection: "row", alignItems: "center", margin: 5 }}>
-          <Text style={{ fontSize: 17 }}>Bạn đã tạo </Text>
-          <Text style={{ fontSize: 17, color: "#0255f0", fontWeight: "bold" }}>
-            {listCV.length}
-          </Text>
-          <Text style={{ fontSize: 17 }}> CV</Text>
-          <View
-            style={{
-              backgroundColor: "#015aff",
-              padding: 10,
-              margin: 5,
-              borderRadius: 16,
-              marginLeft: 100,
-              alignSelf: "flex-start",
-            }}
-          >
-            <TouchableOpacity
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-              }}
-            >
-              <Ionicons name="add-circle" size={24} color="white" />
-              <Text style={{ fontSize: 15, color: "#fcffff", marginLeft: 5 }}>
-                Tạo CV mới
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        <FlatList
-          showsVerticalScrollIndicator={false}
-          data={listCV}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              style={{
-                backgroundColor: "white",
-                margin: 0,
-                padding: 10,
-                borderRadius: 0,
-                borderBottomColor: "#ebebec",
-                borderBottomWidth: 1,
-              }}
-              onPress={() =>
-                navigation.push("manege-job-detail", {
-                  job: item,
-                })
-              }
-            >
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
-                <View style={{ flexDirection: "row", alignItems: "center" }}>
-                  <Image
-                    source={{ uri: item.Avatar }}
-                    style={{
-                      width: 70,
-                      height: 70,
-                      marginRight: 15,
-                      borderRadius: 100,
-                      borderWidth: 2,
-                      borderColor: "blue",
-                    }}
-                  />
-                  <View>
-                    <Text
-                      style={{
-                        fontSize: 18,
-                        fontWeight: "bold",
-                        color: "#015aff",
-                      }}
-                    >
-                      {item?.Name}
-                    </Text>
-                    <Text
-                      style={{
-                        color: "#3b3b3b",
-                        marginTop: 5,
-                        fontWeight: "bold",
-                      }}
-                    >
-                      {item?.DateBirth}
-                    </Text>
-                    <View
-                      style={{
-                        backgroundColor: "#d6e4ff",
-                        borderRadius: 5,
-                        alignSelf: "flex-start",
-                        padding: 5,
-                        marginTop: 5,
-                      }}
-                    >
-                      <Text
-                        style={{
-                          color: "#0056b3",
-                          fontSize: 12,
-                          fontWeight: "bold",
-                        }}
-                      >
-                        #{item?.ID}
-                      </Text>
-                    </View>
-                  </View>
-                </View>
-              </View>
-            </TouchableOpacity>
-          )}
-          keyExtractor={(item) => item.ID}
-        />
-      </View>
-    </>
+    </View>
   );
-}
+};
+
+export default App;

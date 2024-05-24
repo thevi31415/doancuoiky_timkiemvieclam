@@ -14,7 +14,7 @@ export default function CompaniesItem({ item }) {
         borderColor: "#a4c1f7",
         width: 300,
         padding: 16,
-        marginRight: 16,
+        marginHorizontal: 10,
         shadowColor: "#000",
         shadowRadius: 4,
         shadowOpacity: 0.1,

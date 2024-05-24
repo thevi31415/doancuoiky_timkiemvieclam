@@ -134,12 +134,23 @@ export default function DetailCVApply({ job }) {
 
     return randomId;
   };
+  // const formatDate = () => {
+  //   const today = new Date();
+  //   const day = today.getDate();
+  //   const month = today.getMonth() + 1;
+  //   const year = today.getFullYear();
+  //   return `${day}/${month}/${year}`;
+  // };
   const formatDate = () => {
     const today = new Date();
-    const day = today.getDate();
-    const month = today.getMonth() + 1;
+    const day = String(today.getDate()).padStart(2, "0");
+    const month = String(today.getMonth() + 1).padStart(2, "0");
     const year = today.getFullYear();
-    return `${day}/${month}/${year}`;
+    const hours = String(today.getHours()).padStart(2, "0");
+    const minutes = String(today.getMinutes()).padStart(2, "0");
+    const seconds = String(today.getSeconds()).padStart(2, "0");
+
+    return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
   };
   return (
     <>

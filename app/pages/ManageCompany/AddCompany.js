@@ -7,7 +7,6 @@ import {
   ToastAndroid,
   ScrollView,
   Image,
-  Pressable,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 
@@ -24,42 +23,31 @@ import {
   deleteDoc,
   updateDoc,
 } from "firebase/firestore";
-
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 import { useUser } from "@clerk/clerk-expo";
-import { useFocusEffect } from "@react-navigation/native";
-import DateTimePicker from "@react-native-community/datetimepicker";
+
 import Icon from "react-native-vector-icons/Ionicons";
 import { app } from "../../../firebaseConfig";
 import { getFirestore } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import LoadingOverlay from "../../components/LoadingOverlay";
 
-export default function AddJob() {
+export default function AddCompany() {
   const navigation = useNavigation();
   const db = getFirestore(app);
   const storage = getStorage();
   const [loading, setLoading] = useState(false);
-  const [showPicker, setShowPicker] = useState(false);
+
+  const [imageAvatar, setImageAvatar] = useState(null);
+  const [imageBackground, setImageBackground] = useState(null);
   const { user } = useUser();
-  const [listCompany, setListCompany] = useState([]);
+
   const [textName, setTextName] = useState("");
   const [isFocusedName, setIsFocusedName] = useState(false);
-  const [date, setDate] = useState(new Date());
   const clearText = () => {
     setTextName("");
-  };
-  const [textSalary, setTextSalary] = useState("");
-  const [isFocusedSalary, setIsFocusedSalary] = useState(false);
-  const clearSalary = () => {
-    setTextSalary("");
-  };
-  const [textExperience, setTextExperience] = useState("");
-  const [isFocusedExperience, setIsFocusedExperience] = useState(false);
-  const clearExperience = () => {
-    setTextExperience("");
   };
 
   const [textSlogan, setTextSlogan] = useState("");
@@ -73,147 +61,126 @@ export default function AddJob() {
     setTextSlogan("");
   };
 
-  const [textBenefit, setTextBenefit] = useState("");
-  const [isFocusedBenefit, setIsFocusedBenefit] = useState(false);
-  const clearBenefit = () => {
-    setTextBenefit("");
+  const [textPhone, setTextPhone] = useState("");
+  const [isFocusedPhone, setIsFocusedPhone] = useState(false);
+  const clearPhone = () => {
+    setTextPhone("");
   };
-  const [textSkill, setTextSkill] = useState("");
-  const [isFocusedSkill, setIsFocusedSkill] = useState(false);
-  const clearSkill = () => {
-    setTextSkill("");
+
+  const [textEmail, setTextEmail] = useState("");
+  const [isFocusedEmail, setIsFocusedEmail] = useState(false);
+  const clearEmail = () => {
+    setTextEmail("");
   };
+
+  const [textWebsite, setTextWebsite] = useState("");
+  const [isFocusedWebsite, setIsFocusedWebsite] = useState(false);
+  const clearWebsite = () => {
+    setTextWebsite("");
+  };
+
+  const [textEmployee, setTextEmployee] = useState("");
+  const [isFocusedEmployee, setIsFocusedEmployee] = useState(false);
+  const clearEmployee = () => {
+    setTextEmployee("");
+  };
+
   const [textIntroduction, setTextIntroduction] = useState("");
   const [isFocusedIntroduction, setIsFocusedIntroduction] = useState(false);
   const clearIntroduction = () => {
     setTextIntroduction("");
   };
-  const [textTypeJob, setTextTypeJob] = useState("");
-  const [isFocusedTypeJob, setIsFocusedTypeJob] = useState(false);
-  const clearTypeJob = () => {
-    setTextTypeJob("");
-  };
+
   const [selectedField, setSelectedField] = useState("");
   const [isFocused, setIsFocused] = useState(false);
 
-  const [textDeadline, setTextDeadline] = useState("");
-  const [isFocusedDeadline, setIsFocusedDeadline] = useState(false);
-  const clearDeadline = () => {
-    setTextDeadline("");
-  };
-  const toggleDatepicker = () => {
-    if (showPicker) {
-      setShowPicker(false);
-    } else {
-      setShowPicker(true);
-    }
-  };
-  const onChange = ({ type }, selectedDate) => {
-    console.log("Picker Date:  " + selectedDate);
-    if (type === "set") {
-      console.log("Setdate");
-      const currentDate = selectedDate;
-      setTextDeadline(formatDate(currentDate));
-      toggleDatepicker();
-    }
-  };
-  const formatDate = (date) => {
-    const day = date.getDate();
-    const month = date.getMonth() + 1;
-    const year = date.getFullYear();
-    const formattedDay = String(day).padStart(2, "0");
-    const formattedMonth = String(month).padStart(2, "0");
-
-    return `${formattedDay}/${formattedMonth}/${year}`;
-  };
   const clearSelection = () => {
     setSelectedField("");
   };
-  const fetchDataListCompany = async () => {
-    try {
-      const q = query(
-        collection(db, "Company"),
-        where("IDUser", "==", user?.id)
-      );
 
-      const companySnapshot = await getDocs(q);
-      const company = companySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setListCompany(company);
-    } catch (error) {
-      console.error("Error fetching data following:", error);
-    }
-    console.log(listCompany.length);
-  };
-
-  const typeJob = ["Fulltime", "Freelance", "Part-time"];
+  const fields = [
+    "Công nghệ thông tin",
+    "Tài chính",
+    "Y tế và Dược phẩm",
+    "Giáo dục",
+    "Bất động sản",
+    "Thương mại điện tử",
+    "Sản xuất",
+    "Năng lượng",
+    "Du lịch và Khách sạn",
+    "Truyền thông và Giải trí",
+    "Nông nghiệp",
+    "Vận tải và Logistics",
+    "Bán lẻ",
+    "Dịch vụ tư vấn",
+    "Dịch vụ khách hàng",
+  ];
   const onSubmitMethod = async (value) => {
     console.log("Submit");
-    // if (
-    //   !imageAvatar ||
-    //   !imageBackground ||
-    //   !textName ||
-    //   !textSlogan ||
-    //   !textWebsite ||
-    //   !textLocation ||
-    //   !selectedField ||
-    //   !textEmail ||
-    //   !user?.id ||
-    //   !textEmployee ||
-    //   !textIntroduction
-    // ) {
-    //   ToastAndroid.show(
-    //     "Vui lòng nhập đầy đủ thông tin",
-    //     ToastAndroid.SHORT,
-    //     ToastAndroid.BOTTOM
-    //   );
-    //   return;
-    // }
+    if (
+      !imageAvatar ||
+      !imageBackground ||
+      !textName ||
+      !textSlogan ||
+      !textWebsite ||
+      !textLocation ||
+      !selectedField ||
+      !textEmail ||
+      !user?.id ||
+      !textEmployee ||
+      !textIntroduction
+    ) {
+      ToastAndroid.show(
+        "Vui lòng nhập đầy đủ thông tin",
+        ToastAndroid.SHORT,
+        ToastAndroid.BOTTOM
+      );
+      return;
+    }
     setLoading(true);
-    const q = query(
-      collection(db, "Company"),
-      where("ID", "==", selectedField)
-    );
-    const companySnapshot = await getDocs(q);
-    const company = companySnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
 
     try {
-      const job = {
-        Applicants: 0,
-        Background: company[0].Background,
-        BenefitJob: textBenefit,
-        CV: 0,
-        IDUser: user?.id,
-        CVApprove: 0,
-        DateCreated: formatDate(new Date()),
-        Deadline: textDeadline,
-        DescriptionJob: textIntroduction,
-        Experience: textExperience,
+      const resp = await fetch(imageAvatar);
+      const blob = await resp.blob();
+      const storageRef = ref(storage, "avatarCV/" + Date.now() + ".jpg");
+      await uploadBytes(storageRef, blob);
+      const downloadUrl = await getDownloadURL(storageRef);
+
+      console.log("Download URL:", downloadUrl);
+
+      const resp2 = await fetch(imageBackground);
+      const blob2 = await resp2.blob();
+      const storageRef2 = ref(storage, "avatarCV/" + Date.now() + ".jpg");
+      await uploadBytes(storageRef2, blob2);
+      const downloadUrl2 = await getDownloadURL(storageRef2);
+
+      console.log("Download URL2:", downloadUrl2);
+
+      const company = {
         ID: generateRandomId(8),
-        IDCompany: company[0].ID,
-        LocationJob: textLocation,
-        Logo: company[0].Logo,
-        NameCompany: company[0].Name,
-        NameJob: textName,
-        Salary: textSalary,
-        SkillJob: textSkill,
-        Status: true,
-        TypeJob: textTypeJob,
+        Logo: downloadUrl,
+        Background: downloadUrl2,
+        Name: textName,
+        Slogan: textSlogan,
+        Website: textWebsite,
+        Location: textLocation,
+        Job: 0,
+        Field: selectedField,
+        Email: textEmail,
+        IDUser: user?.id,
+        Employee: textEmployee,
+        Introduction: textIntroduction,
       };
-      const docRef = await addDoc(collection(db, "Jobs"), job);
+
+      const docRef = await addDoc(collection(db, "Company"), company);
       navigation.goBack();
       ToastAndroid.show(
-        "Thêm công việc thành công!",
+        "Thêm công ty thành công!",
         ToastAndroid.SHORT,
         ToastAndroid.BOTTOM
       );
     } catch (error) {
-      console.error("Error adding job:", error);
+      console.error("Error adding company:", error);
       ToastAndroid.show(
         "Đã xảy ra lỗi khi thêm công ty.",
         ToastAndroid.SHORT,
@@ -222,7 +189,35 @@ export default function AddJob() {
     }
     setLoading(false);
   };
+  const pickImageAvatar = async () => {
+    console.log("Pick Avatar");
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 4],
+      quality: 1,
+    });
 
+    console.log(result);
+
+    if (!result.canceled) {
+      setImageAvatar(result.assets[0].uri);
+    }
+  };
+  const pickImageBackground = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [8, 5],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.canceled) {
+      setImageBackground(result.assets[0].uri);
+    }
+  };
   const generateRandomId = (length) => {
     const characters = "0123456789";
     let randomId = "";
@@ -235,12 +230,6 @@ export default function AddJob() {
 
     return randomId;
   };
-
-  useFocusEffect(
-    React.useCallback(() => {
-      fetchDataListCompany();
-    }, [])
-  );
   return (
     <>
       <View
@@ -261,62 +250,60 @@ export default function AddJob() {
         >
           <AntDesign name="close" size={24} color="black" />
         </TouchableOpacity>
-        <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-          Add Job {listCompany.length}
-        </Text>
+        <Text style={{ fontSize: 20, fontWeight: "bold" }}>Add Company</Text>
       </View>
       <View style={{ backgroundColor: "white", flex: 1 }}>
         <ScrollView style={{ marginBottom: 80 }}>
-          <View style={{ margin: 5 }}>
-            <Text
-              style={{
-                color: "#333333",
-                fontSize: 20,
-                fontWeight: "500",
-                marginHorizontal: 10,
-              }}
-            >
-              Công ty
-            </Text>
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                borderColor: isFocused ? "blue" : "#ccc",
-                borderWidth: 1,
-                borderRadius: 10,
-                margin: 10,
-                paddingLeft: 10,
-                paddingRight: 10,
-                padding: 10,
-                paddingHorizontal: 20,
-                height: 45,
-              }}
-            >
-              <Picker
-                selectedValue={selectedField}
-                style={{ flex: 1, color: "#000" }}
-                onValueChange={(itemValue) => setSelectedField(itemValue)}
-                onFocus={() => setIsFocused(true)}
-                onBlur={() => setIsFocused(false)}
-              >
-                <Picker.Item label="Chọn công ty" value="" />
-                {listCompany.map((company) => (
-                  <Picker.Item
-                    key={company.id}
-                    label={company.Name}
-                    value={company.ID}
-                  />
-                ))}
-              </Picker>
-              {selectedField?.length > 0 && (
-                <TouchableOpacity
-                  onPress={clearSelection}
-                  style={{ marginLeft: 10 }}
-                >
-                  <Icon name="close-circle" size={20} color="#999" />
+          <View
+            style={{
+              borderRadius: 20,
+              width: "full",
+              marginBottom: 30,
+            }}
+          >
+            <View>
+              <TouchableOpacity onPress={pickImageBackground}>
+                <Image
+                  source={require("../assets/Logo_HCMUTE.jpg")}
+                  className="h-[150px] w-full"
+                  style={{
+                    width: 420,
+                    resizeMode: "cover",
+                  }}
+                />
+              </TouchableOpacity>
+
+              <View style={{ padding: 10, elevation: 5 }}>
+                <TouchableOpacity onPress={pickImageAvatar}>
+                  {imageAvatar ? (
+                    <Image
+                      source={{ uri: imageAvatar }}
+                      className="h-[100px] w-[100px] "
+                      style={{
+                        elevation: 5,
+                        position: "absolute",
+                        borderRadius: 20,
+                        alignSelf: "center",
+                        padding: 10,
+                        bottom: -35,
+                      }}
+                    />
+                  ) : (
+                    <Image
+                      source={require("../assets/not_found_image.jpg")}
+                      className="h-[100px] w-[100px] "
+                      style={{
+                        elevation: 5,
+                        position: "absolute",
+                        borderRadius: 20,
+                        alignSelf: "center",
+                        padding: 10,
+                        bottom: -35,
+                      }}
+                    />
+                  )}
                 </TouchableOpacity>
-              )}
+              </View>
             </View>
           </View>
           <View style={{ margin: 5 }}>
@@ -328,7 +315,7 @@ export default function AddJob() {
                 marginHorizontal: 10,
               }}
             >
-              Tên công việc
+              Tên công ty
             </Text>
             <View
               style={{
@@ -354,7 +341,7 @@ export default function AddJob() {
                 }}
                 value={textName}
                 onChangeText={setTextName}
-                placeholder="Nhập tên công việc"
+                placeholder="Nhập tên công"
                 placeholderTextColor="#999"
                 cursorColor="blue"
                 onFocus={() => setIsFocusedName(true)}
@@ -379,13 +366,218 @@ export default function AddJob() {
                 marginHorizontal: 10,
               }}
             >
-              Loại công việc
+              Slogan
             </Text>
             <View
               style={{
                 flexDirection: "row",
                 alignItems: "center",
-                borderColor: isFocusedTypeJob ? "blue" : "#ccc",
+                borderColor: isFocusedSlogan ? "blue" : "#ccc",
+                borderWidth: 1,
+                borderRadius: 10,
+                margin: 10,
+                paddingLeft: 10,
+                paddingRight: 10,
+                padding: 10,
+                paddingHorizontal: 20,
+                height: 45,
+              }}
+            >
+              <TextInput
+                style={{
+                  flex: 1,
+                  height: "100%",
+                  color: "#000",
+                  fontSize: 16,
+                }}
+                value={textSlogan}
+                onChangeText={setTextSlogan}
+                placeholder="Nhập Slogan"
+                placeholderTextColor="#999"
+                selectionColor="blue"
+                onFocus={() => setIsFocusedSlogan(true)}
+                onBlur={() => setIsFocusedSlogan(false)}
+              />
+              {textSlogan?.length > 0 && (
+                <TouchableOpacity
+                  onPress={clearSlogan}
+                  style={{ marginLeft: 10 }}
+                >
+                  <Icon name="close-circle" size={20} color="#999" />
+                </TouchableOpacity>
+              )}
+            </View>
+          </View>
+          <View style={{ margin: 5 }}>
+            <Text
+              style={{
+                color: "#333333",
+                fontSize: 20,
+                fontWeight: "500",
+                marginHorizontal: 10,
+              }}
+            >
+              Email
+            </Text>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                borderColor: isFocusedEmail ? "blue" : "#ccc",
+                borderWidth: 1,
+                borderRadius: 10,
+                margin: 10,
+                paddingLeft: 10,
+                paddingRight: 10,
+                padding: 10,
+                paddingHorizontal: 20,
+                height: 45,
+              }}
+            >
+              <TextInput
+                style={{
+                  flex: 1,
+                  height: "100%",
+                  color: "#000",
+                  fontSize: 16,
+                }}
+                value={textEmail}
+                onChangeText={setTextEmail}
+                placeholder="Nhập Email"
+                placeholderTextColor="#999"
+                cursorColor="blue"
+                onFocus={() => setIsFocusedEmail(true)}
+                onBlur={() => setIsFocusedEmail(false)}
+              />
+              {textEmail?.length > 0 && (
+                <TouchableOpacity
+                  onPress={clearEmail}
+                  style={{ marginLeft: 10 }}
+                >
+                  <Icon name="close-circle" size={20} color="#999" />
+                </TouchableOpacity>
+              )}
+            </View>
+          </View>
+          <View style={{ margin: 5 }}>
+            <Text
+              style={{
+                color: "#333333",
+                fontSize: 20,
+                fontWeight: "500",
+                marginHorizontal: 10,
+              }}
+            >
+              Website
+            </Text>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                borderColor: isFocusedWebsite ? "blue" : "#ccc",
+                borderWidth: 1,
+                borderRadius: 10,
+                margin: 10,
+                paddingLeft: 10,
+                paddingRight: 10,
+                padding: 10,
+                paddingHorizontal: 20,
+                height: 45,
+              }}
+            >
+              <TextInput
+                style={{
+                  flex: 1,
+                  height: "100%",
+                  color: "#000",
+                  fontSize: 16,
+                }}
+                value={textWebsite}
+                onChangeText={setTextWebsite}
+                placeholder="Nhập Website"
+                placeholderTextColor="#999"
+                cursorColor="blue"
+                onFocus={() => setIsFocusedWebsite(true)}
+                onBlur={() => setIsFocusedWebsite(false)}
+              />
+              {textWebsite?.length > 0 && (
+                <TouchableOpacity
+                  onPress={clearWebsite}
+                  style={{ marginLeft: 10 }}
+                >
+                  <Icon name="close-circle" size={20} color="#999" />
+                </TouchableOpacity>
+              )}
+            </View>
+          </View>
+          <View style={{ margin: 5 }}>
+            <Text
+              style={{
+                color: "#333333",
+                fontSize: 20,
+                fontWeight: "500",
+                marginHorizontal: 10,
+              }}
+            >
+              Số lượng nhân viên
+            </Text>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                borderColor: isFocusedEmployee ? "blue" : "#ccc",
+                borderWidth: 1,
+                borderRadius: 10,
+                margin: 10,
+                paddingLeft: 10,
+                paddingRight: 10,
+                padding: 10,
+                paddingHorizontal: 20,
+                height: 45,
+              }}
+            >
+              <TextInput
+                style={{
+                  flex: 1,
+                  height: "100%",
+                  color: "#000",
+                  fontSize: 16,
+                }}
+                keyboardType="numeric"
+                value={textEmployee}
+                onChangeText={setTextEmployee}
+                placeholder="Nhập số lượng nhân viên"
+                placeholderTextColor="#999"
+                cursorColor="blue"
+                onFocus={() => setIsFocusedEmployee(true)}
+                onBlur={() => setIsFocusedEmployee(false)}
+              />
+              {textEmployee?.length > 0 && (
+                <TouchableOpacity
+                  onPress={clearEmployee}
+                  style={{ marginLeft: 10 }}
+                >
+                  <Icon name="close-circle" size={20} color="#999" />
+                </TouchableOpacity>
+              )}
+            </View>
+          </View>
+          <View style={{ margin: 5 }}>
+            <Text
+              style={{
+                color: "#333333",
+                fontSize: 20,
+                fontWeight: "500",
+                marginHorizontal: 10,
+              }}
+            >
+              Lĩnh vực
+            </Text>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                borderColor: isFocused ? "blue" : "#ccc",
                 borderWidth: 1,
                 borderRadius: 10,
                 margin: 10,
@@ -397,15 +589,15 @@ export default function AddJob() {
               }}
             >
               <Picker
-                selectedValue={textTypeJob}
+                selectedValue={selectedField}
                 style={{ flex: 1, color: "#000" }}
-                onValueChange={(itemValue) => setTextTypeJob(itemValue)}
-                onFocus={() => setIsFocusedTypeJob(true)}
-                onBlur={() => setIsFocusedTypeJob(false)}
+                onValueChange={(itemValue) => setSelectedField(itemValue)}
+                onFocus={() => setIsFocused(true)}
+                onBlur={() => setIsFocused(false)}
               >
-                <Picker.Item label="Chọn loại công việc" value="" />
-                {typeJob.map((typeJob, index) => (
-                  <Picker.Item key={index} label={typeJob} value={typeJob} />
+                <Picker.Item label="Chọn lĩnh vực" value="" />
+                {fields.map((field, index) => (
+                  <Picker.Item key={index} label={field} value={field} />
                 ))}
               </Picker>
               {selectedField?.length > 0 && (
@@ -418,179 +610,6 @@ export default function AddJob() {
               )}
             </View>
           </View>
-          <View style={{ margin: 5 }}>
-            <Text
-              style={{
-                color: "#333333",
-                fontSize: 20,
-                fontWeight: "500",
-                marginHorizontal: 10,
-              }}
-            >
-              Mức lương (USD)
-            </Text>
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                borderColor: isFocusedSalary ? "blue" : "#ccc",
-                borderWidth: 1,
-                borderRadius: 10,
-                margin: 10,
-                paddingLeft: 10,
-                paddingRight: 10,
-                padding: 10,
-                paddingHorizontal: 20,
-                height: 45,
-              }}
-            >
-              <TextInput
-                style={{
-                  flex: 1,
-                  height: "100%",
-                  color: "#000",
-                  fontSize: 16,
-                }}
-                value={textSalary}
-                onChangeText={setTextSalary}
-                placeholder="Nhập mức lương"
-                placeholderTextColor="#999"
-                selectionColor="blue"
-                keyboardType="numeric"
-                onFocus={() => setIsFocusedSalary(true)}
-                onBlur={() => setIsFocusedSalary(false)}
-              />
-              {textSalary?.length > 0 && (
-                <TouchableOpacity
-                  onPress={clearSalary}
-                  style={{ marginLeft: 10 }}
-                >
-                  <Icon name="close-circle" size={20} color="#999" />
-                </TouchableOpacity>
-              )}
-            </View>
-          </View>
-          <View style={{ margin: 5 }}>
-            <Text
-              style={{
-                color: "#333333",
-                fontSize: 20,
-                fontWeight: "500",
-                marginHorizontal: 10,
-              }}
-            >
-              Ngày phỏng vấn
-            </Text>
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                borderColor: isFocusedSalary ? "blue" : "#ccc",
-                borderWidth: 1,
-                borderRadius: 10,
-                margin: 10,
-                paddingLeft: 10,
-                paddingRight: 10,
-                padding: 10,
-                paddingHorizontal: 20,
-                height: 45,
-              }}
-            >
-              {/* <TextInput
-                style={{
-                  flex: 1,
-                  height: "100%",
-                  color: "#000",
-                  fontSize: 16,
-                }}
-                value={textSalary}
-                onChangeText={setTextSalary}
-                placeholder="Nhập mức lương"
-                placeholderTextColor="#999"
-                selectionColor="blue"
-                keyboardType="numeric"
-                onFocus={() => setIsFocusedSalary(true)}
-                onBlur={() => setIsFocusedSalary(false)}
-              />
-              {textSalary?.length > 0 && (
-                <TouchableOpacity
-                  onPress={clearSalary}
-                  style={{ marginLeft: 10 }}
-                >
-                  <Icon name="close-circle" size={20} color="#999" />
-                </TouchableOpacity>
-              )} */}
-              {showPicker && (
-                <DateTimePicker
-                  value={date}
-                  mode="date"
-                  display="spinner"
-                  onChange={onChange}
-                />
-              )}
-              <Pressable onPress={toggleDatepicker}>
-                <TextInput
-                  style={styles.input}
-                  placeholder="12/10/2003"
-                  value={textDeadline}
-                  editable={false}
-                />
-              </Pressable>
-            </View>
-          </View>
-          <View style={{ margin: 5 }}>
-            <Text
-              style={{
-                color: "#333333",
-                fontSize: 20,
-                fontWeight: "500",
-                marginHorizontal: 10,
-              }}
-            >
-              Kinh nghiệm (năm)
-            </Text>
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                borderColor: isFocusedExperience ? "blue" : "#ccc",
-                borderWidth: 1,
-                borderRadius: 10,
-                margin: 10,
-                paddingLeft: 10,
-                paddingRight: 10,
-                padding: 10,
-                paddingHorizontal: 20,
-                height: 45,
-              }}
-            >
-              <TextInput
-                style={{
-                  flex: 1,
-                  height: "100%",
-                  color: "#000",
-                  fontSize: 16,
-                }}
-                value={textExperience}
-                onChangeText={setTextExperience}
-                placeholder="Nhập kinh nghiệm"
-                placeholderTextColor="#999"
-                selectionColor="blue"
-                keyboardType="numeric"
-                onFocus={() => setIsFocusedExperience(true)}
-                onBlur={() => setIsFocusedExperience(false)}
-              />
-              {textExperience?.length > 0 && (
-                <TouchableOpacity
-                  onPress={clearExperience}
-                  style={{ marginLeft: 10 }}
-                >
-                  <Icon name="close-circle" size={20} color="#999" />
-                </TouchableOpacity>
-              )}
-            </View>
-          </View>
-
           <View style={{ margin: 5 }}>
             <Text
               style={{
@@ -653,7 +672,7 @@ export default function AddJob() {
                 marginHorizontal: 10,
               }}
             >
-              Mô tả công việc
+              Giới thiệu
             </Text>
             <View
               style={{
@@ -681,7 +700,7 @@ export default function AddJob() {
                 value={textIntroduction}
                 multiline
                 onChangeText={setTextIntroduction}
-                placeholder="Nhập mô tả công việc"
+                placeholder="Nhập giới thiệu công ty"
                 placeholderTextColor="#999"
                 selectionColor="blue"
                 onFocus={() => setIsFocusedIntroduction(true)}
@@ -690,112 +709,6 @@ export default function AddJob() {
               {textIntroduction?.length > 0 && (
                 <TouchableOpacity
                   onPress={clearIntroduction}
-                  style={{ marginLeft: 10 }}
-                >
-                  <Icon name="close-circle" size={20} color="#999" />
-                </TouchableOpacity>
-              )}
-            </View>
-          </View>
-          <View style={{ margin: 5 }}>
-            <Text
-              style={{
-                color: "#333333",
-                fontSize: 20,
-                fontWeight: "500",
-                marginHorizontal: 10,
-              }}
-            >
-              Quyền lợi
-            </Text>
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                borderColor: isFocusedBenefit ? "blue" : "#ccc",
-                borderWidth: 1,
-                borderRadius: 10,
-                margin: 10,
-                paddingLeft: 10,
-                paddingRight: 10,
-                padding: 10,
-                paddingHorizontal: 20,
-                height: 200,
-              }}
-            >
-              <TextInput
-                style={{
-                  flex: 1,
-                  height: "100%",
-                  color: "#000",
-                  fontSize: 16,
-                  textAlignVertical: "top",
-                }}
-                value={textBenefit}
-                multiline
-                onChangeText={setTextBenefit}
-                placeholder="Nhập quyền lợi"
-                placeholderTextColor="#999"
-                selectionColor="blue"
-                onFocus={() => setIsFocusedBenefit(true)}
-                onBlur={() => setIsFocusedBenefit(false)}
-              />
-              {textBenefit?.length > 0 && (
-                <TouchableOpacity
-                  onPress={clearBenefit}
-                  style={{ marginLeft: 10 }}
-                >
-                  <Icon name="close-circle" size={20} color="#999" />
-                </TouchableOpacity>
-              )}
-            </View>
-          </View>
-          <View style={{ margin: 5 }}>
-            <Text
-              style={{
-                color: "#333333",
-                fontSize: 20,
-                fontWeight: "500",
-                marginHorizontal: 10,
-              }}
-            >
-              Kĩ năng
-            </Text>
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                borderColor: isFocusedSkill ? "blue" : "#ccc",
-                borderWidth: 1,
-                borderRadius: 10,
-                margin: 10,
-                paddingLeft: 10,
-                paddingRight: 10,
-                padding: 10,
-                paddingHorizontal: 20,
-                height: 150,
-              }}
-            >
-              <TextInput
-                style={{
-                  flex: 1,
-                  height: "100%",
-                  color: "#000",
-                  fontSize: 16,
-                  textAlignVertical: "top",
-                }}
-                value={textSkill}
-                multiline
-                onChangeText={setTextSkill}
-                placeholder="Nhập kĩ năng"
-                placeholderTextColor="#999"
-                selectionColor="blue"
-                onFocus={() => setIsFocusedSkill(true)}
-                onBlur={() => setIsFocusedSkill(false)}
-              />
-              {textSkill?.length > 0 && (
-                <TouchableOpacity
-                  onPress={clearSkill}
                   style={{ marginLeft: 10 }}
                 >
                   <Icon name="close-circle" size={20} color="#999" />

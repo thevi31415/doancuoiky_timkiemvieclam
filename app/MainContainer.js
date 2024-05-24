@@ -29,6 +29,7 @@ import ManageCompany from "./pages/ManageCompany/ManageCompany";
 import ManageJobStackNav from "./pages/ManageJob/ManageJobStackNav";
 import ManagementCVStackNav from "./pages/CV/ManagementCVStackNav";
 import NotificationStackNav from "./pages/Notifications/NotificationStackNav";
+import ManageCompanyStackNav from "./pages/ManageCompany/ManageCompanyStackNav";
 
 const Tab = createBottomTabNavigator();
 const storeData = async (value) => {
@@ -157,7 +158,7 @@ export default function MainComponent() {
         {role === "Admin" ? (
           <Tab.Screen
             name="Công ty"
-            component={ManageCompany}
+            component={ManageCompanyStackNav}
             options={{
               tabBarIcon: ({ color, size }) => (
                 <Ionicons name="business" size={size} color={color} />
