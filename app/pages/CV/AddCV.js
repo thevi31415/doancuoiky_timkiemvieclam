@@ -54,6 +54,15 @@ export default function AddCV() {
   const onSubmitMethod = async (value) => {
     try {
       setLoading(true);
+      if (image === null) {
+        ToastAndroid.show(
+          "Vui lòng chọn ảnh đại diện!",
+          ToastAndroid.SHORT,
+          ToastAndroid.BOTTOM
+        );
+        setLoading(false); // Set loading to false before return
+        return;
+      }
       const resp = await fetch(image);
       const blob = await resp.blob();
       const storageRef = ref(storage, "avatarCV/" + Date.now() + ".jpg");
