@@ -51,11 +51,12 @@ export default function JobDetail({ checkNav, jobs }) {
   const [checkBookmark, setCheckBookmark] = useState(false);
   const [IDBookMark, setIDBookmark] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [userAccount, setUserAccount] = useState([]);
 
   const showAlertApply = () => {
     Alert.alert(
       "Thông báo",
-      "Bạn đã ứng tuyển và công việc này không thể ứng tuyển nữa nữa"
+      "Bạn đã ứng tuyển và công việc này không thể ứng tuyển nữa !"
     );
   };
   const showAlertApplyStop = () => {
@@ -63,6 +64,9 @@ export default function JobDetail({ checkNav, jobs }) {
       "Thông báo",
       "Việc làm này đã dừng tuyển ! Vui lòng tìm công việc khác !"
     );
+  };
+  const showAlertApplyStop2 = () => {
+    Alert.alert("Thông báo", "Nhà tuyển dụng không thể tự ứng tuyển !");
   };
   const fetchData = async () => {
     setLoading(true); // Bắt đầu quá trình load
@@ -95,6 +99,21 @@ export default function JobDetail({ checkNav, jobs }) {
       setCompanies(companiesData[0]);
     } catch (error) {
       console.error("Error fetching data applyjob:", error);
+    }
+    try {
+      console.log(user.id);
+      const q = query(collection(db, "User"), where("ID", "==", user.id));
+
+      const userSnapshot = await getDocs(q);
+      const userAccount = userSnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+
+      setUserAccount(userAccount);
+      console.log(userAccount[0].name);
+    } catch (error) {
+      console.error("Error fetching data following:", error);
     }
     setLoading(false);
   };
@@ -552,7 +571,20 @@ export default function JobDetail({ checkNav, jobs }) {
             color={checkBookmark ? "#2c67f2" : "#2c67f2"} // Màu sắc phụ thuộc vào trạng thái checkApply
           />
         </TouchableOpacity>
-        {jobs?.Status ? (
+        {userAccount[0]?.role == "Admin" ? (
+          <TouchableOpacity
+            style={[styles.disabledBtn]}
+            onPress={showAlertApplyStop2}
+          >
+            {isLoading ? (
+              <ActivityIndicator color="white" />
+            ) : (
+              <Text style={[styles.applyBtnTextFalse]}>
+                Không thể ứng tuyển
+              </Text> // Thay đổi nội dung của nút dựa trên trạng thái checkApply
+            )}
+          </TouchableOpacity>
+        ) : jobs?.Status ? (
           <TouchableOpacity
             style={[styles.disabledBtn, checkApply && styles.applyBtn]} // Nếu checkApply là true, áp dụng kiểu disabledBtn
             onPress={checkApply ? showAlertApply : applyJob} // Không cho phép người dùng click nếu checkApply là true
