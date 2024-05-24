@@ -30,7 +30,7 @@ import {
   where,
   getDocs,
   doc,
-  deleteDoc,
+  deleteDoc
 } from "firebase/firestore";
 import { useUser } from "@clerk/clerk-expo";
 import LoadingOverlay from "../../components/LoadingOverlay";
