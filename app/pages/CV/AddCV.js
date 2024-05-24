@@ -68,7 +68,7 @@ export default function AddCV() {
       value.ID = generateRandomId(8);
       value.Status = 1;
       const docRef = await addDoc(collection(db, "CV"), value);
-
+      navigation.goBack();
       if (docRef.id) {
         setLoading(false);
         console.log("Document Added");
@@ -178,6 +178,7 @@ export default function AddCV() {
               Phone: "",
               Experience: "",
               Interest: "",
+              Skills: "",
             }}
             onSubmit={(value) => onSubmitMethod(value)}
             validate={(values) => {
@@ -269,6 +270,7 @@ export default function AddCV() {
                     ]}
                     placeholder="Nhập số điện thoại"
                     value={values?.Phone}
+                    keyboardType="numeric"
                     onChangeText={handleChange("Phone")}
                     placeholderTextColor="#c9cdd6"
                     onFocus={() => setSelectedInput("Phone")}
@@ -340,6 +342,7 @@ export default function AddCV() {
                   <View style={styles.inputContainer}>
                     <TextInput
                       style={styles.input2}
+                      keyboardType="numeric"
                       placeholder="Số năm kinh nghiệm"
                       value={values?.Experience}
                       onChangeText={handleChange("Experience")}
@@ -355,12 +358,30 @@ export default function AddCV() {
                   />
                   <TitleInput text={"Định hướng nghề nghiệp"} />
                   <TextInput
-                    style={styles.input}
-                    placeholder="Descrjihhption"
+                    style={[styles.input, { textAlignVertical: "top" }]}
+                    placeholder="Định hướng nghề nghiệp"
                     value={values?.Introduction}
                     numberOfLines={5}
                     multiline={true}
                     onChangeText={handleChange("Introduction")}
+                  />
+                  <TitleInput text={"Sở thích"} />
+                  <TextInput
+                    style={[styles.input, { textAlignVertical: "top" }]}
+                    placeholder="Sở thích"
+                    value={values?.Interest}
+                    numberOfLines={5}
+                    multiline={true}
+                    onChangeText={handleChange("Interest")}
+                  />
+                  <TitleInput text={"Kĩ năng"} />
+                  <TextInput
+                    style={[styles.input, { textAlignVertical: "top" }]}
+                    placeholder="Kĩ năng"
+                    value={values?.Skills}
+                    numberOfLines={5}
+                    multiline={true}
+                    onChangeText={handleChange("Skills")}
                   />
                 </View>
 
@@ -368,6 +389,7 @@ export default function AddCV() {
                   onPress={handleSubmit}
                   styles={{
                     backgroundColor: loading ? "#ccc" : "#007BFF",
+                    marginBottom: 40,
                   }}
                   disabled={loading}
                   className="p-4 bg-blue-500 rounded-full mt-2 mb-10"
@@ -376,7 +398,7 @@ export default function AddCV() {
                     <ActivityIndicator color="#fff" />
                   ) : (
                     <Text className="text-white text-center text-[16px]">
-                      Submit
+                      SAVE
                     </Text>
                   )}
                 </TouchableOpacity>

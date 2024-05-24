@@ -83,6 +83,7 @@ export default function ApplyJob({ checkNav }) {
     }
     setLoading(false);
   };
+
   useEffect(() => {
     params && setJob(params.job);
     fetchDataCV();
@@ -97,12 +98,15 @@ export default function ApplyJob({ checkNav }) {
       setLoading(true); // Start loading process
       console.log("Apply");
       try {
+        const q = query(collection(db, "User"), where("ID", "==", user?.id));
+        const userSnapshot = await getDocs(q);
+        const userData = userSnapshot.docs.map((doc) => doc.data());
         const docRef = await addDoc(collection(db, "ApplyJob"), {
           ID: generateRandomId(8),
           IDJob: params.job?.ID,
           IDUser: user?.id,
           IDCv: selectedId,
-          Name: user?.fullName,
+          Name: userData[0].name,
           Avatar: user?.imageUrl,
           DateApply: formatDate(),
           Status: 0,

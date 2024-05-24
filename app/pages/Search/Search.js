@@ -48,6 +48,7 @@ const SalaryData = [
   { label: "Dưới $300", value: "2" },
   { label: "$300-$500", value: "3" },
   { label: "$500-$700", value: "4" },
+  { label: "Trên $700", value: "5" },
 ];
 export default function Search() {
   //Ket noi voi firebase
@@ -159,15 +160,41 @@ export default function Search() {
         valueLocation.toLowerCase()
       );
 
+      // const searchResult = jobs.filter((job) => {
+      //   const nameJobLower = removeAccents(job.NameJob.toLowerCase());
+      //   const nameCompanyLower = removeAccents(job.NameCompany.toLowerCase());
+      //   const locationJobLower = removeAccents(job.LocationJob.toLowerCase());
+
+      //   return (
+      //     (nameJobLower.includes(searchTextWithoutAccents) ||
+      //       nameCompanyLower.includes(searchTextWithoutAccents)) &&
+      //     locationJobLower.includes(searchLocationWithoutAccents)
+      //   );
+      // });
       const searchResult = jobs.filter((job) => {
         const nameJobLower = removeAccents(job.NameJob.toLowerCase());
         const nameCompanyLower = removeAccents(job.NameCompany.toLowerCase());
         const locationJobLower = removeAccents(job.LocationJob.toLowerCase());
 
+        // Additional condition for Salary
+        const salary = job.Salary || 0; // Default to 0 if Salary is not present
+        let salaryInRange = true;
+        console.log("Check Salary" + valueSalary);
+        if (valueSalary === "2") {
+          console.log("Check luong");
+          salaryInRange = salary < 300;
+        } else if (valueSalary === "3") {
+          salaryInRange = salary >= 300 && salary < 500;
+        } else if (valueSalary === "4") {
+          salaryInRange = salary >= 500 && salary < 700;
+        } else if (valueSalary === "5") {
+          salaryInRange = salary >= 700;
+        }
         return (
           (nameJobLower.includes(searchTextWithoutAccents) ||
             nameCompanyLower.includes(searchTextWithoutAccents)) &&
-          locationJobLower.includes(searchLocationWithoutAccents)
+          locationJobLower.includes(searchLocationWithoutAccents) &&
+          salaryInRange // Include salary condition
         );
       });
 
@@ -195,6 +222,7 @@ export default function Search() {
         ToastAndroid.BOTTOM
       );
     } else {
+      console.log("Value salary: " + valueSalary);
       fetchSearchCompanyResult(searchText, valueLocation);
       fetchSearchJobResult(searchText, valueLocation);
     }
