@@ -263,14 +263,25 @@ export default function AddCompany() {
           >
             <View>
               <TouchableOpacity onPress={pickImageBackground}>
-                <Image
-                  source={require("../assets/Logo_HCMUTE.jpg")}
-                  className="h-[150px] w-full"
-                  style={{
-                    width: 420,
-                    resizeMode: "cover",
-                  }}
-                />
+                {imageBackground ? (
+                  <Image
+                    source={{ uri: imageBackground }}
+                    className="h-[150px] w-full"
+                    style={{
+                      width: 420,
+                      resizeMode: "cover",
+                    }}
+                  />
+                ) : (
+                  <Image
+                    source={require("../assets/bg_gray.jpg")}
+                    className="h-[150px] w-full"
+                    style={{
+                      width: 420,
+                      resizeMode: "cover",
+                    }}
+                  />
+                )}
               </TouchableOpacity>
 
               <View style={{ padding: 10, elevation: 5 }}>

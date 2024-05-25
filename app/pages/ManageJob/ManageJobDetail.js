@@ -117,7 +117,7 @@ export default function ManageJobDetail({ job }) {
           </Text>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Text style={{ marginLeft: 5, fontSize: 16, fontWeight: "normal" }}>
-              {job?.LocationJob}
+              {job?.LocationJob.substring(0, 25) + "..."}
             </Text>
             <MaterialIcons name="arrow-forward-ios" size={20} color="#a6a6a6" />
           </View>

@@ -423,46 +423,47 @@ export default function Account() {
                     </View>
                   </TouchableOpacity>
                 </View>
-                <View style={styles.row2}>
-                  <TouchableOpacity
-                    style={styles.rectangle2}
-                    onPress={() => navigation.push("job-apply")}
-                  >
-                    <FontAwesome
-                      name="shopping-bag"
-                      size={24}
-                      color="#015aff"
-                      style={{ marginBottom: 10 }}
-                    />
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        justifyContent: "space-between",
-                      }}
+                {userAccount[0]?.role == "User" && (
+                  <View style={styles.row2}>
+                    <TouchableOpacity
+                      style={styles.rectangle2}
+                      onPress={() => navigation.push("job-apply")}
                     >
-                      <Text
+                      <FontAwesome
+                        name="shopping-bag"
+                        size={24}
+                        color="#015aff"
+                        style={{ marginBottom: 10 }}
+                      />
+                      <View
                         style={{
-                          color: "#333333",
-                          fontSize: 15,
-                          fontWeight: "bold",
-                          alignSelf: "flex-start", // căn chỉnh văn bản ở góc trái
+                          flexDirection: "row",
+                          justifyContent: "space-between",
                         }}
                       >
-                        Việc làm đã ứng tuyển
-                      </Text>
-                      <Text
-                        style={{
-                          color: "#015aff",
-                          fontSize: 20,
-                          fontWeight: "bold",
-                          alignSelf: "flex-end", // căn chỉnh số ở góc phải
-                        }}
-                      >
-                        {countJobApply}
-                      </Text>
-                    </View>
-                  </TouchableOpacity>
-                  {/* <TouchableOpacity style={styles.rectangle2}>
+                        <Text
+                          style={{
+                            color: "#333333",
+                            fontSize: 15,
+                            fontWeight: "bold",
+                            alignSelf: "flex-start", // căn chỉnh văn bản ở góc trái
+                          }}
+                        >
+                          Việc làm đã ứng tuyển
+                        </Text>
+                        <Text
+                          style={{
+                            color: "#015aff",
+                            fontSize: 20,
+                            fontWeight: "bold",
+                            alignSelf: "flex-end", // căn chỉnh số ở góc phải
+                          }}
+                        >
+                          {countJobApply}
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                    {/* <TouchableOpacity style={styles.rectangle2}>
                     <FontAwesome
                       name="check-circle"
                       size={24}
@@ -497,7 +498,8 @@ export default function Account() {
                       </Text>
                     </View>
                   </TouchableOpacity> */}
-                </View>
+                  </View>
+                )}
               </View>
             </View>
             <View style={styles.section}>
@@ -556,7 +558,7 @@ export default function Account() {
                       color: "#cecece",
                     }}
                   >
-                    Version Final_1
+                    Version Final_2
                   </Text>
                 </View>
               </View>
