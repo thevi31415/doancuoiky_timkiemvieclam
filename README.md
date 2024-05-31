@@ -42,6 +42,8 @@ JobVP is a mobile application designed to connect users with thousands of suitab
 
 - Home Page Interface:
 <img src="https://github.com/thevi31415/doancuoiky_timkiemvieclam/assets/92256900/2688b534-a4e8-4cf4-b161-f094fd97e6ef" width="300" height="650">
+<img src="https://github.com/thevi31415/doancuoiky_timkiemvieclam/assets/92256900/4ffc7353-87e7-4380-a36b-6c337dba4a8f" width="300" height="650">
+
 
 - Search for jobs and filter search results by location and salary:
 <img src="https://github.com/thevi31415/doancuoiky_timkiemvieclam/assets/92256900/4e588197-77c6-4c08-aeb5-4ed6f08af6db" width="300" height="650">
