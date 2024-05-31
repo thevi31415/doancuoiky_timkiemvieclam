@@ -38,47 +38,47 @@ JobVP is a mobile application designed to connect users with thousands of suitab
 - Expo: Our development environment is powered by Expo, which streamlines the development process by providing tools for building, deploying, and testing React Native apps. Expo offers features like hot reloading, over-the-air updates, and access to native APIs, making app development more efficient and productive.
 ## Functions
 - Log in to the application using a Google account:
-<img src="https://github.com/thevi31415/doancuoiky_timkiemvieclam/assets/92256900/99f2960b-de6e-4f42-b873-ebc3cbe43668" width="400" height="830">
+<img src="https://github.com/thevi31415/doancuoiky_timkiemvieclam/assets/92256900/99f2960b-de6e-4f42-b873-ebc3cbe43668" width="300" height="650">
 
 - Home Page Interface:
-<img src="https://github.com/thevi31415/doancuoiky_timkiemvieclam/assets/92256900/2688b534-a4e8-4cf4-b161-f094fd97e6ef" width="400" height="830">
+<img src="https://github.com/thevi31415/doancuoiky_timkiemvieclam/assets/92256900/2688b534-a4e8-4cf4-b161-f094fd97e6ef" width="300" height="650">
 
 - Search for jobs and filter search results by location and salary:
-<img src="https://github.com/thevi31415/doancuoiky_timkiemvieclam/assets/92256900/4e588197-77c6-4c08-aeb5-4ed6f08af6db" width="400" height="830">
+<img src="https://github.com/thevi31415/doancuoiky_timkiemvieclam/assets/92256900/4e588197-77c6-4c08-aeb5-4ed6f08af6db" width="300" height="650">
 
 
   
-<img src="https://github.com/thevi31415/doancuoiky_timkiemvieclam/assets/92256900/1af97bc0-4cf0-417c-9665-f0edf3f5f971" width="400" height="830">
+<img src="https://github.com/thevi31415/doancuoiky_timkiemvieclam/assets/92256900/1af97bc0-4cf0-417c-9665-f0edf3f5f971"  width="300" height="650">
 
 -View company details and follow companies:
 
-<img src="https://github.com/thevi31415/doancuoiky_timkiemvieclam/assets/92256900/a5aa6661-08aa-4a4c-9fd7-e56a966475ba" width="400" height="840">
+<img src="https://github.com/thevi31415/doancuoiky_timkiemvieclam/assets/92256900/a5aa6661-08aa-4a4c-9fd7-e56a966475ba" width="300" height="650">
 
 - View job details and save jobs:
 
-<img src="https://github.com/thevi31415/doancuoiky_timkiemvieclam/assets/92256900/df5488bd-c697-4ee2-8ec3-86f46a03b66a" width="400" height="840">
+<img src="https://github.com/thevi31415/doancuoiky_timkiemvieclam/assets/92256900/df5488bd-c697-4ee2-8ec3-86f46a03b66a"  width="300" height="650">
 
 - Manage personal resumes:
 
-<img src="https://github.com/thevi31415/doancuoiky_timkiemvieclam/assets/92256900/a9c52603-9b35-42db-b879-8696b8daf4bb" width="400" height="840">
+<img src="https://github.com/thevi31415/doancuoiky_timkiemvieclam/assets/92256900/a9c52603-9b35-42db-b879-8696b8daf4bb"  width="300" height="650">
 
 - Apply for a job:
 
-<img src="https://github.com/thevi31415/doancuoiky_timkiemvieclam/assets/92256900/9fe387b7-2789-4e4e-881b-829537644ec6" width="400" height="840">
+<img src="https://github.com/thevi31415/doancuoiky_timkiemvieclam/assets/92256900/9fe387b7-2789-4e4e-881b-829537644ec6" width="300" height="650">
 
 - Receive notifications when employers approve profiles:
 
-<img src="https://github.com/thevi31415/doancuoiky_timkiemvieclam/assets/92256900/778c4f83-523a-4b3d-a5bf-3e5f08003c37" width="400" height="840">
+<img src="https://github.com/thevi31415/doancuoiky_timkiemvieclam/assets/92256900/778c4f83-523a-4b3d-a5bf-3e5f08003c37"  width="300" height="650">
 
 - The Account page allows users to edit personal information, view saved jobs, applied jobs, followed companies, and log out.
 
-<img src="https://github.com/thevi31415/doancuoiky_timkiemvieclam/assets/92256900/a35b961b-5fdf-4ed1-b43a-2236601e1952" width="400" height="840">
+<img src="https://github.com/thevi31415/doancuoiky_timkiemvieclam/assets/92256900/a35b961b-5fdf-4ed1-b43a-2236601e1952" width="300" height="650">
 
-<img src="https://github.com/thevi31415/doancuoiky_timkiemvieclam/assets/92256900/8806acb8-2eab-4e37-bf4e-7256d90ee23b" width="400" height="840">
+<img src="https://github.com/thevi31415/doancuoiky_timkiemvieclam/assets/92256900/8806acb8-2eab-4e37-bf4e-7256d90ee23b" width="300" height="650">
 
-<img src="https://github.com/thevi31415/doancuoiky_timkiemvieclam/assets/92256900/9d398343-843b-45bb-ab42-f4ea51478ee5" width="400" height="840">
+<img src="https://github.com/thevi31415/doancuoiky_timkiemvieclam/assets/92256900/9d398343-843b-45bb-ab42-f4ea51478ee5" width="300" height="650">
 
-<img src="https://github.com/thevi31415/doancuoiky_timkiemvieclam/assets/92256900/374aa902-eefb-4772-82ef-029afd9e3333" width="400" height="840">
+<img src="https://github.com/thevi31415/doancuoiky_timkiemvieclam/assets/92256900/374aa902-eefb-4772-82ef-029afd9e3333" width="300" height="650">
 
 In addition, employers also have the ability to create companies, post job listings, and review candidate resumes,...
 
