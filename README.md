@@ -17,6 +17,13 @@
 ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
 ![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white)
 ![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)
+## Project Team Members
+
+| STT | MSSV     | Họ và tên                                                  |
+| --- | -------- | ---------------------------------------------------------- | 
+| 1   | 21110603 | [Nguyễn Đại Phúc](https://github.com/juxtapsy2)          | 
+| 2  | 21110728 | [Nguyễn Dương Thế Vĩ](https://github.com/thevi31415)         | 
+
 ## Introduction
 JobVP is a mobile application designed to connect users with thousands of suitable job opportunities with just a few taps. With a user-friendly and intuitive interface, JobVP helps candidates filter and search for desired jobs by location and salary quickly and efficiently, allowing them to apply for jobs they are interested in. Additionally, JobVP assists employers with recruitment needs to easily connect with job-seeking candidates, creating a mutually beneficial situation.
 
